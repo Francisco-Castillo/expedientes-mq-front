@@ -1,11 +1,13 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import Login from "../pages/login";
 
 export const AppRouter = () => {
   return (
     <>
-      <div>EXPEDIENTES MQ</div>
-      <Routes></Routes>
+      <Routes>
+        <Route path="/" element={<Login />} />
+      </Routes>
     </>
   );
 };
