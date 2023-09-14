@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { onLogin } from "../store/auth";
 
 import "../styles/login.css";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +12,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const authStatus = useSelector((state) => state.auth.status);
   const { user } = useSelector((state) => state.auth);
+  const navigation = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -24,6 +26,7 @@ const Login = () => {
       const authenticatedUser = data;
       console.log(authenticatedUser);
       dispatch(onLogin(data));
+      navigation("/new/expedient");
     } catch (error) {
       console.log(error);
     }
