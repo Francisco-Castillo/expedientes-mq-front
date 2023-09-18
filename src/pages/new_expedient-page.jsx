@@ -9,7 +9,9 @@ const New_Expedient = () => {
   const [title, setTitle] = useState();
   const [tramitNum, setTramitNum] = useState();
   const [description, setDescription] = useState();
-  const { user } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
+
+  const { user } = JSON.parse(atob(token.split(".")[1]));
 
   const expediente = {
     user: `${user.name} ${user.lastName}`,
@@ -18,15 +20,14 @@ const New_Expedient = () => {
     tramitNum: tramitNum,
     description: description,
   };
+  console.log(user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const { data } = await axios.post(
-      //   "http://certificadosfhu.unse.edu.ar:9090/expedientes/pagos/caratular",
-      //   expediente
-      // );
-      console.log(expediente);
+      const { data } = await axios.post(
+        "http://certificadosfhu.unse.edu.ar:9090/expedientes/pagos/caratular"
+      );
     } catch (error) {
       console.log(error);
     }
@@ -60,6 +61,7 @@ const New_Expedient = () => {
             type="text"
             className="expedient-input"
             defaultValue={expediente.user}
+            readOnly
           />
           <label htmlFor="">N° Tramite</label>
           <input

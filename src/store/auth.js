@@ -4,25 +4,25 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: {
     status: "not-authenticated",
-    user: {},
+    token: "",
     errorMessage: undefined,
   },
   reducers: {
     onLogin: (state, { payload }) => {
       (state.status = "authenticated"),
-        (state.user = payload),
+        (state.token = payload),
         (state.errorMessage = undefined),
         (state.errorMessage = undefined);
     },
     onLogout: (state, { payload }) => {
       (state.status = "not-authenticated"),
-        (state.user = {}),
+        (state.token = {}),
         (state.errorMessage = payload),
         (state.errorMessage = undefined);
     },
     onLogout: (state, { payload }) => {
       (state.status = "not-authenticated"),
-        (state.user = {}),
+        (state.token = {}),
         (state.errorMessage = payload);
     },
     clearErrorMessage: (state, { payload }) => {
