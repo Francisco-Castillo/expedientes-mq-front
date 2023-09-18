@@ -11,8 +11,9 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const authStatus = useSelector((state) => state.auth.status);
-  const { user } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state);
   const navigation = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -23,8 +24,7 @@ const Login = () => {
           password: password,
         }
       );
-      const authenticatedUser = data;
-      console.log(authenticatedUser);
+
       dispatch(onLogin(data));
       navigation("/new/expedient");
     } catch (error) {
@@ -50,9 +50,9 @@ const Login = () => {
           />
           <button type="submit">Ingresar</button>
         </form>
-        {authStatus === "authenticated" && (
+        {/* {authStatus === "authenticated" && (
           <p>¡Has iniciado sesión con éxito!</p>
-        )}
+        )} */}
       </div>
     </>
   );
