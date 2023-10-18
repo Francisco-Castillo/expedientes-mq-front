@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Average+Sans&family=Public+Sans:wght@700&display=swap");
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 75px;
+  background-color: brown;
+  padding: 0 20px;
+  color: white;
+  & .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  & .icon-login {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    & .icon {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+  }
+}
