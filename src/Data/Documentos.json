@@ -1,0 +1,55 @@
+{
+    "documentos": [
+      {
+        "fechaCreacion": "02-01-2023",
+        "tipoDocumento": "Factura",
+        "observaciones": "Factura de enero"
+      },
+      {
+        "fechaCreacion": "10-02-2023",
+        "tipoDocumento": "Contrato",
+        "observaciones": "Contrato de servicios"
+      },
+      {
+        "fechaCreacion": "15-03-2023",
+        "tipoDocumento": "Informe",
+        "observaciones": "Informe de ventas"
+      },
+      {
+        "fechaCreacion": "05-04-2023",
+        "tipoDocumento": "Carta",
+        "observaciones": "Carta a proveedor"
+      },
+      {
+        "fechaCreacion": "22-05-2023",
+        "tipoDocumento": "Recibo",
+        "observaciones": "Recibo de pago"
+      },
+      {
+        "fechaCreacion": "18-06-2023",
+        "tipoDocumento": "Contrato",
+        "observaciones": "Nuevo contrato de trabajo"
+      },
+      {
+        "fechaCreacion": "12-07-2023",
+        "tipoDocumento": "Factura",
+        "observaciones": "Factura de febrero"
+      },
+      {
+        "fechaCreacion": "28-08-2023",
+        "tipoDocumento": "Informe",
+        "observaciones": "Informe de marketing"
+      },
+      {
+        "fechaCreacion": "09-09-2023",
+        "tipoDocumento": "Carta",
+        "observaciones": "Carta a cliente"
+      },
+      {
+        "fechaCreacion": "30-10-2023",
+        "tipoDocumento": "Recibo",
+        "observaciones": "Recibo de compra"
+      }
+    ]
+  }
+  

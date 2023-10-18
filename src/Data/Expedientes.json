@@ -1,0 +1,84 @@
+{
+  "expedientes": [
+    {
+      "iniciado": "01-01-2023",
+      "numeroExpediente": "1001-TES-2023",
+      "tipoExpediente": "Pago",
+      "descripcion": "Pago de facturas",
+      "estado": "iniciado",
+      "usuario": "Rodrigo Castellanos"
+    },
+    {
+      "iniciado": "05-02-2023",
+      "numeroExpediente": "1002-RRHH-2023",
+      "tipoExpediente": "Recursos Humanos",
+      "descripcion": "Contratación de personal",
+      "estado": "en progreso",
+      "usuario": "Ana López"
+    },
+    {
+      "iniciado": "15-03-2023",
+      "numeroExpediente": "1003-MKT-2023",
+      "tipoExpediente": "Marketing",
+      "descripcion": "Campaña publicitaria",
+      "estado": "completado",
+      "usuario": "Carlos Gómez"
+    },
+    {
+      "iniciado": "10-04-2023",
+      "numeroExpediente": "1004-VENTAS-2023",
+      "tipoExpediente": "Ventas",
+      "descripcion": "Seguimiento de ventas",
+      "estado": "en progreso",
+      "usuario": "Laura Martínez"
+    },
+    {
+      "iniciado": "22-05-2023",
+      "numeroExpediente": "1005-PROY-2023",
+      "tipoExpediente": "Proyectos",
+      "descripcion": "Gestión de proyectos",
+      "estado": "iniciado",
+      "usuario": "Daniel Pérez"
+    },
+    {
+      "iniciado": "18-06-2023",
+      "numeroExpediente": "1006-FIN-2023",
+      "tipoExpediente": "Finanzas",
+      "descripcion": "Auditoría financiera",
+      "estado": "en progreso",
+      "usuario": "María Rodríguez"
+    },
+    {
+      "iniciado": "12-07-2023",
+      "numeroExpediente": "1007-RRHH-2023",
+      "tipoExpediente": "Recursos Humanos",
+      "descripcion": "Entrenamiento del personal",
+      "estado": "completado",
+      "usuario": "Pedro Sánchez"
+    },
+    {
+      "iniciado": "28-08-2023",
+      "numeroExpediente": "1008-VENTAS-2023",
+      "tipoExpediente": "Ventas",
+      "descripcion": "Plan de ventas trimestral",
+      "estado": "iniciado",
+      "usuario": "Sofía Torres"
+    },
+    {
+      "iniciado": "09-09-2023",
+      "numeroExpediente": "1009-MKT-2023",
+      "tipoExpediente": "Marketing",
+      "descripcion": "Diseño de material publicitario",
+      "estado": "en progreso",
+      "usuario": "Javier Ramírez"
+    },
+    {
+      "iniciado": "30-10-2023",
+      "numeroExpediente": "1010-PROY-2023",
+      "tipoExpediente": "Proyectos",
+      "descripcion": "Desarrollo de proyecto de software",
+      "estado": "completado",
+      "usuario": "Isabel Martínez"
+    }
+  ]
+}
