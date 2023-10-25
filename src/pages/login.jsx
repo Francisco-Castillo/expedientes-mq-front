@@ -8,8 +8,6 @@ import svg from "../assets/MMQ.svg";
 
 import "../styles/login.css";
 
-import svg from "../assets/MMQ.svg";
-
 import "../styles/login.css";
 
 const Login = () => {
@@ -33,10 +31,10 @@ const Login = () => {
         {
           email,
           password,
-        },
-        {
-          withCredentials: true,
         }
+        // {
+        //   withCredentials: true,
+        // }
       );
 
       dispatch(onLogin(data));

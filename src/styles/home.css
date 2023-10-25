@@ -28,8 +28,9 @@
 
 .registros-table th,
 .registros-table td {
-  padding: 12px;
+  padding: 10px;
   text-align: left;
+  /* border: 1px solid #ccc; */
 }
 
 .registros-table th {
@@ -66,8 +67,8 @@
 
 .tab-header {
   display: flex;
-  margin-bottom: 10px;
-  margin-top: 20px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .tab {
@@ -135,14 +136,66 @@ table {
   border-collapse: collapse;
 }
 
-table,
-th,
-td {
-  border: 1px solid #ccc;
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
 }
 
-th,
-td {
+.page-item {
+  cursor: pointer;
+  margin: 0 20px;
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.page-item:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.page-number {
+  font-size: 20px;
+  margin: 0 10px;
+}
+
+.page-item.disabled {
+  cursor: default;
+  color: #ccc;
+}
+
+.page-item:active {
+  transform: scale(0.95);
+}
+
+search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+input {
   padding: 8px;
-  text-align: left;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+  flex-grow: 1;
+}
+
+button.btn-primary {
+  padding: 8px 16px;
+  background-color: #daa3a3;
+  color: #000000;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.btn-primary:hover {
+  background-color: rgba(217, 70, 70, 1);
 }

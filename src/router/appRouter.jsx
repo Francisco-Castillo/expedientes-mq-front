@@ -13,7 +13,7 @@ export const AppRouter = () => {
         <Route path="/" element={<Login />} />
         <Route path="/new/expedient" element={<New_Expedient />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/expedient" element={<Expedient />} />
+        <Route path="/expedient/:expedientId" element={<Expedient />} />
       </Routes>
     </>
   );

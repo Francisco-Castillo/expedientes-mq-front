@@ -10,33 +10,39 @@ import Swal from "sweetalert2";
 import "../../styles/new_document.css";
 
 const New_document = () => {
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
   const [observations, setObservations] = useState();
   const [date, setDate] = useState(new Date());
+  const [type, setType] = useState();
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const BaseUrl = import.meta.env.VITE_API_URL;
+  const otherUrl = "http://localhost:3001/api/expedientes/uploadFile";
+
+  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+  const formattedDate = date.toLocaleDateString("es-AR", options);
 
   const formData = new FormData();
 
   formData.append("files", file);
 
   const data = {
-    fechaSubida: date,
+    fechaCreacion: formattedDate,
     observaciones: observations,
-    tipoDocumentoId: 1,
-    documenteId: 1,
+    tipoDocumentoId: type,
   };
 
   formData.append("data", JSON.stringify(data));
 
+  const x = Object.fromEntries(formData);
+
   const handleUpload = async (e) => {
     e.preventDefault();
     try {
-      const data = await axios.post(`${BaseUrl}documentos`, formData, {
+      const response = await axios.post(`${otherUrl}`, x, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -50,7 +56,7 @@ const New_document = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
       });
 
-      console.log(data);
+      console.log(response);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -70,7 +76,6 @@ const New_document = () => {
     <path d="M15 19l2 2l4 -4"></path>
   </svg>`;
 
-  // console.log(file);
   return (
     <>
       <Button
@@ -99,7 +104,7 @@ const New_document = () => {
           <Modal.Title>Subir Archivo</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ padding: "30px" }}>
-          <form className="document-form">
+          <form className="document-form" onSubmit={handleUpload}>
             <label className="document-label" htmlFor="">
               Seleccionar :
             </label>
@@ -109,6 +114,21 @@ const New_document = () => {
               className="document-input"
               onChange={(e) => setFile(e.target.files[0])}
             />
+
+            <Form.Label>Tipo de Documento</Form.Label>
+            <Form.Select onChange={(e) => setType(e.target.value)}>
+              <option>Elegir tipo del documento</option>
+              <option value="Factura">Factura</option>
+              <option value="Informe">Informe</option>
+              <option value="CV">CV</option>
+              <option value="Contrato">Contrato</option>
+              <option value="Auditoria">Auditoria</option>
+              <option value="Plan">Plan</option>
+              <option value="Contrato">Contrato</option>
+              <option value="Publicidad">Publicidad</option>
+              <option value="Estado Finaciero">Estado Finaciero</option>
+              <option value="Presentacion">Presentacion</option>
+            </Form.Select>
 
             <label className="document-label" htmlFor="">
               Descripcion :

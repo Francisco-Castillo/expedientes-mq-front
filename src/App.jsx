@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/expedient",
+        path: "/expedient/:expedientId",
         element: <Expedient />,
       },
     ],
@@ -40,9 +40,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <div>
-    <div>
-      <RouterProvider router={router} />
-    </div>
+      <div>
+        <RouterProvider router={router} />
+      </div>
     </div>
   );
 }
