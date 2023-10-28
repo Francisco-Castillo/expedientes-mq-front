@@ -17,6 +17,7 @@ const LinkFile = ({ expedientId }) => {
 
   const [resultSearch, setResultSearch] = useState([]);
   const [search, setSearch] = useState("");
+  const [fileId, setFileId] = useState();
 
   const handleExpedient = async () => {
     try {
@@ -39,14 +40,41 @@ const LinkFile = ({ expedientId }) => {
   const searchFiles = async () => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3001/api/documents/search`,
-        search
+        `http://localhost:3001/api/documents/search/?search=${search}`
       );
-      console.log(data);
-      setResultSearch(data);
+      console.log(data.items);
+      setResultSearch(data.items);
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
       console.log(error);
     }
+  };
+
+  const linkFile = async () => {
+    try {
+      const { data } = await axios.post(
+        `http://localhost:3001/api/expedientes/linkDocument/${expedientId}/${fileId}`
+      );
+      setShow(false);
+      console.log(data);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
+  const selectFile = (fileId) => {
+    setFileId(fileId);
   };
 
   const handleKeyDown = (e) => {
@@ -82,7 +110,7 @@ const LinkFile = ({ expedientId }) => {
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Tipo de Documento</Form.Label>
-              <Form.Select onChange={(e) => setResultSearch(e.target.value)}>
+              <Form.Select onChange={(e) => setSearch(e.target.value)}>
                 <option>Elegir tipo del documento</option>
                 <option value="Factura">Factura</option>
                 <option value="Informe">Informe</option>
@@ -105,11 +133,11 @@ const LinkFile = ({ expedientId }) => {
               }}
               type="text"
               placeholder="Buscar..."
-              value={search}
+              // value={search}
               onChange={(e) => setSearch(e.target.value)}
-              onKeyDown={handleKeyDown}
+              // onKeyDown={handleKeyDown}
             />
-            <button
+            {/* <button
               style={{
                 borderRadius: "4px",
                 padding: "8px 20px",
@@ -118,7 +146,7 @@ const LinkFile = ({ expedientId }) => {
               onClick={searchFiles}
             >
               Buscar
-            </button>
+            </button> */}
             <table className="registros-table">
               <thead>
                 <tr>
@@ -127,16 +155,16 @@ const LinkFile = ({ expedientId }) => {
                   <th>Observaciones</th>
                 </tr>
               </thead>
-              {/* <tbody>
-              {resultSearch.map((documento, index) => (
-                <tr key={index}>
-                  <td>{documento.fechaCreacion}</td>
-                  <td>{documento.tipoDocumento}</td>
-                  <td>{documento.observaciones}</td>
-                  <td></td>
-                </tr>
-              ))}
-            </tbody> */}
+              <tbody>
+                {resultSearch.map((documento, index) => (
+                  <tr key={index} onClick={() => selectFile(documento.id)}>
+                    <td>{documento.fechaCreacion}</td>
+                    <td>{documento.tipoDocumento}</td>
+                    <td>{documento.observaciones}</td>
+                    <td></td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </Form>
         </Modal.Body>
@@ -153,7 +181,7 @@ const LinkFile = ({ expedientId }) => {
               background: "rgba(235, 87, 87, 1)",
             }}
             type="submit"
-            // onClick={}
+            onClick={linkFile}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

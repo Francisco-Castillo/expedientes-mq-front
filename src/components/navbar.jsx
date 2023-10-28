@@ -14,7 +14,7 @@ import "../styles/navbar.css";
 const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
 
-  const { user } = JSON.parse(atob(token.split(".")[1]));
+  const { user } = JSON.parse(atob(token.slice(7).split(".")[1]));
 
   const dispatch = useDispatch();
 
@@ -40,7 +40,7 @@ const Navbar = () => {
       <div className="icon-login">
         <div className="icon">
           <img src={usericon} alt="" />
-          <span>{`${user.name} ${user.lastName}`}</span>
+          {/* <span>{`${user.name} ${user.lastName}`}</span> */}
         </div>
         <button
           onClick={logout}

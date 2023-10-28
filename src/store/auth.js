@@ -10,7 +10,7 @@ export const authSlice = createSlice({
   reducers: {
     onLogin: (state, { payload }) => {
       (state.status = "authenticated"),
-        (state.token = payload),
+        (state.token = payload.token),
         (state.errorMessage = undefined),
         (state.errorMessage = undefined);
     },

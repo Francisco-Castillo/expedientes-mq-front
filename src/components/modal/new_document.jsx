@@ -32,7 +32,7 @@ const New_document = () => {
   const data = {
     fechaCreacion: formattedDate,
     observaciones: observations,
-    tipoDocumentoId: type,
+    tipoDocumento: type,
   };
 
   formData.append("data", JSON.stringify(data));

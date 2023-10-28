@@ -11,7 +11,7 @@ import "../styles/login.css";
 import "../styles/login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
@@ -22,20 +22,20 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // const { data } = await axios.post(`${BaseUrl}login`, {
-      //   email,
-      //   password,
-      // });
-      const { data } = await axios.post(
-        "http://localhost:3001/api/users/login",
-        {
-          email,
-          password,
-        }
-        // {
-        //   withCredentials: true,
-        // }
-      );
+      const { data } = await axios.post(`${BaseUrl}login`, {
+        username,
+        password,
+      });
+      // const { data } = await axios.post(
+      //   "http://localhost:3001/api/users/login",
+      //   {
+      //     username,
+      //     password,
+      //   },
+      //   {
+      //     withCredentials: true,
+      //   }
+      // );
 
       dispatch(onLogin(data));
       navigation("/home");
@@ -58,7 +58,7 @@ const Login = () => {
               className="input-login"
               type="text"
               placeholder=""
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setusername(e.target.value)}
             />
           </div>
           <div className="container-input">

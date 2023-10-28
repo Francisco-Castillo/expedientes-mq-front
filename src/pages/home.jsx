@@ -97,11 +97,16 @@ const Home = () => {
   // Search expedientes
 
   const searchExpedientes = () => {
+    const searchLowercase = search.toLowerCase();
+
     return expedients.filter((expediente) => {
       return (
-        expediente.numeroExpediente.toLowerCase().includes(search) ||
-        expediente.tipoExpediente.toLowerCase().includes(search) ||
-        expediente.descripcion.toLowerCase().includes(search)
+        expediente.numeroExpediente.toLowerCase().includes(searchLowercase) ||
+        expediente.tipoExpediente.toLowerCase().includes(searchLowercase) ||
+        expediente.descripcion.toLowerCase().includes(searchLowercase) ||
+        expediente.estado.toLowerCase().includes(searchLowercase) ||
+        expediente.fechaCaratulacion.toLowerCase().includes(searchLowercase) ||
+        expediente.usuario.toLowerCase().includes(searchLowercase)
       );
     });
   };
@@ -165,14 +170,26 @@ const Home = () => {
 
   const currentDocuments = getPaginatedDocuments();
 
+  // useEffect(() => {
+  //   handleExpedients();
+  //   // handleSearch();
+  //   handleDocuments();
+  //   const total = Math.ceil(expedients.length / itemsPerPage);
+  //   setTotalPages(total);
+  //   setResultSearch(searchExpedientes());
+  // }, [currentPage]);
+
   useEffect(() => {
     handleExpedients();
-    // handleSearch();
+  }, [expedients]);
+
+  useEffect(() => {
     handleDocuments();
-    const total = Math.ceil(expedients.length / itemsPerPage);
-    setTotalPages(total);
-    setResultSearch(searchExpedientes());
-  }, [currentPage]);
+  }, [documents]);
+
+  // useEffect(() => {
+  //   handleSearch();
+  // }, [resultSearch]);
 
   return (
     <>
@@ -245,8 +262,6 @@ const Home = () => {
                               Ver
                             </Dropdown.Item>
                             <UpdateExpedient expedientId={expediente.id} />
-                            {/* <Dropdown.Item>Cambiar Estado</Dropdown.Item> */}
-                            {/* <Dropdown.Item>Vincular Archivo</Dropdown.Item> */}
                             <LinkFile expedientId={expediente.id} />
                             <Dropdown.Item>Realizar pase</Dropdown.Item>
                           </Dropdown.Menu>
@@ -268,7 +283,7 @@ const Home = () => {
                     <th>Fecha de creación</th>
                     <th>Tipo de documento</th>
                     <th>Observaciones</th>
-                    <th>Acciones</th>
+                    {/* <th>Acciones</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -277,7 +292,7 @@ const Home = () => {
                       <td>{documento.fechaCreacion}</td>
                       <td>{documento.tipoDocumento}</td>
                       <td>{documento.observaciones}</td>
-                      <td>
+                      {/* <td>
                         <Dropdown>
                           <Dropdown.Toggle
                             variant="warning"
@@ -303,7 +318,7 @@ const Home = () => {
                             </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
                 </tbody>
@@ -371,17 +386,15 @@ const Home = () => {
                               height={"30px"}
                             />
                           </Dropdown.Toggle>
-
                           <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">
-                              Cambiar estado
+                            <Dropdown.Item
+                              onClick={() => viewExpedient(expediente.id)}
+                            >
+                              Ver
                             </Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">
-                              Vincular Archivo
-                            </Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">
-                              Realizar pase
-                            </Dropdown.Item>
+                            <UpdateExpedient expedientId={expediente.id} />
+                            <LinkFile expedientId={expediente.id} />
+                            <Dropdown.Item>Realizar pase</Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
                       </td>

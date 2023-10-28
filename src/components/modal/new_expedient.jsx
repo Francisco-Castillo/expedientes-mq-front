@@ -23,9 +23,12 @@ const New_Expedient = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { user } = JSON.parse(atob(token.split(".")[1]));
+  const data = JSON.parse(atob(token.slice(7).split(".")[1]));
 
   const BaseUrl = import.meta.env.VITE_API_URL;
+
+  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+  const formattedDate = date.toLocaleDateString("es-AR", options);
 
   const customIcon = `
 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder-check" width="30" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -38,15 +41,14 @@ const New_Expedient = () => {
     e.preventDefault();
     try {
       await axios.post(`http://localhost:3001/api/expedientes/caratular`, {
-        numero: 1232,
+        numeroExpediente: "1002-TES-2023",
         referencia: reference,
-        fechaCaratulacion: date,
+        fechaCaratulacion: formattedDate,
         descripcion: description,
         codigoTramite: codigoTramite,
-        cantidadFojas: 8,
-        monto: null,
         estado: "iniciado",
-        tipo: typeExpedient,
+        tipoExpediente: typeExpedient,
+        // usuario: user.name + user.lastName,
       });
       setShow(false);
       Swal.fire({
