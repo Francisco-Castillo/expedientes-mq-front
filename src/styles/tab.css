@@ -1,0 +1,31 @@
+.tab-header {
+  display: flex;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.tab.active {
+  background-color: rgba(212, 25, 25, 1);
+  /* Color de fondo activo */
+  color: #fff; /* Color del texto activo */
+}
+
+.tab:hover {
+  background-color: #ccc;
+}
+
+/* Estilos del contenido de los tabs */
+.tab-content {
+  border: 1px solid #ccc;
+  padding: 10px;
+}

@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
 
-import Swal from "sweetalert2";
+import useExpedients from "../../hooks/useExpedients";
+import useDocuments from "../../hooks/useDocuments";
+
+import iconSave from "../../assets/save.svg";
 
 const LinkFile = ({ expedientId }) => {
+  const { getExpedient } = useExpedients();
+  const { linkFile, searchFiles } = useDocuments();
+
   const [expedient, setExpedient] = useState({});
 
   const [show, setShow] = useState(false);
@@ -19,58 +24,8 @@ const LinkFile = ({ expedientId }) => {
   const [search, setSearch] = useState("");
   const [fileId, setFileId] = useState();
 
-  const handleExpedient = async () => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/expedientes/view/${expedientId}`
-      );
-
-      setExpedient(data);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-      console.log(error);
-    }
-  };
-
-  const searchFiles = async () => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/documents/search/?search=${search}`
-      );
-      console.log(data.items);
-      setResultSearch(data.items);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-      console.log(error);
-    }
-  };
-
-  const linkFile = async () => {
-    try {
-      const { data } = await axios.post(
-        `http://localhost:3001/api/expedientes/linkDocument/${expedientId}/${fileId}`
-      );
-      setShow(false);
-      console.log(data);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-      console.log(error);
-    }
+  const uploadFile = () => {
+    linkFile(expedientId, fileId, setShow);
   };
 
   const selectFile = (fileId) => {
@@ -79,13 +34,13 @@ const LinkFile = ({ expedientId }) => {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      searchFiles();
+      searchFiles(search, setResultSearch);
     }
   };
 
   useEffect(() => {
-    handleExpedient();
-    searchFiles();
+    getExpedient(expedient, setExpedient);
+    searchFiles(search, setResultSearch);
   }, [search]);
 
   return (
@@ -111,7 +66,7 @@ const LinkFile = ({ expedientId }) => {
             <Form.Group className="mb-3">
               <Form.Label>Tipo de Documento</Form.Label>
               <Form.Select onChange={(e) => setSearch(e.target.value)}>
-                <option>Elegir tipo del documento</option>
+                <option value="">Elegir tipo del documento</option>
                 <option value="Factura">Factura</option>
                 <option value="Informe">Informe</option>
                 <option value="CV">CV</option>
@@ -181,23 +136,9 @@ const LinkFile = ({ expedientId }) => {
               background: "rgba(235, 87, 87, 1)",
             }}
             type="submit"
-            onClick={linkFile}
+            onClick={uploadFile}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-folder"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"></path>
-            </svg>
+            <img src={iconSave} alt="" />
             Guardar
           </Button>
           <Button

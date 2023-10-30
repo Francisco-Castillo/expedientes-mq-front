@@ -14,7 +14,7 @@ import "../styles/navbar.css";
 const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
 
-  const { user } = JSON.parse(atob(token.slice(7).split(".")[1]));
+  // const { user } = JSON.parse(atob(token.slice(7).split(".")[1]));
 
   const dispatch = useDispatch();
 

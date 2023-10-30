@@ -22,20 +22,20 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${BaseUrl}login`, {
-        username,
-        password,
-      });
-      // const { data } = await axios.post(
-      //   "http://localhost:3001/api/users/login",
-      //   {
-      //     username,
-      //     password,
-      //   },
-      //   {
-      //     withCredentials: true,
-      //   }
-      // );
+      // const { data } = await axios.post(`${BaseUrl}login`, {
+      //   username,
+      //   password,
+      // });
+      const { data } = await axios.post(
+        "http://localhost:3001/api/users/login",
+        {
+          email: username,
+          password,
+        }
+        // {
+        //   withCredentials: true,
+        // }
+      );
 
       dispatch(onLogin(data));
       navigation("/home");

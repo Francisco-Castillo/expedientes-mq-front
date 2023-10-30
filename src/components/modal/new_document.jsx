@@ -42,7 +42,7 @@ const New_document = () => {
   const handleUpload = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${otherUrl}`, x, {
+      const response = await axios.post(`${otherUrl}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
