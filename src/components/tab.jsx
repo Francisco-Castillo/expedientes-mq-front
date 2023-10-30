@@ -38,7 +38,7 @@ const Tab = () => {
     } else if (activeTab === "Documentos") {
       getDocuments(setDocuments, currentPage, setTotalPages);
     }
-    getExpedients(setExpedients, setTotalPages, currentPage);
+    // getExpedients(setExpedients, setTotalPages, currentPage);
   }, [activeTab, currentPage]);
 
   return (
