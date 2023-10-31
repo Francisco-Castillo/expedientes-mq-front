@@ -1,7 +1,12 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import customIcon from "../assets/customIcon.svg";
+const customIcon = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder-check" width="30" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+  <path d="M11 19h-6a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v4"></path>
+  <path d="M15 19l2 2l4 -4"></path>
+</svg>`;
 
 const useExpedients = () => {
   const BaseUrl = import.meta.env.VITE_API_URL;
@@ -15,7 +20,7 @@ const useExpedients = () => {
     setShow
   ) => {
     try {
-      await axios.post(`http://localhost:3001/api/expedientes/caratular`, {
+      await axios.post(`http://localhost:3001/api/expedients/caratular`, {
         numeroExpediente: "1002-TES-2023",
         referencia: reference,
         fechaCaratulacion: formattedDate,
@@ -42,10 +47,91 @@ const useExpedients = () => {
     }
   };
 
+  const getExpedients = async (setExpedients, setTotalPages, currentPage) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3001/api/expedients?page=${currentPage}`
+      );
+      setExpedients(data.items);
+      setTotalPages(data.totalPages);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
+  const getExpedientsWhitFiles = async (
+    setExpedient,
+    setDocuments,
+    expedientId
+  ) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3001/api/expedients/view/${expedientId}`
+      );
+      setExpedient(data);
+      setDocuments(data.Files);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
+  const getExpedient = async (setExpedient, expedientId) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3001/api/expedients/view/${expedientId}`
+      );
+      setExpedient(data);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
+  const searchExpedients = async (
+    setResultSearch,
+    currentPage,
+    search,
+    setTotalPages
+  ) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3001/api/expedients?page=${currentPage}&search=${search}`
+      );
+      setResultSearch(data.items);
+      const serverTotalPages = data.totalPages;
+      setTotalPages(serverTotalPages);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
   const updateExpedient = async (state, setShow, expedientId) => {
     try {
       const { data } = await axios.patch(
-        `http://localhost:3001/api/expedientes/changeState/${expedientId}`,
+        `http://localhost:3001/api/expedients/changeState/${expedientId}`,
         { estado: state }
       );
 
@@ -67,55 +153,12 @@ const useExpedients = () => {
     }
   };
 
-  const getExpedients = async (setExpedients, setTotalPages, currentPage) => {
+  const linkFile = async (expedientId, fileId, setShow) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/expedientes?page=${currentPage}`
+      await axios.post(
+        `http://localhost:3001/api/expedients/linkDocument/${expedientId}/${fileId}`
       );
-      setExpedients(data.items);
-      setTotalPages(data.totalPages);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-      console.log(error);
-    }
-  };
-
-  const getExpedient = async (setExpedient, setDocuments, expedientId) => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/expedientes/view/${expedientId}`
-      );
-      setExpedient(data.item);
-      setDocuments(data.Files);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-      console.log(error);
-    }
-  };
-
-  const searchExpedients = async (
-    setResultSearch,
-    currentPage,
-    search,
-    setTotalPages
-  ) => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/expedientes?page=${currentPage}&search=${search}`
-      );
-      setResultSearch(data.items);
-      const serverTotalPages = data.totalPages;
-      setTotalPages(serverTotalPages);
+      setShow(false);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -131,8 +174,10 @@ const useExpedients = () => {
     newExpedient,
     updateExpedient,
     getExpedient,
+    getExpedientsWhitFiles,
     getExpedients,
     searchExpedients,
+    linkFile,
   };
 };
 

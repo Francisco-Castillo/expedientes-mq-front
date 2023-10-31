@@ -1,13 +1,10 @@
 import { useState } from "react";
-import axios from "axios";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-import Swal from "sweetalert2";
-
-import customIcon from "../../assets/customIcon.svg";
+import useExpedients from "../../hooks/useExpedients";
 
 import "../../styles/new_expedient.css";
 
@@ -25,41 +22,23 @@ const New_Expedient = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // const data = JSON.parse(atob(token.slice(7).split(".")[1]));
+  const { newExpedient } = useExpedients();
 
-  const BaseUrl = import.meta.env.VITE_API_URL;
+  // const data = JSON.parse(atob(token.slice(7).split(".")[1]));
 
   const options = { year: "numeric", month: "2-digit", day: "2-digit" };
   const formattedDate = date.toLocaleDateString("es-AR", options);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post(`http://localhost:3001/api/expedientes/caratular`, {
-        numeroExpediente: "1002-TES-2023",
-        referencia: reference,
-        fechaCaratulacion: formattedDate,
-        descripcion: description,
-        codigoTramite: codigoTramite,
-        estado: "iniciado",
-        tipoExpediente: typeExpedient,
-        // usuario: user.name + user.lastName,
-      });
-      setShow(false);
-      Swal.fire({
-        iconHtml: customIcon,
-        text: "Expediente generado exitosamente!",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-      });
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-      console.log(error);
-    }
+    newExpedient(
+      reference,
+      formattedDate,
+      description,
+      codigoTramite,
+      typeExpedient,
+      setShow
+    );
   };
 
   return (

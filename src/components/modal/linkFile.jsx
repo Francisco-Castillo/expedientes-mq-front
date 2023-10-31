@@ -11,8 +11,8 @@ import useDocuments from "../../hooks/useDocuments";
 import iconSave from "../../assets/save.svg";
 
 const LinkFile = ({ expedientId }) => {
-  const { getExpedient } = useExpedients();
-  const { linkFile, searchFiles } = useDocuments();
+  const { getExpedient, linkFile } = useExpedients();
+  const { searchFiles } = useDocuments();
 
   const [expedient, setExpedient] = useState({});
 
@@ -39,7 +39,7 @@ const LinkFile = ({ expedientId }) => {
   };
 
   useEffect(() => {
-    getExpedient(expedient, setExpedient);
+    getExpedient(expedientId, setExpedient);
     searchFiles(search, setResultSearch);
   }, [search]);
 
@@ -116,7 +116,7 @@ const LinkFile = ({ expedientId }) => {
                     <td>{documento.fechaCreacion}</td>
                     <td>{documento.tipoDocumento}</td>
                     <td>{documento.observaciones}</td>
-                    <td></td>
+                    {/* <td></td> */}
                   </tr>
                 ))}
               </tbody>

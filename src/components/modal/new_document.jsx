@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
-import Swal from "sweetalert2";
+import useDocuments from "../../hooks/useDocuments";
 
 import "../../styles/new_document.css";
 
@@ -19,8 +18,7 @@ const New_document = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const BaseUrl = import.meta.env.VITE_API_URL;
-  const otherUrl = "http://localhost:3001/api/expedientes/uploadFile";
+  const { newDocument } = useDocuments();
 
   const options = { year: "numeric", month: "2-digit", day: "2-digit" };
   const formattedDate = date.toLocaleDateString("es-AR", options);
@@ -37,44 +35,10 @@ const New_document = () => {
 
   formData.append("data", JSON.stringify(data));
 
-  const x = Object.fromEntries(formData);
-
   const handleUpload = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(`${otherUrl}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      setShow(false);
-
-      Swal.fire({
-        iconHtml: customIcon,
-        text: "Documento subido exitosamente!",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-      });
-
-      console.log(response);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-
-      console.log(error);
-    }
+    newDocument(formData, setShow);
   };
-
-  const customIcon = `
-  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder-check" width="30" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-    <path d="M11 19h-6a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v4"></path>
-    <path d="M15 19l2 2l4 -4"></path>
-  </svg>`;
 
   return (
     <>

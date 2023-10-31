@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import axios from "axios";
-
 import { useParams } from "react-router-dom";
 
 import Navbar from "../components/navbar";
+import Button from "react-bootstrap/Button";
 
-import Swal from "sweetalert2";
+import useExpedients from "../hooks/useExpedients";
+
+import { useNavigate } from "react-router-dom";
 
 import "../styles/expedient.css";
 
@@ -16,32 +17,25 @@ const Expedient = () => {
 
   const { expedientId } = useParams();
 
-  const handleExpedient = async () => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/expedientes/view/${expedientId}`
-      );
-      setExpedient(data);
-      setDocuments(data.Files);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-      console.log(error);
-    }
+  const { getExpedientsWhitFiles } = useExpedients();
+
+  const navigate = useNavigate();
+
+  const handleComeBack = () => {
+    navigate("/home");
   };
 
   useEffect(() => {
-    handleExpedient();
+    getExpedientsWhitFiles(setExpedient, setDocuments, expedientId);
   }, []);
 
   return (
     <>
       <Navbar />
       <section className="expediente-section">
+        <Button variant="secondary" onClick={handleComeBack}>
+          Volver
+        </Button>
         <div className="expediente-info">
           <h1 className="expediente-name">
             Expediente: {expedient.numeroExpediente}

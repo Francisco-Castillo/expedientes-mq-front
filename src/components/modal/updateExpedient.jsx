@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
 
-import Swal from "sweetalert2";
+import useExpedients from "../../hooks/useExpedients";
 
 const UpdateExpedient = ({ expedientId }) => {
   const [expedient, setExpedient] = useState({});
@@ -14,60 +13,16 @@ const UpdateExpedient = ({ expedientId }) => {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const handleExpedient = async () => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/expedientes/view/${expedientId}`
-      );
-      setExpedient(data);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-      console.log(error);
-    }
+  const handleShow = () => {
+    setShow(true);
+    getExpedient(setExpedient, expedientId);
   };
+
+  const { getExpedient, updateExpedient } = useExpedients();
 
   const handleUpdate = async () => {
-    try {
-      const { data } = await axios.patch(
-        `http://localhost:3001/api/expedientes/changeState/${expedient.id}`,
-        { estado: state }
-      );
-
-      setShow(false);
-
-      Swal.fire({
-        iconHtml: customIcon,
-        text: "Estado actualizado exitosamente!",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-      });
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-      console.log(error);
-    }
+    updateExpedient(state, setShow, expedientId);
   };
-
-  useEffect(() => {
-    handleExpedient();
-  }, []);
-
-  const customIcon = `
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder-check" width="30" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-  <path d="M11 19h-6a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v4"></path>
-  <path d="M15 19l2 2l4 -4"></path>
-</svg>`;
 
   return (
     <>
@@ -112,12 +67,34 @@ const UpdateExpedient = ({ expedientId }) => {
                 aria-label="Selecionar estado"
                 onChange={(e) => setState(e.target.value)}
               >
-                {/* <option>Open this select menu</option> */}
-                <option value="Iniciado">{expedient.estado}</option>
-                <option value="en Progreso">En Progreso</option>
-                <option value="Completado">Completado</option>
-                <option value="Suspendido">Suspendido</option>
-                <option value="Suspendido">Baja</option>
+                <option>Cambiar estado</option>
+                <option
+                  value="Iniciado"
+                  disabled={expedient.estado === "Iniciado"}
+                >
+                  Iniciado
+                </option>
+                <option
+                  value="En Progreso"
+                  disabled={expedient.estado === "En Progreso"}
+                >
+                  En Progreso
+                </option>
+                <option
+                  value="Completado"
+                  disabled={expedient.estado === "Completado"}
+                >
+                  Completado
+                </option>
+                <option
+                  value="Suspendido"
+                  disabled={expedient.estado === "Suspendido"}
+                >
+                  Suspendido
+                </option>
+                <option value="Baja" disabled={expedient.estado === "Baja"}>
+                  Baja
+                </option>
               </Form.Select>
             </Form.Group>
             <Form.Group

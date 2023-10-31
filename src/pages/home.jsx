@@ -1,10 +1,10 @@
 import React from "react";
 
+import Tab from "../components/tab";
+
 import Navbar from "../components/navbar";
 
 import "../styles/home.css";
-import Tab from "../components/tab";
-import Pagination from "../components/Pagination";
 
 const Home = () => {
   return (
@@ -12,7 +12,6 @@ const Home = () => {
       <Navbar />
       <section className="sections">
         <Tab />
-        {/* <Pagination /> */}
       </section>
     </>
   );
