@@ -1,14 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import LinkFile from "./modal/linkFile";
-import UpdateExpedient from "./modal/updateExpedient";
+import LinkFile from "../modal/linkFile";
+import UpdateExpedient from "../modal/updateExpedient";
 
 import Dropdown from "react-bootstrap/Dropdown";
 
-import settings from "../assets/settings.svg";
+import settings from "../../assets/settings.svg";
 
-import "../styles/table.css";
+import "../../styles/table.css";
 
 const ExpedientsTable = ({ expedients }) => {
   const navigation = useNavigate();

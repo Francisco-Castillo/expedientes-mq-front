@@ -31,8 +31,6 @@ const useDocuments = () => {
         text: "Documento subido exitosamente!",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
       });
-
-      console.log(response);
     } catch (error) {
       Swal.fire({
         icon: "error",

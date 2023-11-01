@@ -2,9 +2,9 @@ import React from "react";
 
 import Dropdown from "react-bootstrap/Dropdown";
 
-import settings from "../assets/settings.svg";
+import settings from "../../assets/settings.svg";
 
-import "../styles/table.css";
+import "../../styles/table.css";
 
 const DocumentsTable = ({ documents }) => {
   return (
