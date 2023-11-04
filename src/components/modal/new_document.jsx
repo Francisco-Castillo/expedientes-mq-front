@@ -85,13 +85,10 @@ const New_document = () => {
               <option value="Factura">Factura</option>
               <option value="Informe">Informe</option>
               <option value="CV">CV</option>
-              <option value="Contrato">Contrato</option>
               <option value="Auditoria">Auditoria</option>
-              <option value="Plan">Plan</option>
+              <option value="Proyecto">Plan</option>
               <option value="Contrato">Contrato</option>
               <option value="Publicidad">Publicidad</option>
-              <option value="Estado Finaciero">Estado Finaciero</option>
-              <option value="Presentacion">Presentacion</option>
             </Form.Select>
 
             <label className="document-label" htmlFor="">

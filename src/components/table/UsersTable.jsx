@@ -6,6 +6,8 @@ import settings from "../../assets/settings.svg";
 
 // import { usuarios } from "../../Data/Users.json";
 
+import UserEdit from "../modal/userEdit";
+
 const UsersTable = ({ users }) => {
   return (
     <table className="registros-table">
@@ -33,7 +35,7 @@ const UsersTable = ({ users }) => {
                   <img src={settings} alt="" width={"30px"} height={"30px"} />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item>Editar</Dropdown.Item>
+                  <UserEdit userId={user.id} />
                   <Dropdown.Item>Eliminar</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

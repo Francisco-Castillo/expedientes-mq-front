@@ -58,7 +58,66 @@ const useUsers = () => {
     }
   };
 
-  return { getUsers, newUser };
+  const getUser = async (setUser, userId) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3001/api/users/${userId}`
+      );
+
+      setUser(data);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+
+      console.log(error);
+    }
+  };
+
+  const updateUser = async (
+    name,
+    lastName,
+    DNI,
+    email,
+    dependence,
+    userId,
+    setShow
+  ) => {
+    try {
+      await axios.patch(
+        `http://localhost:3001/api/users/updateUser/${userId}`,
+        {
+          nombre: name,
+          apellido: lastName,
+          email: email,
+          dni: DNI,
+          dependencia: dependence,
+        }
+      );
+
+      setShow(false);
+
+      Swal.fire({
+        iconHtml: customIcon,
+        text: "Usuario editado exitosamente!",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+
+      console.log(error.message);
+    }
+  };
+
+  return { getUsers, newUser, updateUser, getUser };
 };
 
 export default useUsers;

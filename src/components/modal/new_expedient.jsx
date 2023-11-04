@@ -24,8 +24,6 @@ const New_Expedient = () => {
 
   const { newExpedient } = useExpedients();
 
-  // const data = JSON.parse(atob(token.slice(7).split(".")[1]));
-
   const options = { year: "numeric", month: "2-digit", day: "2-digit" };
   const formattedDate = date.toLocaleDateString("es-AR", options);
 
@@ -68,12 +66,26 @@ const New_Expedient = () => {
         >
           <Modal.Title>Caratular Expediente</Modal.Title>
         </Modal.Header>
+
         <Modal.Body style={{ padding: "30px" }}>
           <form className="expedient-form">
             <label className="expedient-label" htmlFor="">
+              Numero Expediente :
+            </label>
+            <input
+              style={{
+                backgroundColor: "rgba(217, 217, 217, 1) ",
+              }}
+              type="text"
+              value={12234232}
+              readOnly
+              className="expedient-input"
+              onChange={(e) => setReference(e.target.value)}
+            />
+
+            <label className="expedient-label" htmlFor="">
               Tipo de expediente :
             </label>
-
             <select
               style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
               className="form-select"

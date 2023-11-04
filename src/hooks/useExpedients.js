@@ -112,7 +112,7 @@ const useExpedients = () => {
   ) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3001/api/expedients?page=${currentPage}&search=${search}`
+        `http://localhost:3001/api/expedients/search?page=${currentPage}&search=${search}`
       );
       setResultSearch(data.items);
       const serverTotalPages = data.totalPages;
@@ -130,7 +130,7 @@ const useExpedients = () => {
 
   const updateExpedient = async (state, setShow, expedientId) => {
     try {
-      const { data } = await axios.patch(
+      await axios.patch(
         `http://localhost:3001/api/expedients/changeState/${expedientId}`,
         { estado: state }
       );

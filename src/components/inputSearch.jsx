@@ -19,7 +19,7 @@ const InputSearch = ({ setResultSearch, setTotalPages, currentPage }) => {
 
   useEffect(() => {
     searchExpedients(setResultSearch, currentPage, search, setTotalPages);
-  }, [currentPage]);
+  }, [search]);
 
   return (
     <div className="search-bar">

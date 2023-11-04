@@ -45,7 +45,7 @@ const Tab = () => {
     } else if (activeTab === "Usuarios") {
       getUsers(setUsers, setTotalPages, currentPage);
     }
-  }, [activeTab, currentPage, expedients]);
+  }, [activeTab, currentPage, expedients, documents]);
 
   return (
     <>
