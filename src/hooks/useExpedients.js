@@ -12,23 +12,30 @@ const useExpedients = () => {
   const BaseUrl = import.meta.env.VITE_API_URL;
 
   const newExpedient = async (
+    numExpedient,
     reference,
     formattedDate,
     description,
     codigoTramite,
     typeExpedient,
+    sub,
     setShow
   ) => {
     try {
-      await axios.post(`http://localhost:3001/api/expedients/caratular`, {
-        numeroExpediente: "1002-TES-2023",
+      await axios.post(`${BaseUrl}/expedientes/caratular`, {
+        numero: numExpedient,
         referencia: reference,
         fechaCaratulacion: formattedDate,
         descripcion: description,
         codigoTramite: codigoTramite,
-        estado: "iniciado",
-        tipoExpediente: typeExpedient,
-        // usuario: user.name + user.lastName,
+        cantidadFojas: 8,
+        monto: null,
+        tipo: typeExpedient,
+        estado: "Iniciado",
+        iniciador: "Secretaria de ambiente y produccion",
+        usuario: {
+          id: sub.userId,
+        },
       });
       setShow(false);
       Swal.fire({
@@ -49,9 +56,7 @@ const useExpedients = () => {
 
   const getExpedients = async (setExpedients, setTotalPages, currentPage) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/expedients?page=${currentPage}`
-      );
+      const { data } = await axios.get(`${BaseUrl}/expedientes`);
       setExpedients(data.items);
       setTotalPages(data.totalPages);
     } catch (error) {

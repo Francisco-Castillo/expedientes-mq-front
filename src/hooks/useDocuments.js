@@ -14,15 +14,11 @@ const useDocuments = () => {
 
   const newDocument = async (formData, setShow) => {
     try {
-      const response = await axios.post(
-        `http://localhost:3001/api/documents/uploadFile`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      await axios.post(`${BaseUrl}/documentos`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       setShow(false);
 

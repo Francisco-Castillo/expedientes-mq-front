@@ -8,14 +8,22 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 import settings from "../../assets/settings.svg";
 
+import { useSelector } from "react-redux/es/hooks/useSelector";
+
+import decodeToken from "../../helpers/decodeToken";
+
 import "../../styles/table.css";
 
 const ExpedientsTable = ({ expedients }) => {
+  const { token } = useSelector((state) => state.auth);
+
   const navigation = useNavigate();
 
   const viewExpedient = (expedientId) => {
     navigation(`/expedient/${expedientId}`);
   };
+
+  const { sub } = decodeToken(token);
 
   return (
     <table className="registros-table">
@@ -26,7 +34,7 @@ const ExpedientsTable = ({ expedients }) => {
           <th>Tipo de Expediente</th>
           <th>Descripción</th>
           <th>Estado</th>
-          <th>Usuario Actual</th>
+          <th>Enviado por</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -34,11 +42,11 @@ const ExpedientsTable = ({ expedients }) => {
         {expedients.map((expediente, index) => (
           <tr key={index}>
             <td>{expediente.fechaCaratulacion}</td>
-            <td>{expediente.numeroExpediente}</td>
-            <td>{expediente.tipoExpediente}</td>
+            <td>{expediente.numero}</td>
+            <td>{expediente.tipo}</td>
             <td>{expediente.descripcion}</td>
             <td>{expediente.estado}</td>
-            <td>{expediente.usuario}</td>
+            <td>{sub}</td>
             <td>
               <Dropdown>
                 <Dropdown.Toggle variant="warning" id="dropdown-basic">

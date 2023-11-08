@@ -9,15 +9,18 @@ const useUsers = () => {
       <path d="M15 19l2 2l4 -4"></path>
     </svg>`;
 
-  const newUser = async (name, lastName, DNI, email, dependence, setShow) => {
+  const BaseUrl = import.meta.env.VITE_API_URL;
+
+  const newUser = async (name, lastName, DNI, email, area, setShow) => {
     try {
-      await axios.post(`http://localhost:3001/api/users/register`, {
+      await axios.post(`${BaseUrl}/usuarios`, {
         nombre: name,
         apellido: lastName,
         email: email,
-        dni: DNI,
-        dependencia: dependence,
-        password: "Test01**",
+        documento: DNI,
+        area: {
+          id: area,
+        },
       });
 
       setShow(false);
@@ -38,14 +41,42 @@ const useUsers = () => {
     }
   };
 
+  const login = async (username, password, dispatch, onLogin, navigation) => {
+    try {
+      const { data } = await axios.post(`${BaseUrl}/login`, {
+        username: username,
+        password,
+      });
+
+      dispatch(onLogin(data));
+      navigation("/home");
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+
+      console.log(error);
+    }
+  };
+
   const getUsers = async (setUsers, setTotalPages, currentPage) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/users/all?page=${currentPage}`
-      );
+      if (currentPage > 1) {
+        const { data } = await axios.get(
+          `${BaseUrl}/usuarios?page=${currentPage}`
+        );
 
-      setUsers(data.items);
-      setTotalPages(data.totalPages);
+        setUsers(data.items);
+        setTotalPages(data.totalPages);
+      } else {
+        const { data } = await axios.get(`${BaseUrl}/usuarios`);
+
+        setUsers(data.items);
+        setTotalPages(data.totalPages);
+      }
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -60,9 +91,7 @@ const useUsers = () => {
 
   const getUser = async (setUser, userId) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/users/${userId}`
-      );
+      const { data } = await axios.get(`${BaseUrl}/usuarios/${userId}`);
 
       setUser(data);
     } catch (error) {
@@ -77,26 +106,14 @@ const useUsers = () => {
     }
   };
 
-  const updateUser = async (
-    name,
-    lastName,
-    DNI,
-    email,
-    dependence,
-    userId,
-    setShow
-  ) => {
+  const updateUser = async (name, lastName, dependence, userId, setShow) => {
     try {
-      await axios.patch(
-        `http://localhost:3001/api/users/updateUser/${userId}`,
-        {
-          nombre: name,
-          apellido: lastName,
-          email: email,
-          dni: DNI,
-          dependencia: dependence,
-        }
-      );
+      await axios.patch(`${BaseUrl}/usuarios/cambiar-info`, {
+        nombre: name,
+        apellido: lastName,
+        dependencia: dependence,
+        id: userId,
+      });
 
       setShow(false);
 
@@ -117,7 +134,7 @@ const useUsers = () => {
     }
   };
 
-  return { getUsers, newUser, updateUser, getUser };
+  return { getUsers, newUser, updateUser, getUser, login };
 };
 
 export default useUsers;

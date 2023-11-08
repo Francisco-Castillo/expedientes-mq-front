@@ -5,14 +5,14 @@ import Modal from "react-bootstrap/Modal";
 
 import useUsers from "../../hooks/useUsers";
 
-import dependencias from "../../Data/Dependencias.json";
+import areas from "../../Data/Dependencias.json";
 
 const New_User = () => {
   const [name, setName] = useState();
   const [lastName, setLastName] = useState();
   const [DNI, setDNI] = useState();
   const [email, setEmail] = useState();
-  const [dependence, setDependence] = useState();
+  const [area, setArea] = useState();
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -22,7 +22,7 @@ const New_User = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    newUser(name, lastName, DNI, email, dependence, setShow);
+    newUser(name, lastName, DNI, email, area, setShow);
   };
 
   return (
@@ -62,12 +62,12 @@ const New_User = () => {
               style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
               className="form-select"
               aria-label="Default select example"
-              onChange={(e) => setDependence(e.target.value)}
+              onChange={(e) => setArea(e.target.value)}
             >
               <option>Seleccionar dependencia</option>
-              {dependencias.map((dependencia, index) => (
-                <option value={dependencia} key={index}>
-                  {dependencia}
+              {areas.map((area, index) => (
+                <option value={area} key={index}>
+                  {area}
                 </option>
               ))}
             </select>

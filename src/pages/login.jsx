@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
+
 import { useDispatch } from "react-redux";
 import { onLogin } from "../store/auth";
+
 import { useNavigate } from "react-router-dom";
+
+import useUsers from "../hooks/useUsers";
 
 import svg from "../assets/MMQ.svg";
 
@@ -15,33 +18,13 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
-  const navigation = useNavigate();
+  const { login } = useUsers();
 
-  const BaseUrl = import.meta.env.VITE_API_URL;
+  const navigation = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      // const { data } = await axios.post(`${BaseUrl}login`, {
-      //   username,
-      //   password,
-      // });
-      const { data } = await axios.post(
-        "http://localhost:3001/api/users/login",
-        {
-          email: username,
-          password,
-        }
-        // {
-        //   withCredentials: true,
-        // }
-      );
-
-      dispatch(onLogin(data));
-      navigation("/home");
-    } catch (error) {
-      console.log(error);
-    }
+    login(username, password, dispatch, onLogin, navigation);
   };
 
   return (

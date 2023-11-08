@@ -9,5 +9,18 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-right: 10px;
-  flex-grow: 1;
+}
+
+.container-filter {
+  display: flex;
+  padding: 0 10px;
+  align-items: center;
+  & select {
+    border-radius: 3px;
+    /* padding: 10px; */
+  }
+
+  & input{
+    border-radius: 3px;
+  }
 }

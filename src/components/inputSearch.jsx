@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 
 import useExpedients from "../hooks/useExpedients";
 
+import "../styles/search.css";
+
 const InputSearch = ({ setResultSearch, setTotalPages, currentPage }) => {
   const [search, setSearch] = useState("");
+  const [filterState, setFilterState] = useState("");
+  const [filterTypeExpedient, setFilterTypeExpedient] = useState("");
+  const [filterDate, setFilterDate] = useState("");
 
   const { searchExpedients } = useExpedients();
 
@@ -18,7 +23,15 @@ const InputSearch = ({ setResultSearch, setTotalPages, currentPage }) => {
   };
 
   useEffect(() => {
-    searchExpedients(setResultSearch, currentPage, search, setTotalPages);
+    searchExpedients(
+      setResultSearch,
+      currentPage,
+      search,
+      setTotalPages,
+      filterDate,
+      filterState,
+      filterTypeExpedient
+    );
   }, [search]);
 
   return (
@@ -46,6 +59,29 @@ const InputSearch = ({ setResultSearch, setTotalPages, currentPage }) => {
       >
         Buscar
       </button>
+      <div className="container-filter">
+        <select onChange={(e) => setFilterDate(e.target.value)}>
+          <option value="">Estado</option>
+          <option value="Iniciado">Iniciado</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="En Progreso">En Progreso</option>
+          <option value="Completado">Completado</option>
+          <option value="Suspendido">Suspendido</option>
+        </select>
+
+        <select onChange={(e) => setFilterTypeExpedient(e.target.value)}>
+          <option value="">Tipo de Expediente</option>
+          <option value="Subsidio">Subsidio</option>
+          <option value="Pago">Pago</option>
+          <option value="Compra">Compra</option>
+          <option value="Personal">Personal</option>
+          <option value="Solicitud de servicio">Solicitud de servicio</option>
+        </select>
+
+        <input type="date" onChange={(e) => setFilterDate(e.target.value)} />
+
+        <button>Filtrar</button>
+      </div>
     </div>
   );
 };

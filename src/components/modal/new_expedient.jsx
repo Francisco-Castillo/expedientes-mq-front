@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 import useExpedients from "../../hooks/useExpedients";
+
+import decodeToken from "../../helpers/decodeToken";
 
 import "../../styles/new_expedient.css";
 
@@ -24,20 +26,28 @@ const New_Expedient = () => {
 
   const { newExpedient } = useExpedients();
 
+  const sub = decodeToken(token);
+
   const options = { year: "numeric", month: "2-digit", day: "2-digit" };
   const formattedDate = date.toLocaleDateString("es-AR", options);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    newExpedient(
+    await newExpedient(
+      numExpedient,
       reference,
       formattedDate,
       description,
       codigoTramite,
       typeExpedient,
+      sub,
       setShow
     );
   };
+
+  useEffect(() => {
+    console.log(sub);
+  }, [show]);
 
   return (
     <>
@@ -77,10 +87,10 @@ const New_Expedient = () => {
                 backgroundColor: "rgba(217, 217, 217, 1) ",
               }}
               type="text"
-              value={12234232}
+              value={"1569 - 107"}
               readOnly
               className="expedient-input"
-              onChange={(e) => setReference(e.target.value)}
+              onChange={(e) => setNumExpedient(e.target.value)}
             />
 
             <label className="expedient-label" htmlFor="">

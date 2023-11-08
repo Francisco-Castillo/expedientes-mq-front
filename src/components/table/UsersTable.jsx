@@ -4,8 +4,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 import settings from "../../assets/settings.svg";
 
-// import { usuarios } from "../../Data/Users.json";
-
 import UserEdit from "../modal/userEdit";
 
 const UsersTable = ({ users }) => {
@@ -26,7 +24,7 @@ const UsersTable = ({ users }) => {
           <tr key={index}>
             <td>{user.nombre}</td>
             <td>{user.apellido}</td>
-            <td>{user.dni}</td>
+            <td>{user.documento}</td>
             <td>{user.email}</td>
             <td>{user.dependencia}</td>
             <td>
