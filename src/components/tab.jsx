@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import { useSelector } from "react-redux/es/hooks/useSelector";
+
 import New_Expedient from "./modal/new_expedient";
 import DocumentsTable from "./table/DocumentsTable";
 import ExpedientsTable from "./table/ExpedientsTable";
@@ -13,9 +15,13 @@ import useExpedients from "../hooks/useExpedients";
 import useDocuments from "../hooks/useDocuments";
 import useUsers from "../hooks/useUsers";
 
+import decodeToken from "../helpers/decodeToken";
+
 import "../styles/tab.css";
 
 const Tab = () => {
+  const { token } = useSelector((state) => state.auth);
+
   const [activeTab, setActiveTab] = useState("Expedientes");
 
   const [expedients, setExpedients] = useState([]);
@@ -30,6 +36,8 @@ const Tab = () => {
   const { getExpedients } = useExpedients();
   const { getDocuments } = useDocuments();
   const { getUsers } = useUsers();
+
+  const { areaId } = decodeToken(token);
 
   const handleTabChange = (tabName) => {
     setActiveTab(tabName);
@@ -68,12 +76,14 @@ const Tab = () => {
         >
           Consulta
         </div>
-        <div
-          className={`tab ${activeTab === "Usuarios" ? "active" : ""}`}
-          onClick={() => handleTabChange("Usuarios")}
-        >
-          Usuarios
-        </div>
+        {areaId === 1 ? (
+          <div
+            className={`tab ${activeTab === "Usuarios" ? "active" : ""}`}
+            onClick={() => handleTabChange("Usuarios")}
+          >
+            Usuarios
+          </div>
+        ) : null}
       </div>
 
       <div className="tab-content">

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import Dropdown from "react-bootstrap/Dropdown";
 
 import useDocuments from "../../hooks/useDocuments";
 
@@ -42,17 +43,7 @@ const New_document = () => {
 
   return (
     <>
-      <Button
-        variant="light"
-        style={{
-          borderRadius: "4px",
-          padding: "10px 20px",
-          marginBottom: "10px",
-        }}
-        onClick={handleShow}
-      >
-        Crear Documento
-      </Button>
+      <Dropdown.Item onClick={handleShow}>Vincular Archivo</Dropdown.Item>
 
       <Modal
         size="lg"

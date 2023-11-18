@@ -11,7 +11,7 @@ const useUsers = () => {
 
   const BaseUrl = import.meta.env.VITE_API_URL;
 
-  const newUser = async (name, lastName, DNI, email, area, setShow) => {
+  const newUser = async (name, lastName, DNI, email, areaId, setShow) => {
     try {
       await axios.post(`${BaseUrl}/usuarios`, {
         nombre: name,
@@ -19,8 +19,9 @@ const useUsers = () => {
         email: email,
         documento: DNI,
         area: {
-          id: area,
+          id: areaId,
         },
+        password: "test",
       });
 
       setShow(false);
@@ -51,11 +52,21 @@ const useUsers = () => {
       dispatch(onLogin(data));
       navigation("/home");
     } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.messages[0]);
+        console.log(error.response.status);
+
+        if (error.response.data.messages[0] === "Debe cambiar su contraseña.") {
+          navigation("/updatePassword");
+        }
+      } else if (error.message) {
+        console.log("Mensaje de error:", error.message);
+      }
       Swal.fire({
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        text: error.response.data.messages[0],
       });
 
       console.log(error);
@@ -89,9 +100,11 @@ const useUsers = () => {
     }
   };
 
-  const getUser = async (setUser, userId) => {
+  const getUser = async (setUser, userEmail) => {
     try {
-      const { data } = await axios.get(`${BaseUrl}/usuarios/${userId}`);
+      const { data } = await axios.get(`${BaseUrl}/usuarios/user-info`, {
+        email: userEmail,
+      });
 
       setUser(data);
     } catch (error) {
@@ -108,7 +121,7 @@ const useUsers = () => {
 
   const updateUser = async (name, lastName, dependence, userId, setShow) => {
     try {
-      await axios.patch(`${BaseUrl}/usuarios/cambiar-info`, {
+      await axios.put(`${BaseUrl}/usuarios/cambiar-info`, {
         nombre: name,
         apellido: lastName,
         dependencia: dependence,
@@ -134,7 +147,30 @@ const useUsers = () => {
     }
   };
 
-  return { getUsers, newUser, updateUser, getUser, login };
+  const updatePassword = async (password, email) => {
+    try {
+      await axios.put(`${BaseUrl}/usuarios/cambiar-password`, {
+        email,
+        password,
+      });
+
+      Swal.fire({
+        iconHtml: customIcon,
+        text: "Contraseña actualizada exitosamente!",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
+  return { getUsers, newUser, updateUser, getUser, login, updatePassword };
 };
 
 export default useUsers;

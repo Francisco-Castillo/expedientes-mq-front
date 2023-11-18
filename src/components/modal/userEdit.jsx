@@ -5,31 +5,39 @@ import Modal from "react-bootstrap/Modal";
 import Dropdown from "react-bootstrap/Dropdown";
 
 import useUsers from "../../hooks/useUsers";
+import useAreas from "../../hooks/useAreas";
 
-import dependencias from "../../Data/Dependencias.json";
-
-const UserEdit = ({ userId }) => {
+const UserEdit = ({ userEmail }) => {
   const [name, setName] = useState();
   const [lastName, setLastName] = useState();
   const [DNI, setDNI] = useState();
   const [email, setEmail] = useState();
   const [dependence, setDependence] = useState();
 
+  const [areas, setAreas] = useState([]);
+
   const [user, SetUser] = useState({});
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => {
+
+  const handleShow = (e) => {
+    e.preventDefault();
     setShow(true);
-    getUser(SetUser, userId);
+    getUser(SetUser, userEmail);
   };
 
   const { updateUser, getUser } = useUsers();
+  const { getAreas } = useAreas();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateUser(name, lastName, DNI, email, dependence, userId, setShow);
+    updateUser(name, lastName, DNI, email, dependence, user.id, setShow);
   };
+
+  useEffect(() => {
+    getAreas(setAreas);
+  }, []);
 
   return (
     <>
@@ -71,13 +79,13 @@ const UserEdit = ({ userId }) => {
               onChange={(e) => setDependence(e.target.value)}
             >
               <option>Seleccionar dependencia</option>
-              {dependencias.map((dependencia, index) => (
+              {areas.map((area, index) => (
                 <option
-                  value={dependencia}
+                  value={area.areaId}
                   key={index}
-                  disabled={user.dependencia === dependencia}
+                  disabled={user.dependencia === area.descripcion}
                 >
-                  {dependencia}
+                  {area.descripcion}
                 </option>
               ))}
             </select>
@@ -144,7 +152,7 @@ const UserEdit = ({ userId }) => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-folder"
+              className="icon icon-tabler icon-tabler-folder"
               width="24"
               height="24"
               viewBox="0 0 24 24"

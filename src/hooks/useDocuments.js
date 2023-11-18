@@ -14,6 +14,7 @@ const useDocuments = () => {
 
   const newDocument = async (formData, setShow) => {
     try {
+      
       await axios.post(`${BaseUrl}/documentos`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

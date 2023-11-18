@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 import useUsers from "../../hooks/useUsers";
-
-import areas from "../../Data/Dependencias.json";
+import useAreas from "../../hooks/useAreas";
 
 const New_User = () => {
   const [name, setName] = useState();
   const [lastName, setLastName] = useState();
   const [DNI, setDNI] = useState();
   const [email, setEmail] = useState();
-  const [area, setArea] = useState();
+  const [areaId, setAreaId] = useState();
+  const [areas, setAreas] = useState([]);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -20,10 +20,16 @@ const New_User = () => {
 
   const { newUser } = useUsers();
 
+  const { getAreas } = useAreas();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    newUser(name, lastName, DNI, email, area, setShow);
+    newUser(name, lastName, DNI, email, areaId, setShow);
   };
+
+  useEffect(() => {
+    getAreas(setAreas);
+  }, []);
 
   return (
     <>
@@ -62,12 +68,12 @@ const New_User = () => {
               style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
               className="form-select"
               aria-label="Default select example"
-              onChange={(e) => setArea(e.target.value)}
+              onChange={(e) => setAreaId(e.target.value)}
             >
               <option>Seleccionar dependencia</option>
               {areas.map((area, index) => (
-                <option value={area} key={index}>
-                  {area}
+                <option value={area.id} key={index}>
+                  {area.descripcion}
                 </option>
               ))}
             </select>
@@ -130,7 +136,7 @@ const New_User = () => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-folder"
+              className="icon icon-tabler icon-tabler-folder"
               width="24"
               height="24"
               viewBox="0 0 24 24"

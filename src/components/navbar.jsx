@@ -6,8 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { onLogout } from "../store/auth";
 
 import mmqicon from "../assets/ICONMMQ.svg";
-import usericon from "../assets/USER.svg";
+
 import logoutIcon from "../assets/LOGOUT.svg";
+
+import { PiUserCircleDuotone } from "react-icons/pi";
+import { RiLogoutCircleRLine, RiLogoutCircleRFill } from "react-icons/ri";
 
 import "../styles/navbar.css";
 
@@ -39,8 +42,7 @@ const Navbar = () => {
       <h3>Sistema de gestión de expedientes</h3>
       <div className="icon-login">
         <div className="icon">
-          <img src={usericon} alt="" />
-          {/* <span>{`${user.name} ${user.lastName}`}</span> */}
+          <PiUserCircleDuotone style={{ fontSize: "40px" }} />
         </div>
         <button
           onClick={logout}
@@ -48,7 +50,8 @@ const Navbar = () => {
           className="btn btn-primary"
           style={{ backgroundColor: "inherit", border: "none" }}
         >
-          <img src={logoutIcon} alt="logout" />
+          <RiLogoutCircleRLine style={{ fontSize: "40px" }} />
+          {/* <img src={logoutIcon} alt="logout" /> */}
         </button>
       </div>
     </header>

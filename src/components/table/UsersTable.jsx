@@ -33,7 +33,7 @@ const UsersTable = ({ users }) => {
                   <img src={settings} alt="" width={"30px"} height={"30px"} />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <UserEdit userId={user.id} />
+                  <UserEdit userEmail={user.email} />
                   <Dropdown.Item>Eliminar</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

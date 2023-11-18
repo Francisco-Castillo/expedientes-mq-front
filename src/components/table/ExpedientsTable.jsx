@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import LinkFile from "../modal/linkFile";
+import New_document from "../modal/new_document";
+
 import UpdateExpedient from "../modal/updateExpedient";
 
 import Dropdown from "react-bootstrap/Dropdown";
@@ -54,10 +55,10 @@ const ExpedientsTable = ({ expedients }) => {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => viewExpedient(expediente.id)}>
-                    Ver
+                    Tramitar
                   </Dropdown.Item>
                   <UpdateExpedient expedientId={expediente.id} />
-                  <LinkFile expedientId={expediente.id} />
+                  <New_document />
                   <Dropdown.Item>Realizar pase</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
