@@ -1,6 +1,7 @@
 import React from "react";
 
 import "../styles/pagination.css";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
   const handleNextPage = () => {
@@ -18,11 +19,11 @@ const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
   return (
     <div className="pagination">
       <span onClick={handlePrevPage} className="page-item">
-        -
+        <FaArrowLeft />
       </span>
       <span className="page-number">{currentPage}</span>
       <span onClick={handleNextPage} className="page-item">
-        +
+        <FaArrowRight />
       </span>
     </div>
   );

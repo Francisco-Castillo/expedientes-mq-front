@@ -1,8 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import React from "react";
-
 const useAreas = () => {
   const BaseUrl = import.meta.env.VITE_API_URL;
 

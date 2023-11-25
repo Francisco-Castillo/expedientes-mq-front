@@ -1,14 +1,15 @@
 import React from "react";
 
 import Dropdown from "react-bootstrap/Dropdown";
-
-import settings from "../../assets/settings.svg";
+import Table from "react-bootstrap/Table";
 
 import UserEdit from "../modal/userEdit";
 
+import { IoSettingsSharp } from "react-icons/io5";
+
 const UsersTable = ({ users }) => {
   return (
-    <table className="registros-table">
+    <Table responsive striped bordered hover id="table-data">
       <thead>
         <tr>
           <th>Nombre</th>
@@ -29,8 +30,14 @@ const UsersTable = ({ users }) => {
             <td>{user.dependencia}</td>
             <td>
               <Dropdown>
-                <Dropdown.Toggle variant="warning" id="dropdown-basic">
-                  <img src={settings} alt="" width={"30px"} height={"30px"} />
+                <Dropdown.Toggle
+                  style={{
+                    backgroundColor: "rgba(217, 70, 70, 1)",
+                    borderColor: "gray",
+                  }}
+                  id="dropdown-basic"
+                >
+                  <IoSettingsSharp />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <UserEdit userEmail={user.email} />
@@ -41,7 +48,7 @@ const UsersTable = ({ users }) => {
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 };
 

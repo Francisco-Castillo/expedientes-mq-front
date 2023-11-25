@@ -7,12 +7,15 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 import useDocuments from "../../hooks/useDocuments";
 
+import getDate from "../../helpers/getDate";
+
+import { IoIosSave } from "react-icons/io";
+
 import "../../styles/new_document.css";
 
-const New_document = () => {
+const New_document = ({ expedientId }) => {
   const [file, setFile] = useState(null);
   const [observations, setObservations] = useState();
-  const [date, setDate] = useState(new Date());
   const [type, setType] = useState();
 
   const [show, setShow] = useState(false);
@@ -21,26 +24,28 @@ const New_document = () => {
 
   const { newDocument } = useDocuments();
 
-  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-  const formattedDate = date.toLocaleDateString("es-AR", options);
+  const date = getDate();
 
   const formData = new FormData();
 
   formData.append("files", file);
 
-  const data = {
-    fechaCreacion: formattedDate,
-    observaciones: observations,
-    tipoDocumento: type,
-  };
-
-  formData.append("data", JSON.stringify(data));
+  formData.append(
+    "data",
+    JSON.stringify({
+      fechaCreacion: date,
+      observaciones: observations,
+      tipoDocumento: type,
+      exepedienteId: expedientId,
+    })
+  );
 
   const handleUpload = async (e) => {
     e.preventDefault();
     newDocument(formData, setShow);
   };
 
+  console.log(file, "archivo selecionado");
   return (
     <>
       <Dropdown.Item onClick={handleShow}>Vincular Archivo</Dropdown.Item>
@@ -112,21 +117,7 @@ const New_document = () => {
             type="submit"
             onClick={handleUpload}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-folder"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"></path>
-            </svg>
+            <IoIosSave style={{ fontSize: "25px" }} />
             Guardar
           </Button>
           <Button

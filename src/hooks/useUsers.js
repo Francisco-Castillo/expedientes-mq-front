@@ -77,7 +77,7 @@ const useUsers = () => {
     try {
       if (currentPage > 1) {
         const { data } = await axios.get(
-          `${BaseUrl}/usuarios?page=${currentPage}`
+          `https://65f5-181-90-35-149.ngrok-free.app/usuarios?page=${currentPage}`
         );
 
         setUsers(data.items);
@@ -102,9 +102,9 @@ const useUsers = () => {
 
   const getUser = async (setUser, userEmail) => {
     try {
-      const { data } = await axios.get(`${BaseUrl}/usuarios/user-info`, {
-        email: userEmail,
-      });
+      const { data } = await axios.get(
+        `${BaseUrl}/usuarios/user-info?email=${userEmail}`
+      );
 
       setUser(data);
     } catch (error) {
@@ -119,12 +119,12 @@ const useUsers = () => {
     }
   };
 
-  const updateUser = async (name, lastName, dependence, userId, setShow) => {
+  const updateUser = async (name, lastName, DNI, userId, setShow) => {
     try {
-      await axios.put(`${BaseUrl}/usuarios/cambiar-info`, {
+      await axios.get(`${BaseUrl}/usuarios/cambiar-info`, {
         nombre: name,
         apellido: lastName,
-        dependencia: dependence,
+        documento: DNI,
         id: userId,
       });
 
@@ -170,7 +170,38 @@ const useUsers = () => {
     }
   };
 
-  return { getUsers, newUser, updateUser, getUser, login, updatePassword };
+  const changeState = async (uid, estado) => {
+    try {
+      await axios.put(`${BaseUrl}/usuarios/cambiar-estado`, {
+        uid,
+        estado,
+      });
+
+      Swal.fire({
+        iconHtml: customIcon,
+        text: "Estado del Usuario actualizado exitosamente!",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
+  return {
+    getUsers,
+    newUser,
+    updateUser,
+    getUser,
+    login,
+    updatePassword,
+    changeState,
+  };
 };
 
 export default useUsers;

@@ -7,11 +7,13 @@ import UpdateExpedient from "../modal/updateExpedient";
 
 import Dropdown from "react-bootstrap/Dropdown";
 
-import settings from "../../assets/settings.svg";
+import Table from "react-bootstrap/Table";
 
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
 import decodeToken from "../../helpers/decodeToken";
+
+import { IoSettingsSharp } from "react-icons/io5";
 
 import "../../styles/table.css";
 
@@ -24,10 +26,11 @@ const ExpedientsTable = ({ expedients }) => {
     navigation(`/expedient/${expedientId}`);
   };
 
-  const { sub } = decodeToken(token);
-
+  const { name, lastName } = decodeToken(token);
+  // const x = decodeToken(token);
+  // console.log(x);
   return (
-    <table className="registros-table">
+    <Table responsive striped bordered hover id="table-data">
       <thead>
         <tr>
           <th>Iniciado</th>
@@ -40,25 +43,31 @@ const ExpedientsTable = ({ expedients }) => {
         </tr>
       </thead>
       <tbody>
-        {expedients.map((expediente, index) => (
+        {expedients.map((expedient, index) => (
           <tr key={index}>
-            <td>{expediente.fechaCaratulacion}</td>
-            <td>{expediente.numero}</td>
-            <td>{expediente.tipo}</td>
-            <td>{expediente.descripcion}</td>
-            <td>{expediente.estado}</td>
-            <td>{sub}</td>
+            <td>{expedient.fechaCaratulacion}</td>
+            <td>{expedient.numero}</td>
+            <td>{expedient.tipo}</td>
+            <td>{expedient.descripcion}</td>
+            <td>{expedient.estado}</td>
+            <td>{expedient.usuario}</td>
             <td>
               <Dropdown>
-                <Dropdown.Toggle variant="warning" id="dropdown-basic">
-                  <img src={settings} alt="" width={"30px"} height={"30px"} />
+                <Dropdown.Toggle
+                  style={{
+                    backgroundColor: "rgba(217, 70, 70, 1)",
+                    borderColor: "gray",
+                  }}
+                  id="dropdown-basic"
+                >
+                  <IoSettingsSharp />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => viewExpedient(expediente.id)}>
+                  <Dropdown.Item onClick={() => viewExpedient(expedient.id)}>
                     Tramitar
                   </Dropdown.Item>
-                  <UpdateExpedient expedientId={expediente.id} />
-                  <New_document />
+                  <UpdateExpedient expedientId={expedient.id} />
+                  <New_document expedientId={expedient.id} />
                   <Dropdown.Item>Realizar pase</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -66,7 +75,7 @@ const ExpedientsTable = ({ expedients }) => {
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   );
 };
 

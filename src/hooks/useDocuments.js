@@ -14,13 +14,16 @@ const useDocuments = () => {
 
   const newDocument = async (formData, setShow) => {
     try {
-      
-      await axios.post(`${BaseUrl}/documentos`, formData, {
+      for (const entry of formData.entries()) {
+        console.log(entry, "antes de la request");
+      }
+      const newDocument = await axios.post(`${BaseUrl}/documentos`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
+      // console.log(newDocument);
       setShow(false);
 
       Swal.fire({

@@ -12,29 +12,31 @@ const useExpedients = () => {
   const BaseUrl = import.meta.env.VITE_API_URL;
 
   const newExpedient = async (
-    numExpedient,
+    expedientNumber,
+    codigoPresupuestario,
     reference,
-    formattedDate,
+    date,
     description,
     codigoTramite,
     typeExpedient,
-    sub,
+    userId,
+    areaName,
     setShow
   ) => {
     try {
       await axios.post(`${BaseUrl}/expedientes/caratular`, {
-        numero: numExpedient,
+        numero: `${expedientNumber}-${codigoPresupuestario}`,
         referencia: reference,
-        fechaCaratulacion: formattedDate,
+        fechaCaratulacion: date,
         descripcion: description,
         codigoTramite: codigoTramite,
         cantidadFojas: 8,
         monto: null,
         tipo: typeExpedient,
         estado: "Iniciado",
-        iniciador: "Secretaria de ambiente y produccion",
+        iniciador: areaName,
         usuario: {
-          id: sub.userId,
+          id: userId,
         },
       });
       setShow(false);
@@ -56,9 +58,19 @@ const useExpedients = () => {
 
   const getExpedients = async (setExpedients, setTotalPages, currentPage) => {
     try {
-      const { data } = await axios.get(`${BaseUrl}/expedientes`);
-      setExpedients(data.items);
-      setTotalPages(data.totalPages);
+      if (currentPage > 1) {
+        const { data } = await axios.get(
+          `${BaseUrl}/expedientes?page=${currentPage}`
+        );
+
+        setExpedients(data.items);
+        setTotalPages(data.totalPages);
+      } else {
+        const { data } = await axios.get(`${BaseUrl}/expedientes`);
+
+        setExpedients(data.items);
+        setTotalPages(data.totalPages);
+      }
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -70,17 +82,25 @@ const useExpedients = () => {
     }
   };
 
-  const getExpedientsWhitFiles = async (
-    setExpedient,
-    setDocuments,
-    expedientId
-  ) => {
+  const listExpedientTypes = async (setExpedientTypes) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/expedients/view/${expedientId}`
-      );
-      setExpedient(data);
-      setDocuments(data.Files);
+      const { data } = await axios.get(`${BaseUrl}/expedientes/tipos`);
+      setExpedientTypes(data);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
+  const listExpedientStates = async (setExpedientStates) => {
+    try {
+      const { data } = await axios.get(`${BaseUrl}/expedientes/estados`);
+      setExpedientStates(data);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -94,9 +114,7 @@ const useExpedients = () => {
 
   const getExpedient = async (setExpedient, expedientId) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/expedients/view/${expedientId}`
-      );
+      const { data } = await axios.get(`${BaseUrl}/expedientes/${expedientId}`);
       setExpedient(data);
     } catch (error) {
       Swal.fire({
@@ -113,15 +131,32 @@ const useExpedients = () => {
     setResultSearch,
     currentPage,
     search,
-    setTotalPages
+    setTotalPages,
+    filterStartDate,
+    filterEndDate,
+    filterState,
+    filterExpedientType
   ) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/expedients/search?page=${currentPage}&search=${search}`
-      );
-      setResultSearch(data.items);
-      const serverTotalPages = data.totalPages;
-      setTotalPages(serverTotalPages);
+      if (currentPage > 1) {
+        const { data } = await axios.get(
+          `${BaseUrl}/expedientes?universalFilter=${search}&startDate=${filterStartDate}&endDate${filterEndDate}&status=${filterState}&type${filterExpedientType}&page=${currentPage}`
+        );
+
+        const serverTotalPages = data.totalPages;
+
+        setTotalPages(serverTotalPages);
+        setResultSearch(data.items);
+      } else {
+        const { data } = await axios.get(
+          `${BaseUrl}/expedientes?universalFilter=${search}&startDate=${filterStartDate}&endDate${filterEndDate}&status=${filterState}&type${filterExpedientType}`
+        );
+
+        const serverTotalPages = data.totalPages;
+
+        setTotalPages(serverTotalPages);
+        setResultSearch(data.items);
+      }
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -135,10 +170,9 @@ const useExpedients = () => {
 
   const updateExpedient = async (state, setShow, expedientId) => {
     try {
-      await axios.patch(
-        `http://localhost:3001/api/expedients/changeState/${expedientId}`,
-        { estado: state }
-      );
+      await axios.patch(`${BaseUrl}/${expedientId}/cambiar-estado`, {
+        status: state,
+      });
 
       setShow(false);
 
@@ -158,12 +192,13 @@ const useExpedients = () => {
     }
   };
 
-  const linkFile = async (expedientId, fileId, setShow) => {
+  const lastExpedientNumber = async (setExpedientNumber) => {
     try {
-      await axios.post(
-        `http://localhost:3001/api/expedients/linkDocument/${expedientId}/${fileId}`
+      const { data } = await axios.get(
+        `${BaseUrl}/parametros?name=ULTIMO_NUMERO_DE_EXPEDIENTE`
       );
-      setShow(false);
+      const lastNumber = Number(data.valor) + 1;
+      setExpedientNumber(lastNumber);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -179,10 +214,11 @@ const useExpedients = () => {
     newExpedient,
     updateExpedient,
     getExpedient,
-    getExpedientsWhitFiles,
+    listExpedientTypes,
     getExpedients,
     searchExpedients,
-    linkFile,
+    lastExpedientNumber,
+    listExpedientStates,
   };
 };
 

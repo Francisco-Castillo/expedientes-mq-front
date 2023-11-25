@@ -21,22 +21,23 @@ const UserEdit = ({ userEmail }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
 
+  const { updateUser, getUser } = useUsers();
+  const { getAreas } = useAreas();
+
   const handleShow = (e) => {
     e.preventDefault();
     setShow(true);
     getUser(SetUser, userEmail);
   };
 
-  const { updateUser, getUser } = useUsers();
-  const { getAreas } = useAreas();
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateUser(name, lastName, DNI, email, dependence, user.id, setShow);
+    updateUser(name, lastName, DNI, email, user.id, setShow);
   };
 
   useEffect(() => {
     getAreas(setAreas);
+    console.log(userEmail);
   }, []);
 
   return (

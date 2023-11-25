@@ -39,6 +39,8 @@ const Tab = () => {
 
   const { areaId } = decodeToken(token);
 
+  const authorizedLevel = import.meta.env.VITE_HIGH_LVL;
+
   const handleTabChange = (tabName) => {
     setActiveTab(tabName);
     setCurrentPage(1);
@@ -53,7 +55,7 @@ const Tab = () => {
     } else if (activeTab === "Usuarios") {
       getUsers(setUsers, setTotalPages, currentPage);
     }
-  }, [activeTab, currentPage, expedients, documents, users]);
+  }, [activeTab, currentPage, documents, users]);
 
   return (
     <>
@@ -64,19 +66,19 @@ const Tab = () => {
         >
           Expedientes
         </div>
-        <div
+        {/* <div
           className={`tab ${activeTab === "Documentos" ? "active" : ""}`}
           onClick={() => handleTabChange("Documentos")}
         >
           Documentos
-        </div>
+        </div> */}
         <div
           className={`tab ${activeTab === "Consulta" ? "active" : ""}`}
           onClick={() => handleTabChange("Consulta")}
         >
           Consulta
         </div>
-        {areaId === 1 ? (
+        {areaId === Number(authorizedLevel) ? (
           <div
             className={`tab ${activeTab === "Usuarios" ? "active" : ""}`}
             onClick={() => handleTabChange("Usuarios")}

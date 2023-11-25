@@ -7,6 +7,8 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 import useExpedients from "../../hooks/useExpedients";
 
+import { IoIosSave } from "react-icons/io";
+
 const UpdateExpedient = ({ expedientId }) => {
   const [expedient, setExpedient] = useState({});
   const [state, setState] = useState();
@@ -23,6 +25,8 @@ const UpdateExpedient = ({ expedientId }) => {
   const handleUpdate = async () => {
     updateExpedient(state, setShow, expedientId);
   };
+
+  console.log(expedient);
 
   return (
     <>
@@ -47,19 +51,19 @@ const UpdateExpedient = ({ expedientId }) => {
               <Form.Label>Iniciado</Form.Label>
               <Form.Control
                 type="text"
-                value={expedient.fechaCaratulacion}
+                defaultValue={expedient.fechaCaratulacion}
                 readOnly
               />
               <Form.Label>Numero</Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={expedient.numeroExpediente}
+                defaultValue={expedient.numero}
                 readOnly
               />
               <Form.Label>Tipo de Expediente</Form.Label>
               <Form.Control
                 type="text"
-                value={expedient.tipoExpediente}
+                defaultValue={expedient.tipo}
                 readOnly
               />
               <Form.Label>Estado</Form.Label>
@@ -69,7 +73,7 @@ const UpdateExpedient = ({ expedientId }) => {
               >
                 <option>Cambiar estado</option>
                 <option
-                  value="Iniciado"
+                  defaultValue="Iniciado"
                   disabled={expedient.estado === "Iniciado"}
                 >
                   Iniciado
@@ -126,21 +130,7 @@ const UpdateExpedient = ({ expedientId }) => {
             type="submit"
             onClick={handleUpdate}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-folder"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"></path>
-            </svg>
+            <IoIosSave style={{ fontSize: "25px" }} />
             Guardar
           </Button>
           <Button

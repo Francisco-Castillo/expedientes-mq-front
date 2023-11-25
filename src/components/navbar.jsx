@@ -7,10 +7,7 @@ import { onLogout } from "../store/auth";
 
 import mmqicon from "../assets/ICONMMQ.svg";
 
-import logoutIcon from "../assets/LOGOUT.svg";
-
-import { PiUserCircleDuotone } from "react-icons/pi";
-import { RiLogoutCircleRLine, RiLogoutCircleRFill } from "react-icons/ri";
+import { FaUserAlt, FaPowerOff } from "react-icons/fa";
 
 import "../styles/navbar.css";
 
@@ -42,7 +39,7 @@ const Navbar = () => {
       <h3>Sistema de gestión de expedientes</h3>
       <div className="icon-login">
         <div className="icon">
-          <PiUserCircleDuotone style={{ fontSize: "40px" }} />
+          <FaUserAlt style={{ fontSize: "30px" }} />
         </div>
         <button
           onClick={logout}
@@ -50,8 +47,7 @@ const Navbar = () => {
           className="btn btn-primary"
           style={{ backgroundColor: "inherit", border: "none" }}
         >
-          <RiLogoutCircleRLine style={{ fontSize: "40px" }} />
-          {/* <img src={logoutIcon} alt="logout" /> */}
+          <FaPowerOff style={{ fontSize: "30px" }} />
         </button>
       </div>
     </header>
