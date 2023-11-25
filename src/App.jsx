@@ -5,6 +5,7 @@ import New_Expedient from "./components/modal/new_expedient";
 import Home from "./pages/home";
 import { AppRouter } from "./router/appRouter";
 import Expedient from "./pages/expedient";
+import FirsLogin from "./pages/firsLogin";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/app.css";
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/expedient/:expedientId",
         element: <Expedient />,
+      },
+      {
+        path: "/updatePassword",
+        element: <FirsLogin />,
       },
     ],
   },

@@ -6,15 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { onLogout } from "../store/auth";
 
 import mmqicon from "../assets/ICONMMQ.svg";
-import usericon from "../assets/USER.svg";
-import logoutIcon from "../assets/LOGOUT.svg";
+
+import { FaUserAlt, FaPowerOff } from "react-icons/fa";
 
 import "../styles/navbar.css";
 
 const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
 
-  const { user } = JSON.parse(atob(token.slice(7).split(".")[1]));
+  // const { user } = JSON.parse(atob(token.slice(7).split(".")[1]));
 
   const dispatch = useDispatch();
 
@@ -39,8 +39,7 @@ const Navbar = () => {
       <h3>Sistema de gestión de expedientes</h3>
       <div className="icon-login">
         <div className="icon">
-          <img src={usericon} alt="" />
-          {/* <span>{`${user.name} ${user.lastName}`}</span> */}
+          <FaUserAlt style={{ fontSize: "30px" }} />
         </div>
         <button
           onClick={logout}
@@ -48,7 +47,7 @@ const Navbar = () => {
           className="btn btn-primary"
           style={{ backgroundColor: "inherit", border: "none" }}
         >
-          <img src={logoutIcon} alt="logout" />
+          <FaPowerOff style={{ fontSize: "30px" }} />
         </button>
       </div>
     </header>

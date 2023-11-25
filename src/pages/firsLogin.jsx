@@ -10,19 +10,22 @@ import useUsers from "../hooks/useUsers";
 import svg from "../assets/MMQ.svg";
 
 import "../styles/login.css";
-
-const Login = () => {
-  const [username, setusername] = useState("");
+const FirsLogin = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
-  const { login } = useUsers();
-
+  const { updatePassword, login } = useUsers();
   const navigation = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    login(username, password, dispatch, onLogin, navigation);
+    try {
+      await updatePassword(password, email);
+      await login(email, password, dispatch, onLogin, navigation);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -30,24 +33,26 @@ const Login = () => {
       <div className="container-form">
         <h1 id="title-sistema">Sistema de gestión de expedientes</h1>
 
-        <h2 id="title-welcome">¡Bienvenido!</h2>
+        <h2 id="title-welcome">¡Actualice su contraseña</h2>
+        <h2 id="title-welcome">Para poder Continuar!</h2>
 
-        <form action="" id="form-login" onSubmit={handleLogin}>
+        <form action="" id="form-login" onSubmit={handleUpdate}>
           <div className="container-input">
-            <label htmlFor="">Usuario</label>
+            <label htmlFor="">Email</label>
             <input
               className="input-login"
-              type="text"
+              type="email"
               placeholder=""
-              onChange={(e) => setusername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="container-input">
-            <label htmlFor="">Contraseña</label>
+            <label htmlFor="">Ingrese su nueva Contraseña</label>
             <input
               className="input-login"
               type="password"
-              placeholder=""
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
@@ -64,4 +69,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default FirsLogin;

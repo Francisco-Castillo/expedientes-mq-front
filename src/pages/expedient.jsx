@@ -1,85 +1,86 @@
 import React, { useEffect, useState } from "react";
 
-import axios from "axios";
-
 import { useParams } from "react-router-dom";
 
 import Navbar from "../components/navbar";
+import Button from "react-bootstrap/Button";
+import ListGroup from "react-bootstrap/ListGroup";
 
-import Swal from "sweetalert2";
+import useExpedients from "../hooks/useExpedients";
+
+import { RiArrowGoBackLine } from "react-icons/ri";
+
+import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { AiFillPrinter } from "react-icons/ai";
+
+import { useNavigate } from "react-router-dom";
+
+import svg from "../assets/MMQ.svg";
 
 import "../styles/expedient.css";
 
 const Expedient = () => {
   const [expedient, setExpedient] = useState({});
-  const [documents, setDocuments] = useState([]);
 
   const { expedientId } = useParams();
 
-  const handleExpedient = async () => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/expedientes/view/${expedientId}`
-      );
-      setExpedient(data);
-      setDocuments(data.Files);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-      console.log(error);
-    }
+  const { getExpedient } = useExpedients();
+
+  const navigate = useNavigate();
+
+  const handleComeBack = () => {
+    navigate("/home");
   };
 
   useEffect(() => {
-    handleExpedient();
+    getExpedient(setExpedient, expedientId);
   }, []);
-
   return (
     <>
       <Navbar />
-      <section className="expediente-section">
-        <div className="expediente-info">
-          <h1 className="expediente-name">
-            Expediente: {expedient.numeroExpediente}
-          </h1>
-          <table className="expediente-table">
-            <thead>
-              <tr>
-                <th>Caratulado por: {expedient.usuario}</th>
-                <th>Fecha de caratulación: {expedient.fechaCaratulacion}</th>
-                <th>Estado: {expedient.estado}</th>
-              </tr>
-            </thead>
-          </table>
-          <p className="expediente-description">
-            Descripción: {expedient.descripcion}
-          </p>
+
+      <section className="expedient-section">
+        <div>
+          <div className="icons">
+            <FaArrowAltCircleLeft
+              className="button-back"
+              style={{ fontSize: "25px" }}
+              onClick={handleComeBack}
+            />{" "}
+            {/* <strong>Volver</strong> */}
+          </div>
+          <div>
+            <AiFillPrinter
+              className="button-back"
+              style={{ fontSize: "25px" }}
+            />
+          </div>
         </div>
-        <div className="documentos">
-          <h2>Documentos del expediente</h2>
-          <div className="documentos-grid">
-            {documents.map((documento, index) => (
-              <div key={index} className="documento-card">
-                <h3>{documento.tipoDocumento}</h3>
-                <p>
-                  <strong>Fecha de Creación:</strong> {documento.fechaCreacion}
-                </p>
-                <p>
-                  <strong>Observaciones:</strong> {documento.observaciones}
-                </p>
-                <a
-                  href={documento.archivoAdjunto}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Ver Adjunto
-                </a>
-              </div>
-            ))}
+        <div className="container-expedient">
+          <div className="expedient-info">
+            <img className="logo" src={svg} alt="" />
+            <h1 className="expedient-title">Municipalidad de Monte Quemado</h1>
+          </div>
+
+          <h1 className="expedient-name">Expediente N° {expedient.numero}</h1>
+
+          <div className="expedient-description">
+            <ul>
+              <li>
+                <strong> Fecha: </strong> {expedient.fechaCaratulacion}
+              </li>
+              <li>
+                <strong> Iniciado: </strong> {expedient.iniciador}
+              </li>
+              <li>
+                <strong> Extracto: </strong> {expedient.referencia}
+              </li>
+            </ul>
+
+            <p>
+              <strong> Descripción: </strong>
+              {expedient.descripcion}
+            </p>
           </div>
         </div>
       </section>

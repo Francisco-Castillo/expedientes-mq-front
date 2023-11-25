@@ -1,71 +1,73 @@
-import { useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 
-import Swal from "sweetalert2";
+import useExpedients from "../../hooks/useExpedients";
+import useAreas from "../../hooks/useAreas";
+
+import decodeToken from "../../helpers/decodeToken";
+
+import getDate from "../../helpers/getDate";
+
+import { IoIosSave } from "react-icons/io";
 
 import "../../styles/new_expedient.css";
 
 const New_Expedient = () => {
-  const [date, setDate] = useState(new Date());
-  const [numExpedient, setNumExpedient] = useState();
+  // const [date, setDate] = useState(new Date());
+  const [expedientNumber, setExpedientNumber] = useState();
   const [reference, setReference] = useState();
   const [typeExpedient, setTypeExpedient] = useState("Subsidio");
   const [codigoTramite, setCodigoTramite] = useState();
   const [description, setDescription] = useState();
+  const [iniciador, setIniciador] = useState();
+  const [codigoPresupuestario, setCodigoPresupuestario] = useState();
+
+  const date = getDate();
+
+  const [areas, setAreas] = useState([]);
 
   const { token } = useSelector((state) => state.auth);
 
   const [show, setShow] = useState(false);
+
+  const { newExpedient, lastExpedientNumber } = useExpedients();
+
+  const { getAreas } = useAreas();
+
+  const { areaName, userId } = decodeToken(token);
+
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const data = JSON.parse(atob(token.slice(7).split(".")[1]));
-
-  const BaseUrl = import.meta.env.VITE_API_URL;
-
-  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-  const formattedDate = date.toLocaleDateString("es-AR", options);
-
-  const customIcon = `
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder-check" width="30" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-  <path d="M11 19h-6a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v4"></path>
-  <path d="M15 19l2 2l4 -4"></path>
-</svg>`;
+  const handleShow = () => {
+    setShow(true);
+    getAreas(setAreas);
+    lastExpedientNumber(setExpedientNumber);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post(`http://localhost:3001/api/expedientes/caratular`, {
-        numeroExpediente: "1002-TES-2023",
-        referencia: reference,
-        fechaCaratulacion: formattedDate,
-        descripcion: description,
-        codigoTramite: codigoTramite,
-        estado: "iniciado",
-        tipoExpediente: typeExpedient,
-        // usuario: user.name + user.lastName,
-      });
-      setShow(false);
-      Swal.fire({
-        iconHtml: customIcon,
-        text: "Expediente generado exitosamente!",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-      });
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-      console.log(error);
-    }
+    await newExpedient(
+      expedientNumber,
+      codigoPresupuestario,
+      reference,
+      date,
+      description,
+      codigoTramite,
+      typeExpedient,
+      userId,
+      areaName,
+      setShow
+    );
   };
+
+  useEffect(() => {
+    console.log(`${expedientNumber}-${codigoPresupuestario}`);
+    console.log(Number(expedientNumber) + 1);
+    console.log(areas);
+  }, [show, codigoPresupuestario]);
 
   return (
     <>
@@ -94,68 +96,85 @@ const New_Expedient = () => {
         >
           <Modal.Title>Caratular Expediente</Modal.Title>
         </Modal.Header>
+
         <Modal.Body style={{ padding: "30px" }}>
-          <form className="expedient-form">
-            <label className="expedient-label" htmlFor="">
-              Tipo de expediente :
-            </label>
+          <Form id="expedient-form">
+            <Form.Label htmlFor="">Numero Expediente :</Form.Label>
 
-            <select
-              style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
-              className="form-select"
-              aria-label="Default select example"
-              value={typeExpedient}
-              onChange={(e) => setTypeExpedient(e.target.value)}
-            >
-              <option value="Subsidio">Subsidio</option>
-              <option value="Pago">Pago</option>
-              <option value="Compra">Compra</option>
-              <option value="Personal">Personal</option>
-              <option value="Solicitud de servicio">
-                Solicitud de servicio
-              </option>
-            </select>
+            <Form.Group className="mb-3">
+              <Form.Control
+                type="number"
+                defaultValue={expedientNumber}
+                readOnly
+                style={{ width: "50%" }}
+              />
+              <Form.Select
+                aria-label="Default select example"
+                value={codigoPresupuestario}
+                onChange={(e) => setCodigoPresupuestario(e.target.value)}
+              >
+                <option>Codigo Presupuestario</option>
+                {areas.map((area, index) => (
+                  <option value={area.codigoPresupuestario} key={index}>
+                    {`${area.codigoPresupuestario} - ${area.descripcion}`}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
 
-            <label className="expedient-label" htmlFor="">
-              Referencia :
-            </label>
-            <input
-              style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
-              type="text"
-              className="expedient-input"
-              onChange={(e) => setReference(e.target.value)}
-            />
+            <Form.Label htmlFor="">Tipo de expediente :</Form.Label>
 
-            <label className="expedient-label" htmlFor="">
-              Descripcion :
-            </label>
+            <Form.Group className="mb-3">
+              <Form.Select
+                aria-label="Default select example"
+                value={typeExpedient}
+                onChange={(e) => setTypeExpedient(e.target.value)}
+              >
+                <option value="Subsidio">Subsidio</option>
+                <option value="Pago">Pago</option>
+                <option value="Compra">Compra</option>
+                <option value="Personal">Personal</option>
+                <option value="Solicitud de servicio">
+                  Solicitud de servicio
+                </option>
+              </Form.Select>
+            </Form.Group>
 
-            <textarea
-              style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
-              name="Description"
-              id=""
-              className="expedient-textarea"
-              cols="100"
-              rows="10"
-              onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
+            <Form.Label htmlFor="">Referencia :</Form.Label>
 
-            <label className="expedient-label" htmlFor="">
-              Codigo de tramite :
-            </label>
-            <select
-              style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
-              className="form-select"
-              aria-label="Default select example"
-              value={typeExpedient}
-              onChange={(e) => setCodigoTramite(e.target.value)}
-            >
-              <option value="Subsidio">Pago de factura</option>
-              <option value="Pago">Pago de servicios</option>
-              <option value="Compra">Pago de locacion</option>
-              <option value="Personal">Pago a proveedores</option>
-            </select>
-          </form>
+            <Form.Group className="mb-3">
+              <Form.Control
+                type="text"
+                onChange={(e) => setReference(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Label htmlFor="">Descripcion :</Form.Label>
+            <Form.Group className="mb-3">
+              <textarea
+                name="Description"
+                id=""
+                className="expedient-textarea"
+                cols="100"
+                rows="10"
+                onChange={(e) => setDescription(e.target.value)}
+              ></textarea>
+            </Form.Group>
+            <Form.Label htmlFor="">Codigo de tramite :</Form.Label>
+
+            <Form.Group className="mb-3">
+              <Form.Select
+                aria-label="Default select example"
+                value={typeExpedient}
+                onChange={(e) => setCodigoTramite(e.target.value)}
+              >
+                <option value="Subsidio">Pago de factura</option>
+                <option value="Pago">Pago de servicios</option>
+                <option value="Compra">Pago de locacion</option>
+                <option value="Personal">Pago a proveedores</option>
+              </Form.Select>
+            </Form.Group>
+          </Form>
         </Modal.Body>
         <Modal.Footer
           style={{
@@ -172,21 +191,7 @@ const New_Expedient = () => {
             type="submit"
             onClick={handleSubmit}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-folder"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"></path>
-            </svg>
+            <IoIosSave style={{ fontSize: "25px" }} />
             Guardar
           </Button>
           <Button

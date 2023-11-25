@@ -49,6 +49,21 @@
         "fechaCreacion": "30-10-2023",
         "tipoDocumento": "Recibo",
         "observaciones": "Recibo de compra"
+      },
+      {
+        "fechaCreacion": "03-03-2023",
+        "tipoDocumento": "Factura",
+        "observaciones": "Factura de Marzo"
+      },
+      {
+        "fechaCreacion": "02-02-2023",
+        "tipoDocumento": "Factura",
+        "observaciones": "Factura de Febrero"
+      },
+      {
+        "fechaCreacion": "02-04-2023",
+        "tipoDocumento": "Factura",
+        "observaciones": "Factura de abril"
       }
     ]
   }

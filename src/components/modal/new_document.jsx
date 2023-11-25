@@ -1,94 +1,54 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import Dropdown from "react-bootstrap/Dropdown";
 
-import Swal from "sweetalert2";
+import useDocuments from "../../hooks/useDocuments";
+
+import getDate from "../../helpers/getDate";
+
+import { IoIosSave } from "react-icons/io";
 
 import "../../styles/new_document.css";
 
-const New_document = () => {
+const New_document = ({ expedientId }) => {
   const [file, setFile] = useState(null);
   const [observations, setObservations] = useState();
-  const [date, setDate] = useState(new Date());
   const [type, setType] = useState();
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const BaseUrl = import.meta.env.VITE_API_URL;
-  const otherUrl = "http://localhost:3001/api/expedientes/uploadFile";
+  const { newDocument } = useDocuments();
 
-  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-  const formattedDate = date.toLocaleDateString("es-AR", options);
+  const date = getDate();
 
   const formData = new FormData();
 
   formData.append("files", file);
 
-  const data = {
-    fechaCreacion: formattedDate,
-    observaciones: observations,
-    tipoDocumento: type,
-  };
-
-  formData.append("data", JSON.stringify(data));
-
-  const x = Object.fromEntries(formData);
+  formData.append(
+    "data",
+    JSON.stringify({
+      fechaCreacion: date,
+      observaciones: observations,
+      tipoDocumento: type,
+      exepedienteId: expedientId,
+    })
+  );
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(`${otherUrl}`, x, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      setShow(false);
-
-      Swal.fire({
-        iconHtml: customIcon,
-        text: "Documento subido exitosamente!",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-      });
-
-      console.log(response);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-
-      console.log(error);
-    }
+    newDocument(formData, setShow);
   };
 
-  const customIcon = `
-  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder-check" width="30" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-    <path d="M11 19h-6a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v4"></path>
-    <path d="M15 19l2 2l4 -4"></path>
-  </svg>`;
-
+  console.log(file, "archivo selecionado");
   return (
     <>
-      <Button
-        variant="light"
-        style={{
-          borderRadius: "4px",
-          padding: "10px 20px",
-          marginBottom: "10px",
-        }}
-        onClick={handleShow}
-      >
-        Crear Documento
-      </Button>
+      <Dropdown.Item onClick={handleShow}>Vincular Archivo</Dropdown.Item>
 
       <Modal
         size="lg"
@@ -121,13 +81,10 @@ const New_document = () => {
               <option value="Factura">Factura</option>
               <option value="Informe">Informe</option>
               <option value="CV">CV</option>
-              <option value="Contrato">Contrato</option>
               <option value="Auditoria">Auditoria</option>
-              <option value="Plan">Plan</option>
+              <option value="Proyecto">Plan</option>
               <option value="Contrato">Contrato</option>
               <option value="Publicidad">Publicidad</option>
-              <option value="Estado Finaciero">Estado Finaciero</option>
-              <option value="Presentacion">Presentacion</option>
             </Form.Select>
 
             <label className="document-label" htmlFor="">
@@ -160,21 +117,7 @@ const New_document = () => {
             type="submit"
             onClick={handleUpload}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-folder"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"></path>
-            </svg>
+            <IoIosSave style={{ fontSize: "25px" }} />
             Guardar
           </Button>
           <Button

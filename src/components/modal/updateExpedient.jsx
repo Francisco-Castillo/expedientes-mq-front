@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
 
-import Swal from "sweetalert2";
+import useExpedients from "../../hooks/useExpedients";
+
+import { IoIosSave } from "react-icons/io";
 
 const UpdateExpedient = ({ expedientId }) => {
   const [expedient, setExpedient] = useState({});
@@ -14,60 +15,18 @@ const UpdateExpedient = ({ expedientId }) => {
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const handleExpedient = async () => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/expedientes/view/${expedientId}`
-      );
-      setExpedient(data);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-      console.log(error);
-    }
+  const handleShow = () => {
+    setShow(true);
+    getExpedient(setExpedient, expedientId);
   };
+
+  const { getExpedient, updateExpedient } = useExpedients();
 
   const handleUpdate = async () => {
-    try {
-      const { data } = await axios.patch(
-        `http://localhost:3001/api/expedientes/changeState/${expedient.id}`,
-        { estado: state }
-      );
-
-      setShow(false);
-
-      Swal.fire({
-        iconHtml: customIcon,
-        text: "Estado actualizado exitosamente!",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-      });
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        text: error.message,
-      });
-      console.log(error);
-    }
+    updateExpedient(state, setShow, expedientId);
   };
 
-  useEffect(() => {
-    handleExpedient();
-  }, []);
-
-  const customIcon = `
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder-check" width="30" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-  <path d="M11 19h-6a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2h4l3 3h7a2 2 0 0 1 2 2v4"></path>
-  <path d="M15 19l2 2l4 -4"></path>
-</svg>`;
+  console.log(expedient);
 
   return (
     <>
@@ -92,19 +51,19 @@ const UpdateExpedient = ({ expedientId }) => {
               <Form.Label>Iniciado</Form.Label>
               <Form.Control
                 type="text"
-                value={expedient.fechaCaratulacion}
+                defaultValue={expedient.fechaCaratulacion}
                 readOnly
               />
               <Form.Label>Numero</Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={expedient.numeroExpediente}
+                defaultValue={expedient.numero}
                 readOnly
               />
               <Form.Label>Tipo de Expediente</Form.Label>
               <Form.Control
                 type="text"
-                value={expedient.tipoExpediente}
+                defaultValue={expedient.tipo}
                 readOnly
               />
               <Form.Label>Estado</Form.Label>
@@ -112,12 +71,34 @@ const UpdateExpedient = ({ expedientId }) => {
                 aria-label="Selecionar estado"
                 onChange={(e) => setState(e.target.value)}
               >
-                {/* <option>Open this select menu</option> */}
-                <option value="Iniciado">{expedient.estado}</option>
-                <option value="en Progreso">En Progreso</option>
-                <option value="Completado">Completado</option>
-                <option value="Suspendido">Suspendido</option>
-                <option value="Suspendido">Baja</option>
+                <option>Cambiar estado</option>
+                <option
+                  defaultValue="Iniciado"
+                  disabled={expedient.estado === "Iniciado"}
+                >
+                  Iniciado
+                </option>
+                <option
+                  value="En Progreso"
+                  disabled={expedient.estado === "En Progreso"}
+                >
+                  En Progreso
+                </option>
+                <option
+                  value="Completado"
+                  disabled={expedient.estado === "Completado"}
+                >
+                  Completado
+                </option>
+                <option
+                  value="Suspendido"
+                  disabled={expedient.estado === "Suspendido"}
+                >
+                  Suspendido
+                </option>
+                <option value="Baja" disabled={expedient.estado === "Baja"}>
+                  Baja
+                </option>
               </Form.Select>
             </Form.Group>
             <Form.Group
@@ -149,21 +130,7 @@ const UpdateExpedient = ({ expedientId }) => {
             type="submit"
             onClick={handleUpdate}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon icon-tabler icon-tabler-folder"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"></path>
-            </svg>
+            <IoIosSave style={{ fontSize: "25px" }} />
             Guardar
           </Button>
           <Button
