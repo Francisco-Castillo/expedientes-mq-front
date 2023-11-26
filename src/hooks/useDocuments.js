@@ -22,8 +22,6 @@ const useDocuments = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      // console.log(newDocument);
       setShow(false);
 
       Swal.fire({
@@ -78,7 +76,22 @@ const useDocuments = () => {
     }
   };
 
-  return { newDocument, getDocuments, searchFiles };
+  const ListDocumentTypes = async (setTypes) => {
+    try {
+      const { data } = await axios.get(`${BaseUrl}//tipos-documentos`);
+      setTypes(data);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
+  return { newDocument, getDocuments, searchFiles, ListDocumentTypes };
 };
 
 export default useDocuments;

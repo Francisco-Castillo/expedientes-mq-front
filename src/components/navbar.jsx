@@ -9,16 +9,18 @@ import mmqicon from "../assets/ICONMMQ.svg";
 
 import { FaUserAlt, FaPowerOff } from "react-icons/fa";
 
+import decodeToken from "../helpers/decodeToken";
+
 import "../styles/navbar.css";
 
 const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
 
-  // const { user } = JSON.parse(atob(token.slice(7).split(".")[1]));
-
   const dispatch = useDispatch();
 
   const navigation = useNavigate();
+
+  const { name, lastName } = decodeToken(token);
 
   const logout = () => {
     dispatch(onLogout({}));
@@ -40,6 +42,7 @@ const Navbar = () => {
       <div className="icon-login">
         <div className="icon">
           <FaUserAlt style={{ fontSize: "30px" }} />
+          <span>{`${name} ${lastName}`}</span>
         </div>
         <button
           onClick={logout}

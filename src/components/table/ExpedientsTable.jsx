@@ -5,6 +5,8 @@ import New_document from "../modal/new_document";
 
 import UpdateExpedient from "../modal/updateExpedient";
 
+import MakePass from "../modal/makePass";
+
 import Dropdown from "react-bootstrap/Dropdown";
 
 import Table from "react-bootstrap/Table";
@@ -28,13 +30,12 @@ const ExpedientsTable = ({ expedients }) => {
 
   const { name, lastName } = decodeToken(token);
   // const x = decodeToken(token);
-  // console.log(x);
   return (
     <Table responsive striped bordered hover id="table-data">
       <thead>
         <tr>
-          <th>Iniciado</th>
           <th>Número</th>
+          <th>Iniciado</th>
           <th>Tipo de Expediente</th>
           <th>Descripción</th>
           <th>Estado</th>
@@ -45,8 +46,8 @@ const ExpedientsTable = ({ expedients }) => {
       <tbody>
         {expedients.map((expedient, index) => (
           <tr key={index}>
-            <td>{expedient.fechaCaratulacion}</td>
             <td>{expedient.numero}</td>
+            <td>{expedient.fechaCaratulacion}</td>
             <td>{expedient.tipo}</td>
             <td>{expedient.descripcion}</td>
             <td>{expedient.estado}</td>
@@ -68,7 +69,7 @@ const ExpedientsTable = ({ expedients }) => {
                   </Dropdown.Item>
                   <UpdateExpedient expedientId={expedient.id} />
                   <New_document expedientId={expedient.id} />
-                  <Dropdown.Item>Realizar pase</Dropdown.Item>
+                  <MakePass expedientId={expedient.id}></MakePass>
                 </Dropdown.Menu>
               </Dropdown>
             </td>

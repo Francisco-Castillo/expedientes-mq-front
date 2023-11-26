@@ -66,7 +66,7 @@ const useUsers = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.response.data.messages[0],
+        text: error.message,
       });
 
       console.log(error);
@@ -77,7 +77,7 @@ const useUsers = () => {
     try {
       if (currentPage > 1) {
         const { data } = await axios.get(
-          `https://65f5-181-90-35-149.ngrok-free.app/usuarios?page=${currentPage}`
+          `${BaseUrl}/usuarios?page=${currentPage}`
         );
 
         setUsers(data.items);
@@ -193,6 +193,23 @@ const useUsers = () => {
     }
   };
 
+  const searchUser = async (searchTerm, setSearchResults) => {
+    try {
+      const { data } = await axios.get(
+        `${BaseUrl}/usuarios?universalFilter=${searchTerm}`
+      );
+      setSearchResults(data.items);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
   return {
     getUsers,
     newUser,
@@ -201,6 +218,7 @@ const useUsers = () => {
     login,
     updatePassword,
     changeState,
+    searchUser,
   };
 };
 

@@ -7,7 +7,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 
 import "../styles/search.css";
@@ -100,7 +99,7 @@ const InputSearch = ({ setResultSearch, currentPage, setTotalPages }) => {
               value={filterState}
               onChange={(e) => setFilterState(e.target.value)}
             >
-              <option value="">Todos</option>
+              <option value="">Selecionar Estado</option>
               {expedientStates.map((state, index) => (
                 <option value={state} key={index}>
                   {state}
@@ -116,7 +115,7 @@ const InputSearch = ({ setResultSearch, currentPage, setTotalPages }) => {
               aria-label="Default select example"
               onChange={(e) => setFilterExpedientType(e.target.value)}
             >
-              <option value="">Todos</option>
+              <option value="">Selecionar tipo</option>
               {expedientTypes.map((type, index) => (
                 <option value={type} key={index}>
                   {type}

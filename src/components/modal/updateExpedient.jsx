@@ -13,14 +13,14 @@ const UpdateExpedient = ({ expedientId }) => {
   const [expedient, setExpedient] = useState({});
   const [state, setState] = useState();
 
+  const { getExpedient, updateExpedient } = useExpedients();
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true);
     getExpedient(setExpedient, expedientId);
   };
-
-  const { getExpedient, updateExpedient } = useExpedients();
 
   const handleUpdate = async () => {
     updateExpedient(state, setShow, expedientId);

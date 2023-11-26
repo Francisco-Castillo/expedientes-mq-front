@@ -16,13 +16,17 @@ import "../../styles/new_document.css";
 const New_document = ({ expedientId }) => {
   const [file, setFile] = useState(null);
   const [observations, setObservations] = useState();
+  const [types, setTypes] = useState([]);
   const [type, setType] = useState();
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true);
+    ListDocumentTypes(setTypes);
+  };
 
-  const { newDocument } = useDocuments();
+  const { newDocument, ListDocumentTypes } = useDocuments();
 
   const date = getDate();
 
@@ -45,7 +49,6 @@ const New_document = ({ expedientId }) => {
     newDocument(formData, setShow);
   };
 
-  console.log(file, "archivo selecionado");
   return (
     <>
       <Dropdown.Item onClick={handleShow}>Vincular Archivo</Dropdown.Item>
@@ -74,18 +77,20 @@ const New_document = ({ expedientId }) => {
               className="document-input"
               onChange={(e) => setFile(e.target.files[0])}
             />
-
             <Form.Label>Tipo de Documento</Form.Label>
-            <Form.Select onChange={(e) => setType(e.target.value)}>
-              <option>Elegir tipo del documento</option>
-              <option value="Factura">Factura</option>
-              <option value="Informe">Informe</option>
-              <option value="CV">CV</option>
-              <option value="Auditoria">Auditoria</option>
-              <option value="Proyecto">Plan</option>
-              <option value="Contrato">Contrato</option>
-              <option value="Publicidad">Publicidad</option>
-            </Form.Select>
+            <Form.Group>
+              <Form.Select
+                aria-label="Default select example"
+                onChange={(e) => setType(e.target.value)}
+              >
+                <option label="Selecionar"></option>
+                {types.map((e, index) => (
+                  <option value={e.id} key={index}>
+                    {e.descripcion}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
 
             <label className="document-label" htmlFor="">
               Descripcion :
@@ -98,6 +103,7 @@ const New_document = ({ expedientId }) => {
               className="document-textarea"
               cols="100"
               rows="10"
+              value={observations}
               onChange={(e) => setObservations(e.target.value)}
             ></textarea>
           </form>

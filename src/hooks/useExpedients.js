@@ -60,13 +60,15 @@ const useExpedients = () => {
     try {
       if (currentPage > 1) {
         const { data } = await axios.get(
-          `${BaseUrl}/expedientes?page=${currentPage}`
+          `${BaseUrl}/expedientes?page=${currentPage}&orderBy=fechaCaratulacion&orientation=desc`
         );
 
         setExpedients(data.items);
         setTotalPages(data.totalPages);
       } else {
-        const { data } = await axios.get(`${BaseUrl}/expedientes`);
+        const { data } = await axios.get(
+          `${BaseUrl}/expedientes?orderBy=fechaCaratulacion&orientation=desc`
+        );
 
         setExpedients(data.items);
         setTotalPages(data.totalPages);
@@ -210,6 +212,40 @@ const useExpedients = () => {
     }
   };
 
+  const expedientPass = async ({
+    userId,
+    userReceiver,
+    date,
+    expedientId,
+    observations,
+    setShow,
+  }) => {
+    try {
+      await axios.post(`${BaseUrl}/expedientes/${expedientId}/pase`, {
+        fechaHora: date,
+        observaciones: observations,
+        expedienteId: expedientId,
+        usuarioEmisorId: userId,
+        usuarioReceptorId: userReceiver.id,
+      });
+
+      setShow(false);
+      Swal.fire({
+        iconHtml: customIcon,
+        text: `Expediente enviado exitosamente a ${userReceiver.nombre} ${userReceiver.apellido}`,
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
   return {
     newExpedient,
     updateExpedient,
@@ -219,6 +255,7 @@ const useExpedients = () => {
     searchExpedients,
     lastExpedientNumber,
     listExpedientStates,
+    expedientPass,
   };
 };
 

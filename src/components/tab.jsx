@@ -6,6 +6,7 @@ import New_Expedient from "./modal/new_expedient";
 import DocumentsTable from "./table/DocumentsTable";
 import ExpedientsTable from "./table/ExpedientsTable";
 import UsersTable from "./table/UsersTable";
+import ExpedientsSearchTable from "./table/ExpedientsSearchTable";
 import New_document from "./modal/new_document";
 import InputSearch from "./inputSearch";
 import New_User from "./modal/new_user";
@@ -118,7 +119,7 @@ const Tab = () => {
               setTotalPages={setTotalPages}
               currentPage={currentPage}
             />
-            <ExpedientsTable expedients={resultSearch} />
+            <ExpedientsSearchTable resultSearch={resultSearch} />
             <Pagination
               totalPages={totalPages}
               setCurrentPage={setCurrentPage}

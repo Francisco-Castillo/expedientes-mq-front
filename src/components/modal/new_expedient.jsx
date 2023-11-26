@@ -20,7 +20,7 @@ const New_Expedient = () => {
   // const [date, setDate] = useState(new Date());
   const [expedientNumber, setExpedientNumber] = useState();
   const [reference, setReference] = useState();
-  const [typeExpedient, setTypeExpedient] = useState("Subsidio");
+  const [expedientTypes, setExpedientTypes] = useState([]);
   const [codigoTramite, setCodigoTramite] = useState();
   const [description, setDescription] = useState();
   const [iniciador, setIniciador] = useState();
@@ -34,7 +34,8 @@ const New_Expedient = () => {
 
   const [show, setShow] = useState(false);
 
-  const { newExpedient, lastExpedientNumber } = useExpedients();
+  const { newExpedient, lastExpedientNumber, listExpedientTypes } =
+    useExpedients();
 
   const { getAreas } = useAreas();
 
@@ -45,6 +46,7 @@ const New_Expedient = () => {
     setShow(true);
     getAreas(setAreas);
     lastExpedientNumber(setExpedientNumber);
+    listExpedientTypes(setExpedientTypes);
   };
 
   const handleSubmit = async (e) => {
@@ -56,18 +58,14 @@ const New_Expedient = () => {
       date,
       description,
       codigoTramite,
-      typeExpedient,
+      expedientTypes,
       userId,
       areaName,
       setShow
     );
   };
 
-  useEffect(() => {
-    console.log(`${expedientNumber}-${codigoPresupuestario}`);
-    console.log(Number(expedientNumber) + 1);
-    console.log(areas);
-  }, [show, codigoPresupuestario]);
+  useEffect(() => {}, [show, codigoPresupuestario]);
 
   return (
     <>
@@ -103,10 +101,9 @@ const New_Expedient = () => {
 
             <Form.Group className="mb-3">
               <Form.Control
-                type="number"
                 defaultValue={expedientNumber}
                 readOnly
-                style={{ width: "50%" }}
+                style={{ width: "20%", marginBottom: "10px" }}
               />
               <Form.Select
                 aria-label="Default select example"
@@ -116,7 +113,9 @@ const New_Expedient = () => {
                 <option>Codigo Presupuestario</option>
                 {areas.map((area, index) => (
                   <option value={area.codigoPresupuestario} key={index}>
-                    {`${area.codigoPresupuestario} - ${area.descripcion}`}
+                    {area.codigoPresupuestario
+                      ? `${area.codigoPresupuestario} - ${area.descripcion}`
+                      : null}
                   </option>
                 ))}
               </Form.Select>
@@ -127,16 +126,15 @@ const New_Expedient = () => {
             <Form.Group className="mb-3">
               <Form.Select
                 aria-label="Default select example"
-                value={typeExpedient}
+                value={expedientTypes}
                 onChange={(e) => setTypeExpedient(e.target.value)}
               >
-                <option value="Subsidio">Subsidio</option>
-                <option value="Pago">Pago</option>
-                <option value="Compra">Compra</option>
-                <option value="Personal">Personal</option>
-                <option value="Solicitud de servicio">
-                  Solicitud de servicio
-                </option>
+                <option>Selecionar</option>
+                {expedientTypes.map((type, index) => (
+                  <option value={type} key={index}>
+                    {type}
+                  </option>
+                ))}
               </Form.Select>
             </Form.Group>
 
@@ -165,7 +163,7 @@ const New_Expedient = () => {
             <Form.Group className="mb-3">
               <Form.Select
                 aria-label="Default select example"
-                value={typeExpedient}
+                // value={expedientTypes}
                 onChange={(e) => setCodigoTramite(e.target.value)}
               >
                 <option value="Subsidio">Pago de factura</option>
