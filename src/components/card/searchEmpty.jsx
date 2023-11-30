@@ -20,10 +20,10 @@ const SearchEmpty = () => {
           borderStyle: "none",
         }}
       >
-        <Card.Img
+        {/* <Card.Img
           variant="top"
           src="https://i.postimg.cc/V669bTjv/6016221.png"
-        />
+        /> */}
         <Card.Body>
           <Card.Title style={{ textAlign: "center" }}>
             Su búsqueda no arrojó ningún resultado

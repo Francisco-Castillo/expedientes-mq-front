@@ -7,10 +7,7 @@ import getDate from "../../helpers/getDate";
 
 import useExpedients from "../../hooks/useExpedients";
 
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Dropdown from "react-bootstrap/Dropdown";
-import Form from "react-bootstrap/Form";
+import { Form, Dropdown, Modal, Button } from "react-bootstrap";
 
 import TuComponente from "../searchUser";
 
@@ -36,7 +33,9 @@ const MakePass = ({ expedientId }) => {
   const handleSubmit = () => {
     expedientPass(
       userId,
-      userReceiver,
+      userReceiver.id,
+      userReceiver.nombre,
+      userReceiver.apellido,
       date,
       expedientId,
       observations,
@@ -46,7 +45,8 @@ const MakePass = ({ expedientId }) => {
 
   useEffect(() => {
     getExpedient(setExpedient, expedientId);
-  }, [userReceiver]);
+  }, []);
+
   return (
     <>
       <Dropdown.Item variant="light" onClick={handleShow}>
@@ -80,7 +80,7 @@ const MakePass = ({ expedientId }) => {
             </Form.Group>
 
             <Form.Label htmlFor="">Usuario :</Form.Label>
-            <TuComponente setUserReceiverId={setUserReceiver} />
+            <TuComponente setUserReceiver={setUserReceiver} />
           </Form>
         </Modal.Body>
         <Modal.Footer

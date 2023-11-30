@@ -1,7 +1,9 @@
-.tab-header {
+.tabExpedients-header {
   display: flex;
   margin-bottom: 5px;
   margin-top: 5px;
+  width: 25%;
+  gap: 10px;
 }
 
 .tab {

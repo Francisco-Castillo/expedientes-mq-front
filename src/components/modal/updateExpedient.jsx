@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import Dropdown from "react-bootstrap/Dropdown";
+import { Dropdown, Form, Modal, Button } from "react-bootstrap";
 
 import useExpedients from "../../hooks/useExpedients";
 
@@ -11,22 +8,23 @@ import { IoIosSave } from "react-icons/io";
 
 const UpdateExpedient = ({ expedientId }) => {
   const [expedient, setExpedient] = useState({});
-  const [state, setState] = useState();
+  const [states, setStates] = useState([]);
+  const [state, setState] = useState(null);
 
-  const { getExpedient, updateExpedient } = useExpedients();
+  const { getExpedient, updateExpedient, listExpedientStates } =
+    useExpedients();
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true);
     getExpedient(setExpedient, expedientId);
+    listExpedientStates(setStates);
   };
 
   const handleUpdate = async () => {
     updateExpedient(state, setShow, expedientId);
   };
-
-  console.log(expedient);
 
   return (
     <>
@@ -41,12 +39,15 @@ const UpdateExpedient = ({ expedientId }) => {
       >
         <Modal.Header
           closeButton
-          style={{ backgroundColor: "rgba(235, 87, 87, 1)", color: "white" }}
+          style={{
+            backgroundColor: "rgba(235, 87, 87, 1)",
+            color: "white",
+          }}
         >
-          <Modal.Title></Modal.Title>
+          <Modal.Title>{`Expediente  ${expedient.numero}`}</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ padding: "30px" }}>
-          <Form>
+          <Form id="expedient-form">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Iniciado</Form.Label>
               <Form.Control
@@ -54,57 +55,31 @@ const UpdateExpedient = ({ expedientId }) => {
                 defaultValue={expedient.fechaCaratulacion}
                 readOnly
               />
-              <Form.Label>Numero</Form.Label>
-              <Form.Control
-                type="text"
-                defaultValue={expedient.numero}
-                readOnly
-              />
+            </Form.Group>
+            <Form.Group className="mb-3">
               <Form.Label>Tipo de Expediente</Form.Label>
               <Form.Control
                 type="text"
                 defaultValue={expedient.tipo}
                 readOnly
               />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              {" "}
               <Form.Label>Estado</Form.Label>
               <Form.Select
-                aria-label="Selecionar estado"
+                aria-label="Seleccionar estado"
                 onChange={(e) => setState(e.target.value)}
               >
-                <option>Cambiar estado</option>
-                <option
-                  defaultValue="Iniciado"
-                  disabled={expedient.estado === "Iniciado"}
-                >
-                  Iniciado
-                </option>
-                <option
-                  value="En Progreso"
-                  disabled={expedient.estado === "En Progreso"}
-                >
-                  En Progreso
-                </option>
-                <option
-                  value="Completado"
-                  disabled={expedient.estado === "Completado"}
-                >
-                  Completado
-                </option>
-                <option
-                  value="Suspendido"
-                  disabled={expedient.estado === "Suspendido"}
-                >
-                  Suspendido
-                </option>
-                <option value="Baja" disabled={expedient.estado === "Baja"}>
-                  Baja
-                </option>
+                <option value="">Seleccionar Estado</option>
+                {states.map((state, index) => (
+                  <option value={state} key={index}>
+                    {state}
+                  </option>
+                ))}
               </Form.Select>
             </Form.Group>
-            <Form.Group
-              className="mb-3"
-              //   controlId="exampleForm.ControlTextarea1"
-            >
+            <Form.Group className="mb-3">
               <Form.Label>Descripcion</Form.Label>
               <Form.Control
                 as="textarea"

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Dropdown from "react-bootstrap/Dropdown";
+import { Dropdown, Modal, Button, Form } from "react-bootstrap";
 
 import useUsers from "../../hooks/useUsers";
 import useAreas from "../../hooks/useAreas";
@@ -12,33 +10,34 @@ const UserEdit = ({ userEmail }) => {
   const [lastName, setLastName] = useState();
   const [DNI, setDNI] = useState();
   const [email, setEmail] = useState();
-  const [dependence, setDependence] = useState();
+  const [userArea, setUserArea] = useState();
 
   const [areas, setAreas] = useState([]);
-
   const [user, SetUser] = useState({});
 
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
 
   const { updateUser, getUser } = useUsers();
   const { getAreas } = useAreas();
 
-  const handleShow = (e) => {
-    e.preventDefault();
-    setShow(true);
-    getUser(SetUser, userEmail);
-  };
+  const handleClose = () => setShow(false);
+  const handleShow = (e) => setShow(true);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     updateUser(name, lastName, DNI, email, user.id, setShow);
   };
 
+  const handleUpdate = async () => {
+    await getAreas(setAreas);
+    await getUser(SetUser, userEmail);
+    const area = await user.area;
+    setUserArea(area.descripcion);
+  };
+
   useEffect(() => {
-    getAreas(setAreas);
-    console.log(userEmail);
-  }, []);
+    handleUpdate();
+  }, [show]);
 
   return (
     <>
@@ -68,73 +67,80 @@ const UserEdit = ({ userEmail }) => {
           <Modal.Title>Editar Usuario</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ padding: "30px" }}>
-          <form className="expedient-form">
-            <label className="expedient-label" htmlFor="">
-              Dependencia :
-            </label>
+          <Form id="expedient-form">
+            <Form.Group className="mb-3">
+              <Form.Label className="expedient-label" htmlFor="">
+                Dependencia :
+              </Form.Label>
 
-            <select
-              style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
-              className="form-select"
-              aria-label="Default select example"
-              onChange={(e) => setDependence(e.target.value)}
-            >
-              <option>Seleccionar dependencia</option>
-              {areas.map((area, index) => (
-                <option
-                  value={area.areaId}
-                  key={index}
-                  disabled={user.dependencia === area.descripcion}
-                >
-                  {area.descripcion}
-                </option>
-              ))}
-            </select>
+              <Form.Select
+                style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
+                className="form-select"
+                aria-label="Default select example"
+                onChange={(e) => setDependence(e.target.value)}
+              >
+                <option>Seleccionar dependencia</option>
+                {areas.map((area, index) => (
+                  <option
+                    value={area.areaId}
+                    key={index}
+                    disabled={userArea === area.descripcion}
+                  >
+                    {area.descripcion}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="expedient-label" htmlFor="">
+                Nombre :
+              </Form.Label>
+              <Form.Control
+                style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
+                type="text"
+                className="expedient-input"
+                defaultValue={user.nombre}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="expedient-label" htmlFor="">
+                Apellido :
+              </Form.Label>
+              <Form.Control
+                style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
+                type="text"
+                className="expedient-input"
+                defaultValue={user.apellido}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </Form.Group>
 
-            <label className="expedient-label" htmlFor="">
-              Nombre :
-            </label>
-            <input
-              style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
-              type="text"
-              className="expedient-input"
-              defaultValue={user.nombre}
-              onChange={(e) => setName(e.target.value)}
-            />
-
-            <label className="expedient-label" htmlFor="">
-              Apellido :
-            </label>
-            <input
-              style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
-              type="text"
-              className="expedient-input"
-              defaultValue={user.apellido}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-
-            <label className="expedient-label" htmlFor="">
-              DNI :
-            </label>
-            <input
-              style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
-              type="text"
-              className="expedient-input"
-              defaultValue={user.dni}
-              onChange={(e) => setDNI(e.target.value)}
-            />
-
-            <label className="expedient-label" htmlFor="">
-              Correo :
-            </label>
-            <input
-              style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
-              type="email"
-              className="expedient-input"
-              defaultValue={user.email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </form>
+            <Form.Group className="mb-3">
+              <Form.Label className="expedient-label" htmlFor="">
+                DNI :
+              </Form.Label>
+              <Form.Control
+                style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
+                type="text"
+                className="expedient-input"
+                defaultValue={user.dni}
+                onChange={(e) => setDNI(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label className="expedient-label" htmlFor="">
+                Correo :
+              </Form.Label>
+              <Form.Control
+                style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
+                type="email"
+                className="expedient-input"
+                defaultValue={user.email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
         </Modal.Body>
         <Modal.Footer
           style={{

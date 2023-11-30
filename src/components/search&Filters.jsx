@@ -12,7 +12,7 @@ import Button from "react-bootstrap/Button";
 import "../styles/search.css";
 
 const InputSearch = ({ setResultSearch, currentPage, setTotalPages }) => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(null);
   const [filterState, setFilterState] = useState("");
   const [filterExpedientType, setFilterExpedientType] = useState("");
   const [filterStartDate, setFilterStartDate] = useState("");
@@ -43,16 +43,7 @@ const InputSearch = ({ setResultSearch, currentPage, setTotalPages }) => {
   };
 
   useEffect(() => {
-    searchExpedients(
-      setResultSearch,
-      currentPage,
-      search,
-      setTotalPages,
-      filterStartDate,
-      filterEndDate,
-      filterState,
-      filterExpedientType
-    );
+    handleSearch();
     listExpedientTypes(setExpedientTypes);
     listExpedientStates(setExpedientStates);
   }, [
@@ -99,7 +90,7 @@ const InputSearch = ({ setResultSearch, currentPage, setTotalPages }) => {
               value={filterState}
               onChange={(e) => setFilterState(e.target.value)}
             >
-              <option value="">Selecionar Estado</option>
+              <option value="">Seleccionar Estado</option>
               {expedientStates.map((state, index) => (
                 <option value={state} key={index}>
                   {state}
@@ -110,12 +101,14 @@ const InputSearch = ({ setResultSearch, currentPage, setTotalPages }) => {
         </Col>
         <Col>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label style={{ color: "white" }}>Tipo</Form.Label>
+            <Form.Label style={{ color: "white", fontSize: "20px" }}>
+              Tipo
+            </Form.Label>
             <Form.Select
               aria-label="Default select example"
               onChange={(e) => setFilterExpedientType(e.target.value)}
             >
-              <option value="">Selecionar tipo</option>
+              <option value="">Seleccionar tipo</option>
               {expedientTypes.map((type, index) => (
                 <option value={type} key={index}>
                   {type}
@@ -126,7 +119,10 @@ const InputSearch = ({ setResultSearch, currentPage, setTotalPages }) => {
         </Col>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label id="basic-addon1" style={{ color: "white" }}>
+            <Form.Label
+              id="basic-addon1"
+              style={{ color: "white", fontSize: "20px" }}
+            >
               Fecha de Inicio
             </Form.Label>
             <Form.Control
@@ -139,7 +135,10 @@ const InputSearch = ({ setResultSearch, currentPage, setTotalPages }) => {
         <Col>
           {" "}
           <Form.Group className="mb-3">
-            <Form.Label id="basic-addon1" style={{ color: "white" }}>
+            <Form.Label
+              id="basic-addon1"
+              style={{ color: "white", fontSize: "20px" }}
+            >
               Fecha de Finalizacion
             </Form.Label>
             <Form.Control

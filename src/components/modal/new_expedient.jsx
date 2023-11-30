@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
+import { Form, Button, Modal } from "react-bootstrap";
 
 import useExpedients from "../../hooks/useExpedients";
 import useAreas from "../../hooks/useAreas";
@@ -129,7 +127,7 @@ const New_Expedient = () => {
                 value={expedientTypes}
                 onChange={(e) => setTypeExpedient(e.target.value)}
               >
-                <option>Selecionar</option>
+                <option>seleccionar</option>
                 {expedientTypes.map((type, index) => (
                   <option value={type} key={index}>
                     {type}

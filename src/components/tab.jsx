@@ -2,15 +2,14 @@ import React, { useEffect, useState } from "react";
 
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
-import New_Expedient from "./modal/new_expedient";
 import DocumentsTable from "./table/DocumentsTable";
-import ExpedientsTable from "./table/ExpedientsTable";
 import UsersTable from "./table/UsersTable";
 import ExpedientsSearchTable from "./table/ExpedientsSearchTable";
 import New_document from "./modal/new_document";
-import InputSearch from "./inputSearch";
+import SearchAndFilters from "./search&Filters";
 import New_User from "./modal/new_user";
 import Pagination from "./Pagination";
+import ExpedientsTab from "./expedientsTab";
 
 import useExpedients from "../hooks/useExpedients";
 import useDocuments from "../hooks/useDocuments";
@@ -38,7 +37,7 @@ const Tab = () => {
   const { getDocuments } = useDocuments();
   const { getUsers } = useUsers();
 
-  const { areaId } = decodeToken(token);
+  const { areaId, userId } = decodeToken(token);
 
   const authorizedLevel = import.meta.env.VITE_HIGH_LVL;
 
@@ -50,7 +49,7 @@ const Tab = () => {
 
   useEffect(() => {
     if (activeTab === "Expedientes") {
-      getExpedients(setExpedients, setTotalPages, currentPage);
+      getExpedients(setExpedients, userId);
     } else if (activeTab === "Documentos") {
       getDocuments(setDocuments, currentPage, setTotalPages);
     } else if (activeTab === "Usuarios") {
@@ -92,9 +91,8 @@ const Tab = () => {
       <div className="tab-content">
         {activeTab == "Expedientes" && (
           <div>
-            <New_Expedient />
-            <ExpedientsTable expedients={expedients} />
-            <Pagination
+            <ExpedientsTab
+              expedients={expedients}
               totalPages={totalPages}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
@@ -105,22 +103,17 @@ const Tab = () => {
           <div>
             <New_document />
             <DocumentsTable documents={documents} />
-            <Pagination
-              totalPages={totalPages}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-            />
           </div>
         )}
         {activeTab == "Consulta" && (
           <div>
-            <InputSearch
+            <SearchAndFilters
               setResultSearch={setResultSearch}
               setTotalPages={setTotalPages}
               currentPage={currentPage}
             />
-            <ExpedientsSearchTable resultSearch={resultSearch} />
-            <Pagination
+            <ExpedientsSearchTable
+              resultSearch={resultSearch}
               totalPages={totalPages}
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}

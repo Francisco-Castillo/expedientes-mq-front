@@ -10,9 +10,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <section className="sections">
-        <Tab />
-      </section>
+      <Tab />
     </>
   );
 };

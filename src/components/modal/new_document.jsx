@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import Dropdown from "react-bootstrap/Dropdown";
+import { Button, Modal, Form, Dropdown } from "react-bootstrap";
 
 import useDocuments from "../../hooks/useDocuments";
 
@@ -49,6 +46,8 @@ const New_document = ({ expedientId }) => {
     newDocument(formData, setShow);
   };
 
+  // console.log([...formData]);
+
   return (
     <>
       <Dropdown.Item onClick={handleShow}>Vincular Archivo</Dropdown.Item>
@@ -83,7 +82,7 @@ const New_document = ({ expedientId }) => {
                 aria-label="Default select example"
                 onChange={(e) => setType(e.target.value)}
               >
-                <option label="Selecionar"></option>
+                <option label="Seleccionar"></option>
                 {types.map((e, index) => (
                   <option value={e.id} key={index}>
                     {e.descripcion}
@@ -103,7 +102,7 @@ const New_document = ({ expedientId }) => {
               className="document-textarea"
               cols="100"
               rows="10"
-              value={observations}
+              // value={observations}
               onChange={(e) => setObservations(e.target.value)}
             ></textarea>
           </form>

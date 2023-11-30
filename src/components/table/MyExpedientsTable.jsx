@@ -1,15 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { useNavigate } from "react-router-dom";
-
-import New_document from "../modal/new_document";
-
-import UpdateExpedient from "../modal/updateExpedient";
+import useExpedients from "../../hooks/useExpedients";
 import Pagination from "../Pagination";
 
-import MakePass from "../modal/makePass";
-
 import { Table, Dropdown } from "react-bootstrap";
+
+import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
@@ -19,13 +15,18 @@ import { IoSettingsSharp } from "react-icons/io5";
 
 import "../../styles/table.css";
 
-const ExpedientsTable = ({
-  expedients,
-  totalPages,
-  setCurrentPage,
-  currentPage,
-}) => {
+const MyExpedientsTable = ({}) => {
+  const [expedients, setExpedients] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [userName, setUserName] = useState("");
+
+  const [totalPages, setTotalPages] = useState(0);
+
   const { token } = useSelector((state) => state.auth);
+
+  const { userId } = decodeToken(token);
+
+  const { getMyExpedients } = useExpedients();
 
   const navigation = useNavigate();
 
@@ -33,7 +34,9 @@ const ExpedientsTable = ({
     navigation(`/expedient/${expedientId}`);
   };
 
-  const { name, lastName } = decodeToken(token);
+  useEffect(() => {
+    getMyExpedients(setExpedients, setTotalPages, currentPage, userId);
+  }, []);
 
   return (
     <>
@@ -45,7 +48,7 @@ const ExpedientsTable = ({
             <th>Tipo de Expediente</th>
             <th>Descripción</th>
             <th>Estado</th>
-            <th>Enviado por</th>
+            <th>Caratulado por</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -57,7 +60,7 @@ const ExpedientsTable = ({
               <td>{expedient.tipo}</td>
               <td>{expedient.descripcion}</td>
               <td>{expedient.estado}</td>
-              <td>{`${expedient.usuarioEmisor.nombre} ${expedient.usuarioEmisor.apellido}`}</td>
+              <td>{`${expedient.usuario.nombre} ${expedient.usuario.apellido}`}</td>
               <td>
                 <Dropdown>
                   <Dropdown.Toggle
@@ -73,9 +76,6 @@ const ExpedientsTable = ({
                     <Dropdown.Item onClick={() => viewExpedient(expedient.id)}>
                       Ver expediente
                     </Dropdown.Item>
-                    <UpdateExpedient expedientId={expedient.id} />
-                    <New_document expedientId={expedient.id} />
-                    <MakePass expedientId={expedient.id}></MakePass>
                   </Dropdown.Menu>
                 </Dropdown>
               </td>
@@ -92,4 +92,4 @@ const ExpedientsTable = ({
   );
 };
 
-export default ExpedientsTable;
+export default MyExpedientsTable;

@@ -56,18 +56,43 @@ const useExpedients = () => {
     }
   };
 
-  const getExpedients = async (setExpedients, setTotalPages, currentPage) => {
+  //
+
+  const getExpedients = async (setExpedients, userId) => {
+    try {
+      const { data } = await axios.get(
+        `${BaseUrl}/expedientes/bandeja-entrada/${userId}`
+      );
+
+      setExpedients(data);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
+  const getMyExpedients = async (
+    setExpedients,
+    setTotalPages,
+    currentPage,
+    userId
+  ) => {
     try {
       if (currentPage > 1) {
         const { data } = await axios.get(
-          `${BaseUrl}/expedientes?page=${currentPage}&orderBy=fechaCaratulacion&orientation=desc`
+          `${BaseUrl}/expedientes?caratuladorId=${userId}&page=${currentPage}&orderBy=fechaCaratulacion&orientation=desc`
         );
 
         setExpedients(data.items);
         setTotalPages(data.totalPages);
       } else {
         const { data } = await axios.get(
-          `${BaseUrl}/expedientes?orderBy=fechaCaratulacion&orientation=desc`
+          `${BaseUrl}/expedientes?caratuladorId=${userId}&orderBy=fechaCaratulacion&orientation=desc`
         );
 
         setExpedients(data.items);
@@ -212,27 +237,31 @@ const useExpedients = () => {
     }
   };
 
-  const expedientPass = async ({
+  const expedientPass = async (
     userId,
-    userReceiver,
+    userReceiverId,
+    userReceiverName,
+    userReceiverApellido,
     date,
     expedientId,
     observations,
-    setShow,
-  }) => {
+    setShow
+  ) => {
     try {
-      await axios.post(`${BaseUrl}/expedientes/${expedientId}/pase`, {
-        fechaHora: date,
-        observaciones: observations,
-        expedienteId: expedientId,
-        usuarioEmisorId: userId,
-        usuarioReceptorId: userReceiver.id,
-      });
-
+      const pase = await axios.post(
+        `${BaseUrl}/expedientes/${expedientId}/pase`,
+        {
+          fechaHora: date,
+          observaciones: observations,
+          expedienteId: expedientId,
+          usuarioEmisorId: userId,
+          usuarioReceptorId: Number(userReceiverId),
+        }
+      );
       setShow(false);
       Swal.fire({
         iconHtml: customIcon,
-        text: `Expediente enviado exitosamente a ${userReceiver.nombre} ${userReceiver.apellido}`,
+        text: `Expediente enviado exitosamente a ${userReceiverName} ${userReceiverApellido}`,
         confirmButtonColor: "rgba(235, 87, 87, 1)",
       });
     } catch (error) {
@@ -256,6 +285,7 @@ const useExpedients = () => {
     lastExpedientNumber,
     listExpedientStates,
     expedientPass,
+    getMyExpedients,
   };
 };
 
