@@ -24,7 +24,7 @@ const SearchAndFilters = ({ setResultSearch, currentPage, setTotalPages }) => {
     useExpedients();
 
   const handleSearch = async () => {
-    searchExpedients(
+    await searchExpedients(
       setResultSearch,
       currentPage,
       search,

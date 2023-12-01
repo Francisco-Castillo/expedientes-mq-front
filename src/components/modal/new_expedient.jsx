@@ -15,13 +15,11 @@ import { IoIosSave } from "react-icons/io";
 import "../../styles/new_expedient.css";
 
 const New_Expedient = () => {
-  // const [date, setDate] = useState(new Date());
   const [expedientNumber, setExpedientNumber] = useState();
   const [reference, setReference] = useState();
   const [expedientTypes, setExpedientTypes] = useState([]);
   const [codigoTramite, setCodigoTramite] = useState();
   const [description, setDescription] = useState();
-  const [iniciador, setIniciador] = useState();
   const [codigoPresupuestario, setCodigoPresupuestario] = useState();
 
   const date = getDate();
@@ -62,8 +60,6 @@ const New_Expedient = () => {
       setShow
     );
   };
-
-  useEffect(() => {}, [show, codigoPresupuestario]);
 
   return (
     <>

@@ -1,46 +1,62 @@
-@import url("https://fonts.googleapis.com/css2?family=Average+Sans&family=Public+Sans:wght@700&display=swap");
-
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 75px;
+  height: 100px;
   background-color: rgba(212, 25, 25, 0.79);
-  padding: 0 20px;
+  padding: 0 10px;
   color: white;
   font-family: "Public Sans", sans-serif;
 
-  & .container-logo {
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 20px;
+    text-align: center;
+    & h3 {
+      font-size: 10px;
+    }
+  }
+
+  .container-logo {
     display: flex;
     align-items: center;
   }
+
   & .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+
+    & img {
+      width: 100px;
+    }
   }
-  & .title {
+
+  .title {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-size: 14px;
 
-    & span:first-child {
-      font-size: 14px;
-    }
-
-    & span:last-child {
+    span:last-child {
       font-size: 18px;
     }
   }
-  & .icon-login {
+
+  .icon-login {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
+  }
 
-    & .icon {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
+  .icon {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
   }
 }

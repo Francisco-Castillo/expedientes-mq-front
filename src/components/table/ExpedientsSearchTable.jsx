@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import SearchEmpty from "../card/searchEmpty";
@@ -10,6 +10,7 @@ import Table from "react-bootstrap/Table";
 import { IoSettingsSharp } from "react-icons/io5";
 
 import "../../styles/table.css";
+import LoaderSearch from "../loaders/loaderSearch";
 
 const ExpedientsSearchTable = ({
   resultSearch,
@@ -17,11 +18,19 @@ const ExpedientsSearchTable = ({
   setCurrentPage,
   currentPage,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigation = useNavigate();
 
   const viewExpedient = (expedientId) => {
     navigation(`/expedient/${expedientId}`);
   };
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 500);
+  // }, [isLoading, currentPage, setCurrentPage]);
 
   return (
     <>
@@ -78,6 +87,7 @@ const ExpedientsSearchTable = ({
             totalPages={totalPages}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
+            setIsLoading={setIsLoading}
           />
         </div>
       ) : (

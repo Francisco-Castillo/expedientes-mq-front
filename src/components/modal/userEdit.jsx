@@ -21,7 +21,10 @@ const UserEdit = ({ userEmail }) => {
   const { getAreas } = useAreas();
 
   const handleClose = () => setShow(false);
-  const handleShow = (e) => setShow(true);
+  const handleShow = (e) => {
+    setShow(true);
+    handleUpdate();
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,9 +38,9 @@ const UserEdit = ({ userEmail }) => {
     setUserArea(area.descripcion);
   };
 
-  useEffect(() => {
-    handleUpdate();
-  }, [show]);
+  // useEffect(() => {
+  //   handleUpdate();
+  // }, [show]);
 
   return (
     <>

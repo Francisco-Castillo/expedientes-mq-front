@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
@@ -19,8 +19,6 @@ const MakePass = ({ expedientId }) => {
   const [observations, setObservations] = useState("");
 
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const { getExpedient, expedientPass } = useExpedients();
 
@@ -29,6 +27,13 @@ const MakePass = ({ expedientId }) => {
   const { userId } = decodeToken(token);
 
   const date = getDate();
+
+  const handleClose = () => setShow(false);
+
+  const handleShow = () => {
+    getExpedient(setExpedient, expedientId);
+    setShow(true);
+  };
 
   const handleSubmit = () => {
     expedientPass(
@@ -42,10 +47,6 @@ const MakePass = ({ expedientId }) => {
       setShow
     );
   };
-
-  useEffect(() => {
-    getExpedient(setExpedient, expedientId);
-  }, []);
 
   return (
     <>

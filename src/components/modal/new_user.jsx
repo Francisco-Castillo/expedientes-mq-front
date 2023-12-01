@@ -23,9 +23,9 @@ const New_User = () => {
 
   const { getAreas } = useAreas();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    newUser(name, lastName, DNI, email, areaId, setShow);
+    await newUser(name, lastName, DNI, email, areaId, setShow);
   };
 
   useEffect(() => {

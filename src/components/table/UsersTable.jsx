@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import Dropdown from "react-bootstrap/Dropdown";
-import Table from "react-bootstrap/Table";
+import { Dropdown, Table } from "react-bootstrap";
 
 import Empty from "../card/empty";
 import UserEdit from "../modal/userEdit";
@@ -18,20 +17,17 @@ const UsersTable = () => {
 
   const { getUsers, changeState } = useUsers();
 
-  const handleChangeState = (data) => {
-    console.log(data);
+  const handleChangeState = async (data) => {
     if (data.estado) {
-      changeState(data.id, 0);
+      await changeState(data.id, 0);
     } else {
-      changeState(data.id, 1);
+      await changeState(data.id, 1);
     }
   };
 
   useEffect(() => {
     getUsers(setUsers, setTotalPages, currentPage);
-  }, [currentPage]);
-
-  console.log(users);
+  }, [currentPage, users]);
 
   return (
     <>
@@ -49,11 +45,41 @@ const UsersTable = () => {
         <tbody>
           {users.map((user, index) => (
             <tr key={index}>
-              <td>{user.nombre}</td>
-              <td>{user.apellido}</td>
-              <td>{user.documento}</td>
-              <td>{user.email}</td>
-              <td>{user.dependencia}</td>
+              <td
+                style={{
+                  color: user.estado === 0 ? "rgba(212, 25, 25, 1)" : "inherit",
+                }}
+              >
+                {user.nombre}
+              </td>
+              <td
+                style={{
+                  color: user.estado === 0 ? "rgba(212, 25, 25, 1)" : "inherit",
+                }}
+              >
+                {user.apellido}
+              </td>
+              <td
+                style={{
+                  color: user.estado === 0 ? "rgba(212, 25, 25, 1)" : "inherit",
+                }}
+              >
+                {user.documento}
+              </td>
+              <td
+                style={{
+                  color: user.estado === 0 ? "rgba(212, 25, 25, 1)" : "inherit",
+                }}
+              >
+                {user.email}
+              </td>
+              <td
+                style={{
+                  color: user.estado === 0 ? "rgba(212, 25, 25, 1)" : "inherit",
+                }}
+              >
+                {user.area.descripcion}
+              </td>
               <td>
                 <Dropdown>
                   <Dropdown.Toggle

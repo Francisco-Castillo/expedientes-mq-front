@@ -42,15 +42,13 @@ const useUsers = () => {
     }
   };
 
-  const login = async (username, password, dispatch, onLogin, navigation) => {
+  const login = async (username, password, navigation, onLogin, dispatch) => {
     try {
       const { data } = await axios.post(`${BaseUrl}/login`, {
         username: username,
         password,
       });
-
       dispatch(onLogin(data));
-      navigation("/home");
     } catch (error) {
       if (error.response) {
         console.log(error.response.data.messages[0]);
@@ -81,7 +79,6 @@ const useUsers = () => {
 
       setUsers(data.items);
       setTotalPages(data.totalPages);
-      console.log(data);
     } catch (error) {
       Swal.fire({
         icon: "error",

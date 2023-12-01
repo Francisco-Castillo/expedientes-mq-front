@@ -43,10 +43,8 @@ const New_document = ({ expedientId }) => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    newDocument(formData, setShow);
+    await newDocument(formData, setShow);
   };
-
-  // console.log([...formData]);
 
   return (
     <>

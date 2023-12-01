@@ -10,11 +10,12 @@ import QueryContent from "./queryContent";
 import decodeToken from "../helpers/decodeToken";
 
 import "../styles/tab.css";
+import Welcome from "./card/welcome";
 
 const Tab = () => {
   const { token } = useSelector((state) => state.auth);
 
-  const [activeTab, setActiveTab] = useState("Expedientes");
+  const [activeTab, setActiveTab] = useState();
 
   const { areaId } = decodeToken(token);
 
@@ -56,6 +57,11 @@ const Tab = () => {
       </div>
 
       <div className="tab-content">
+        {activeTab == null && (
+          <div>
+            <Welcome />
+          </div>
+        )}
         {activeTab == "Expedientes" && (
           <div>
             <ExpedientsTab />

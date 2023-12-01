@@ -30,9 +30,7 @@ const Navbar = () => {
   return (
     <header>
       <div className="container-logo">
-        <div className="logo">
-          <img src={mmqicon} alt="" />
-        </div>
+        <img src={mmqicon} alt="" />
         <div className="title">
           <span>Municipalidad de</span>
           <span>Monte Quemado</span>

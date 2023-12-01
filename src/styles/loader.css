@@ -1,0 +1,11 @@
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Esto ocupa toda la altura de la pantalla */
+}
+
+/* Estilos adicionales para el spinner si es necesario */
+.loader-container .spinner-border {
+  /* Agrega estilos personalizados al spinner si es necesario */
+}

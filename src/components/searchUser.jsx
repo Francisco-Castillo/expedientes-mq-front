@@ -13,12 +13,12 @@ const TuComponente = ({ setUserReceiver }) => {
 
   const { searchUser } = useUsers();
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     setSearch(e.target.value);
     if (search.trim() === "") {
       setShowResults(false);
     } else {
-      searchUser(search, setSearchResults);
+      await searchUser(search, setSearchResults);
       setShowResults(true);
     }
   };
