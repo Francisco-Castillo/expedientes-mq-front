@@ -80,7 +80,9 @@ const ExpedientsSearchTable = ({
             currentPage={currentPage}
           />
         </div>
-      ) : null}
+      ) : (
+        <SearchEmpty />
+      )}
     </>
   );
 };

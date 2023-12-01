@@ -5,13 +5,13 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
   const handleNextPage = () => {
-    if (currentPage <= totalPages - 1) {
+    if (currentPage <= totalPages - 2) {
       setCurrentPage((prev) => prev + 1);
     }
   };
 
   const handlePrevPage = () => {
-    if (currentPage != 1) {
+    if (currentPage != 0) {
       setCurrentPage((prev) => prev - 1);
     }
   };

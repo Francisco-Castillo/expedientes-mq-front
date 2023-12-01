@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 
 import Card from "react-bootstrap/Card";
 
-const SearchEmpty = () => {
+const Empty = () => {
   return (
     <Container
       style={{
@@ -12,7 +12,7 @@ const SearchEmpty = () => {
         alignItems: "center",
         justifyContent: "center",
         width: "18rem",
-        marginTop: "100px",
+        marginTop:"100px"
       }}
     >
       <Card
@@ -27,7 +27,7 @@ const SearchEmpty = () => {
         /> */}
         <Card.Body>
           <Card.Title style={{ textAlign: "center" }}>
-            Su búsqueda no arrojó ningún resultado
+            Sin resultados
           </Card.Title>
         </Card.Body>
       </Card>
@@ -35,4 +35,4 @@ const SearchEmpty = () => {
   );
 };
 
-export default SearchEmpty;
+export default Empty;

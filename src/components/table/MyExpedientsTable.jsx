@@ -14,11 +14,11 @@ import decodeToken from "../../helpers/decodeToken";
 import { IoSettingsSharp } from "react-icons/io5";
 
 import "../../styles/table.css";
+import Empty from "../card/empty";
 
-const MyExpedientsTable = ({}) => {
+const MyExpedientsTable = () => {
   const [expedients, setExpedients] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [userName, setUserName] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
 
   const [totalPages, setTotalPages] = useState(0);
 
@@ -35,8 +35,14 @@ const MyExpedientsTable = ({}) => {
   };
 
   useEffect(() => {
-    getMyExpedients(setExpedients, setTotalPages, currentPage, userId);
-  }, []);
+    getMyExpedients(
+      setExpedients,
+      setTotalPages,
+      currentPage,
+      userId,
+      setCurrentPage
+    );
+  }, [currentPage]);
 
   return (
     <>
@@ -83,11 +89,15 @@ const MyExpedientsTable = ({}) => {
           ))}
         </tbody>
       </Table>
-      <Pagination
-        totalPages={totalPages}
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-      />
+      {expedients.length ? (
+        <Pagination
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
+      ) : (
+        <Empty />
+      )}
     </>
   );
 };

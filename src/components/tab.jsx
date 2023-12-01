@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
-import DocumentsTable from "./table/DocumentsTable";
 import UsersTable from "./table/UsersTable";
-import ExpedientsSearchTable from "./table/ExpedientsSearchTable";
-import New_document from "./modal/new_document";
-import SearchAndFilters from "./search&Filters";
 import New_User from "./modal/new_user";
-import Pagination from "./Pagination";
 import ExpedientsTab from "./expedientsTab";
-
-import useExpedients from "../hooks/useExpedients";
-import useDocuments from "../hooks/useDocuments";
-import useUsers from "../hooks/useUsers";
+import QueryContent from "./queryContent";
 
 import decodeToken from "../helpers/decodeToken";
 
@@ -24,38 +16,13 @@ const Tab = () => {
 
   const [activeTab, setActiveTab] = useState("Expedientes");
 
-  const [expedients, setExpedients] = useState([]);
-  const [documents, setDocuments] = useState([]);
-  const [users, setUsers] = useState([]);
-
-  const [resultSearch, setResultSearch] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const [totalPages, setTotalPages] = useState(0);
-
-  const { getExpedients } = useExpedients();
-  const { getDocuments } = useDocuments();
-  const { getUsers } = useUsers();
-
-  const { areaId, userId } = decodeToken(token);
+  const { areaId } = decodeToken(token);
 
   const authorizedLevel = import.meta.env.VITE_HIGH_LVL;
 
   const handleTabChange = (tabName) => {
     setActiveTab(tabName);
-    setCurrentPage(1);
-    setTotalPages(0);
   };
-
-  useEffect(() => {
-    if (activeTab === "Expedientes") {
-      getExpedients(setExpedients, userId);
-    } else if (activeTab === "Documentos") {
-      getDocuments(setDocuments, currentPage, setTotalPages);
-    } else if (activeTab === "Usuarios") {
-      getUsers(setUsers, setTotalPages, currentPage);
-    }
-  }, [activeTab, currentPage, documents, users]);
 
   return (
     <>
@@ -91,44 +58,24 @@ const Tab = () => {
       <div className="tab-content">
         {activeTab == "Expedientes" && (
           <div>
-            <ExpedientsTab
-              expedients={expedients}
-              totalPages={totalPages}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-            />
+            <ExpedientsTab />
           </div>
         )}
-        {activeTab == "Documentos" && (
+        {/* {activeTab == "Documentos" && (
           <div>
             <New_document />
-            <DocumentsTable documents={documents} />
+            <DocumentsTable />
           </div>
-        )}
+        )} */}
         {activeTab == "Consulta" && (
           <div>
-            <SearchAndFilters
-              setResultSearch={setResultSearch}
-              setTotalPages={setTotalPages}
-              currentPage={currentPage}
-            />
-            <ExpedientsSearchTable
-              resultSearch={resultSearch}
-              totalPages={totalPages}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-            />
+            <QueryContent />
           </div>
         )}
         {activeTab == "Usuarios" && (
           <div>
             <New_User />
-            <UsersTable users={users} />
-            <Pagination
-              totalPages={totalPages}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-            />
+            <UsersTable />
           </div>
         )}
       </div>

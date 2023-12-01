@@ -75,19 +75,13 @@ const useUsers = () => {
 
   const getUsers = async (setUsers, setTotalPages, currentPage) => {
     try {
-      if (currentPage > 1) {
-        const { data } = await axios.get(
-          `${BaseUrl}/usuarios?page=${currentPage}`
-        );
+      const { data } = await axios.get(
+        `${BaseUrl}/usuarios?page=${currentPage}`
+      );
 
-        setUsers(data.items);
-        setTotalPages(data.totalPages);
-      } else {
-        const { data } = await axios.get(`${BaseUrl}/usuarios`);
-
-        setUsers(data.items);
-        setTotalPages(data.totalPages);
-      }
+      setUsers(data.items);
+      setTotalPages(data.totalPages);
+      console.log(data);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -171,10 +165,11 @@ const useUsers = () => {
   };
 
   const changeState = async (uid, estado) => {
+    console.log(uid, estado);
     try {
       await axios.put(`${BaseUrl}/usuarios/cambiar-estado`, {
-        uid,
-        estado,
+        id: String(uid),
+        estado: estado,
       });
 
       Swal.fire({

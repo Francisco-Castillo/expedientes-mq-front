@@ -41,15 +41,7 @@ const UserEdit = ({ userEmail }) => {
 
   return (
     <>
-      <Dropdown.Item
-        variant="light"
-        style={{
-          borderRadius: "4px",
-          padding: "10px 20px",
-          marginBottom: "10px",
-        }}
-        onClick={handleShow}
-      >
+      <Dropdown.Item variant="light" onClick={handleShow}>
         Editar
       </Dropdown.Item>
 

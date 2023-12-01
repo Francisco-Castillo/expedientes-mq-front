@@ -127,7 +127,7 @@ const New_Expedient = () => {
                 value={expedientTypes}
                 onChange={(e) => setTypeExpedient(e.target.value)}
               >
-                <option>seleccionar</option>
+                <option>Seleccionar</option>
                 {expedientTypes.map((type, index) => (
                   <option value={type} key={index}>
                     {type}

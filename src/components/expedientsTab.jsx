@@ -6,12 +6,7 @@ import MyExpedientsTable from "./table/MyExpedientsTable";
 
 import "../styles/expedientsTab.css";
 
-const ExpedientsTab = ({
-  expedients,
-  totalPages,
-  setCurrentPage,
-  currentPage,
-}) => {
+const ExpedientsTab = ({}) => {
   const [activeTab, setActiveTab] = useState(null);
 
   const handleTabChange = (tabName) => {
@@ -41,12 +36,7 @@ const ExpedientsTab = ({
       <div className="tab-content">
         {activeTab == "Expedientes Entrantes" && (
           <div>
-            <ExpedientsTable
-              expedients={expedients}
-              totalPages={totalPages}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-            />
+            <ExpedientsTable />
           </div>
         )}
         {activeTab == "Mis Expedientes" && (

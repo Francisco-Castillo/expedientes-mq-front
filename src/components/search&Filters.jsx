@@ -11,7 +11,7 @@ import Button from "react-bootstrap/Button";
 
 import "../styles/search.css";
 
-const InputSearch = ({ setResultSearch, currentPage, setTotalPages }) => {
+const SearchAndFilters = ({ setResultSearch, currentPage, setTotalPages }) => {
   const [search, setSearch] = useState(null);
   const [filterState, setFilterState] = useState("");
   const [filterExpedientType, setFilterExpedientType] = useState("");
@@ -153,4 +153,4 @@ const InputSearch = ({ setResultSearch, currentPage, setTotalPages }) => {
   );
 };
 
-export default InputSearch;
+export default SearchAndFilters;

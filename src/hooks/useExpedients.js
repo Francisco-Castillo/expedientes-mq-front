@@ -83,21 +83,15 @@ const useExpedients = () => {
     userId
   ) => {
     try {
-      if (currentPage > 1) {
-        const { data } = await axios.get(
-          `${BaseUrl}/expedientes?caratuladorId=${userId}&page=${currentPage}&orderBy=fechaCaratulacion&orientation=desc`
-        );
+      const { data } = await axios.get(
+        `${BaseUrl}/expedientes?caratuladorId=${userId}&page=${currentPage}&orderBy=fechaCaratulacion&orientation=desc`
+      );
 
-        setExpedients(data.items);
-        setTotalPages(data.totalPages);
-      } else {
-        const { data } = await axios.get(
-          `${BaseUrl}/expedientes?caratuladorId=${userId}&orderBy=fechaCaratulacion&orientation=desc`
-        );
+      setExpedients(data.items);
+      setTotalPages(data.totalPages);
 
-        setExpedients(data.items);
-        setTotalPages(data.totalPages);
-      }
+      setExpedients(data.items);
+      setTotalPages(data.totalPages);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -165,25 +159,14 @@ const useExpedients = () => {
     filterExpedientType
   ) => {
     try {
-      if (currentPage > 1) {
-        const { data } = await axios.get(
-          `${BaseUrl}/expedientes?universalFilter=${search}&startDate=${filterStartDate}&endDate${filterEndDate}&status=${filterState}&type${filterExpedientType}&page=${currentPage}`
-        );
+      const { data } = await axios.get(
+        `${BaseUrl}/expedientes?universalFilter=${search}&startDate=${filterStartDate}&endDate${filterEndDate}&status=${filterState}&type${filterExpedientType}&page=${currentPage}`
+      );
 
-        const serverTotalPages = data.totalPages;
+      const serverTotalPages = data.totalPages;
 
-        setTotalPages(serverTotalPages);
-        setResultSearch(data.items);
-      } else {
-        const { data } = await axios.get(
-          `${BaseUrl}/expedientes?universalFilter=${search}&startDate=${filterStartDate}&endDate${filterEndDate}&status=${filterState}&type${filterExpedientType}`
-        );
-
-        const serverTotalPages = data.totalPages;
-
-        setTotalPages(serverTotalPages);
-        setResultSearch(data.items);
-      }
+      setTotalPages(serverTotalPages);
+      setResultSearch(data.items);
     } catch (error) {
       Swal.fire({
         icon: "error",
