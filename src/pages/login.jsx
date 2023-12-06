@@ -2,9 +2,6 @@ import React, { useState } from "react";
 
 import Loader from "../components/loaders/loader";
 
-import { useDispatch } from "react-redux";
-import { onLogin } from "../store/auth";
-
 import { useNavigate } from "react-router-dom";
 
 import useUsers from "../hooks/useUsers";
@@ -19,21 +16,21 @@ const Login = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const dispatch = useDispatch();
-
   const { login } = useUsers();
-
   const navigation = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    await login(username, password, navigation, onLogin, dispatch);
-
-    setTimeout(() => {
-      setIsLoading(false);
-      navigation("/home");
-    }, 1000); //
+    try {
+      await login(username, password);
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        navigation("/home");
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -65,10 +62,10 @@ const Login = () => {
                   placeholder=""
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <button id="btn-login" type="submit">
+                  Ingresar
+                </button>
               </div>
-              <button id="btn-login" type="submit">
-                Ingresar
-              </button>
             </form>
           </div>
           <div className="container-logo">

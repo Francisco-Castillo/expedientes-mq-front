@@ -1,7 +1,6 @@
 import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 import { onLogout } from "../store/auth";
 
@@ -17,8 +16,6 @@ const Navbar = () => {
   const { token } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
-
-  const navigation = useNavigate();
 
   const { name, lastName } = decodeToken(token);
 
@@ -39,8 +36,8 @@ const Navbar = () => {
       <h3>Sistema de gestión de expedientes</h3>
       <div className="icon-login">
         <div className="icon">
-          <FaUserAlt style={{ fontSize: "30px" }} />
           <span>{`${name} ${lastName}`}</span>
+          <FaUserAlt style={{ fontSize: "30px" }} />
         </div>
         <button
           onClick={logout}

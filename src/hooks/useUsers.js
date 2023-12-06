@@ -1,7 +1,11 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { onLogin } from "../store/auth";
 
 const useUsers = () => {
+  const dispatch = useDispatch();
+
   const customIcon = `
     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder-check" width="30" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -42,12 +46,15 @@ const useUsers = () => {
     }
   };
 
-  const login = async (username, password, navigation, onLogin, dispatch) => {
+  const login = async (username, password) => {
     try {
-      const { data } = await axios.post(`${BaseUrl}/login`, {
-        username: username,
-        password,
-      });
+      const { data } = await axios.post(
+        `https://certificadosfhu.unse.edu.ar:8443/login`,
+        {
+          username,
+          password,
+        }
+      );
       dispatch(onLogin(data));
     } catch (error) {
       if (error.response) {
@@ -162,7 +169,6 @@ const useUsers = () => {
   };
 
   const changeState = async (uid, estado) => {
-    console.log(uid, estado);
     try {
       await axios.put(`${BaseUrl}/usuarios/cambiar-estado`, {
         id: String(uid),

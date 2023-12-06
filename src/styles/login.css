@@ -2,7 +2,6 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Average+Sans&family=Public+Sans:wght@700&display=swap");
 
-
 .container-login {
   width: 100vw;
   height: 100vh;
@@ -17,8 +16,9 @@
   gap: 20px;
 }
 
-.container-form {
-}
+/* .container-form {
+  width: 100%;
+} */
 
 .container-logo {
   display: grid;
@@ -28,6 +28,7 @@
 .container-input {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 #form-login {
@@ -55,11 +56,12 @@
   line-height: 93px;
   letter-spacing: 0em;
   text-align: left;
-
   color: rgba(113, 118, 122, 1);
 }
 
 #escudo {
+  width: 80%;
+  min-width: 400px;
 }
 
 #mmq {
@@ -69,7 +71,7 @@
   font-weight: 600;
   line-height: 56px;
   letter-spacing: 0em;
-  text-align: left;
+  text-align: center;
 }
 
 /* Estilos para etiquetas y campos de entrada */
@@ -94,6 +96,7 @@ label {
   font-weight: 400;
   line-height: 31px;
   letter-spacing: 0em;
+  padding: 10px;
 }
 
 /* Estilos para el botón */
@@ -114,3 +117,44 @@ label {
 /* #btn-login:hover {
   background: rgba(235, 87, 87, 1);
 } */
+@media (max-width: 850px) {
+  .container-logo {
+    width: 100%;
+  }
+
+  /* #escudo {
+    width: 100%;
+  } */
+  #mmq {
+    color: rgba(255, 255, 255, 1);
+    font-family: "Public Sans", sans-serif;
+    font-size: 35px;
+    font-weight: 600;
+    line-height: 56px;
+    letter-spacing: 0em;
+    text-align: center;
+  }
+
+  .container-input {
+    align-items: center;
+    text-align: left;
+    gap: 10px;
+  }
+
+  .input-login {
+    width: 300px;
+  }
+
+  .container-form {
+    width: 100%;
+  }
+
+  #title-welcome {
+    font-size: 50px;
+    text-align: center;
+  }
+
+  #btn-login {
+    width: 300px;
+  }
+}

@@ -28,10 +28,6 @@ const TuComponente = ({ setUserReceiver }) => {
     // setShowResults(false);
   };
 
-  // useEffect(() => {
-  //   console.log(selectedUser, "soy yo");
-  // }, [selectedUser]);
-
   return (
     <div>
       <InputGroup className="mb-3" style={{ position: "relative" }}>

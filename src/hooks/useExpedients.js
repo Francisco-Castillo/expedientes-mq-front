@@ -89,9 +89,6 @@ const useExpedients = () => {
 
       setExpedients(data.items);
       setTotalPages(data.totalPages);
-
-      setExpedients(data.items);
-      setTotalPages(data.totalPages);
     } catch (error) {
       Swal.fire({
         icon: "error",
