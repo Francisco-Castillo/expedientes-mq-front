@@ -39,13 +39,13 @@ const useDocuments = () => {
     }
   };
 
-  const getDocuments = async (setDocuments, currentPage, setTotalPages) => {
+  const getDocuments = async (expedientId, setDocuments) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3001/api/documents/allDocuments?page=${currentPage}`
+        `${BaseUrl}/expedientes/1?includeDocuments=true`
       );
-      setDocuments(data.items);
-      setTotalPages(data.totalPages);
+      setDocuments(data.documentos);
+      // setTotalPages(data.totalPages);
     } catch (error) {
       Swal.fire({
         icon: "error",

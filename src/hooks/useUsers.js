@@ -2,9 +2,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { onLogin } from "../store/auth";
+import { useNavigate } from "react-router-dom";
 
 const useUsers = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigate();
 
   const customIcon = `
     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder-check" width="30" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -46,16 +48,18 @@ const useUsers = () => {
     }
   };
 
-  const login = async (username, password) => {
+  const login = async (username, password, setIsLoading) => {
     try {
-      const { data } = await axios.post(
-        `https://certificadosfhu.unse.edu.ar:8443/login`,
-        {
-          username,
-          password,
-        }
-      );
+      const { data } = await axios.post(`${BaseUrl}/login`, {
+        username,
+        password,
+      });
       dispatch(onLogin(data));
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        navigation("/home");
+      }, 1000);
     } catch (error) {
       if (error.response) {
         console.log(error.response.data.messages[0]);

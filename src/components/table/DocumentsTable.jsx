@@ -7,7 +7,7 @@ import settings from "../../assets/settings.svg";
 
 import "../../styles/table.css";
 
-const DocumentsTable = ({ documents }) => {
+const DocumentsTable = () => {
   return (
     <Table responsive striped bordered hover id="table-data">
       <thead>

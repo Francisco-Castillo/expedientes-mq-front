@@ -44,6 +44,7 @@ const MyExpedientsTable = () => {
     );
   }, [currentPage]);
 
+  console.log(expedients);
   return (
     <>
       <Table responsive striped bordered hover id="table-data">

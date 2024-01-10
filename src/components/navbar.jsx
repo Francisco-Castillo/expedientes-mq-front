@@ -2,6 +2,8 @@ import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
+import { useNavigate } from "react-router-dom";
+
 import { onLogout } from "../store/auth";
 
 import mmqicon from "../assets/ICONMMQ.svg";
@@ -18,6 +20,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const { name, lastName } = decodeToken(token);
+
+  const navigation = useNavigate();
 
   const logout = () => {
     dispatch(onLogout({}));

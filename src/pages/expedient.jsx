@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import Navbar from "../components/navbar";
-import Button from "react-bootstrap/Button";
-import ListGroup from "react-bootstrap/ListGroup";
+
+import CarouselDocuments from "../components/carousel/carousel";
 
 import useExpedients from "../hooks/useExpedients";
 
@@ -12,8 +12,11 @@ import { RiArrowGoBackLine } from "react-icons/ri";
 
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { AiFillPrinter } from "react-icons/ai";
+import { IoDocuments } from "react-icons/io5";
 
 import { useNavigate } from "react-router-dom";
+
+import useDocuments from "../hooks/useDocuments";
 
 import svg from "../assets/MMQ.svg";
 
@@ -25,12 +28,17 @@ const Expedient = () => {
   const { expedientId } = useParams();
 
   const { getExpedient } = useExpedients();
+  const { getDocuments } = useDocuments();
 
   const navigate = useNavigate();
 
   const handleComeBack = () => {
     navigate("/home");
   };
+
+  // const viewDocuments = async (expedientId) => {
+  //   await getDocuments(expedientId);
+  // };
 
   useEffect(() => {
     getExpedient(setExpedient, expedientId);
@@ -41,6 +49,9 @@ const Expedient = () => {
 
       <section className="expedient-section">
         <div>
+          {/* <div className="icons">
+            <CarouselDocuments expedientId={expedientId} />
+          </div> */}
           <div className="icons">
             <FaArrowAltCircleLeft
               className="button-back"

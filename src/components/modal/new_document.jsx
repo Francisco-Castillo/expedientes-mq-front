@@ -36,8 +36,8 @@ const New_document = ({ expedientId }) => {
     JSON.stringify({
       fechaCreacion: date,
       observaciones: observations,
-      tipoDocumento: type,
-      exepedienteId: expedientId,
+      tipoDocumentoId: Number(type),
+      expedienteId: expedientId,
     })
   );
 
@@ -45,7 +45,6 @@ const New_document = ({ expedientId }) => {
     e.preventDefault();
     await newDocument(formData, setShow);
   };
-
   return (
     <>
       <Dropdown.Item onClick={handleShow}>Vincular Archivo</Dropdown.Item>
