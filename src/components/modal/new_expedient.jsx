@@ -17,6 +17,7 @@ import "../../styles/new_expedient.css";
 const New_Expedient = () => {
   const [expedientNumber, setExpedientNumber] = useState();
   const [reference, setReference] = useState();
+  const [expedientType, setExpedientType] = useState("");
   const [expedientTypes, setExpedientTypes] = useState([]);
   const [codigoTramite, setCodigoTramite] = useState();
   const [description, setDescription] = useState();
@@ -54,7 +55,7 @@ const New_Expedient = () => {
       date,
       description,
       codigoTramite,
-      expedientTypes,
+      expedientType,
       userId,
       areaName,
       setShow
@@ -105,13 +106,13 @@ const New_Expedient = () => {
                 onChange={(e) => setCodigoPresupuestario(e.target.value)}
               >
                 <option>Codigo Presupuestario</option>
-                {areas.map((area, index) => (
-                  <option value={area.codigoPresupuestario} key={index}>
-                    {area.codigoPresupuestario
-                      ? `${area.codigoPresupuestario} - ${area.descripcion}`
-                      : null}
-                  </option>
-                ))}
+                {areas
+                  .filter((area) => area.codigoPresupuestario !== null)
+                  .map((area, index) => (
+                    <option value={area.codigoPresupuestario} key={index}>
+                      {`${area.codigoPresupuestario} - ${area.descripcion}`}
+                    </option>
+                  ))}
               </Form.Select>
             </Form.Group>
 
@@ -120,8 +121,8 @@ const New_Expedient = () => {
             <Form.Group className="mb-3">
               <Form.Select
                 aria-label="Default select example"
-                value={expedientTypes}
-                onChange={(e) => setTypeExpedient(e.target.value)}
+                value={expedientType}
+                onChange={(e) => setExpedientType(e.target.value)}
               >
                 <option>Seleccionar</option>
                 {expedientTypes.map((type, index) => (
@@ -152,7 +153,7 @@ const New_Expedient = () => {
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
             </Form.Group>
-            <Form.Label htmlFor="">Codigo de tramite :</Form.Label>
+            {/* <Form.Label htmlFor="">Codigo de tramite :</Form.Label>
 
             <Form.Group className="mb-3">
               <Form.Select
@@ -165,7 +166,7 @@ const New_Expedient = () => {
                 <option value="Compra">Pago de locacion</option>
                 <option value="Personal">Pago a proveedores</option>
               </Form.Select>
-            </Form.Group>
+            </Form.Group> */}
           </Form>
         </Modal.Body>
         <Modal.Footer

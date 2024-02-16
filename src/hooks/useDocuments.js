@@ -57,12 +57,10 @@ const useDocuments = () => {
     }
   };
 
-  const searchFiles = async (search, setResultSearch) => {
+  const GetDocumentView = async (documentName, setViewDocument) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:3001/api/documents/search/?search=${search}`
-      );
-      setResultSearch(data.items);
+      const { data } = await axios.get(`${BaseUrl}/documentos/${documentName}`);
+      setViewDocument(data);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -89,7 +87,7 @@ const useDocuments = () => {
     }
   };
 
-  return { newDocument, getDocuments, searchFiles, ListDocumentTypes };
+  return { newDocument, getDocuments, GetDocumentView, ListDocumentTypes };
 };
 
 export default useDocuments;

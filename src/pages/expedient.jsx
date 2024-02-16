@@ -49,21 +49,18 @@ const Expedient = () => {
 
       <section className="expedient-section">
         <div>
-          {/* <div className="icons">
+          <div>
             <CarouselDocuments expedientId={expedientId} />
-          </div> */}
-          <div className="icons">
+          </div>
+          <br />
+          <div>
+            <AiFillPrinter className="button-back" />
+          </div>
+          <br />
+          <div>
             <FaArrowAltCircleLeft
               className="button-back"
-              style={{ fontSize: "25px" }}
               onClick={handleComeBack}
-            />{" "}
-            {/* <strong>Volver</strong> */}
-          </div>
-          <div>
-            <AiFillPrinter
-              className="button-back"
-              style={{ fontSize: "25px" }}
             />
           </div>
         </div>

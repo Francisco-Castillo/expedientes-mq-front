@@ -7,12 +7,19 @@ import useDocuments from "../../hooks/useDocuments";
 import { Button, Modal, Form, Dropdown } from "react-bootstrap";
 
 import { IoDocuments } from "react-icons/io5";
+import { BiSolidDownload } from "react-icons/bi";
+
+import MMQ from "../../assets/MMQ.svg";
+
+const BaseUrl = import.meta.env.VITE_API_URL;
 function CarouselDocuments({ expedientId }) {
-  const { getDocuments } = useDocuments();
+  const { getDocuments, GetDocumentView } = useDocuments();
 
   const [show, setShow] = useState(false);
 
   const [documents, setDocuments] = useState([]);
+
+  const [viewDocument, setViewDocument] = useState();
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -23,7 +30,6 @@ function CarouselDocuments({ expedientId }) {
   console.log(documents);
   return (
     <>
-      {/* <Dropdown.Item onClick={handleShow}></Dropdown.Item> */}
       <IoDocuments
         className="button-back"
         style={{ fontSize: "25px" }}
@@ -42,47 +48,27 @@ function CarouselDocuments({ expedientId }) {
         >
           <Modal.Title>Documentos</Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ padding: "30px" }}>
-          <Carousel slide={false}>
+        <Modal.Body>
+          <Carousel>
             {documents.map((document, index) => (
-              <Carousel.Item>
-                {/* <ExampleCarouselImage text="First slide" /> */}
-                <img src={document.url} alt="" />
-                <Carousel.Caption>
-                  <h3>{document.observaciones}</h3>
-                  {/* <p>
-                    Nulla vitae elit libero, a pharetra augue mollis interdum.
-                  </p> */}
-                </Carousel.Caption>
+              <Carousel.Item key={index}>
+                {document.tipoArchivo === "image/png" ? (
+                  <img
+                    src={`${BaseUrl}${document.url.split("8090/")[1]}`}
+                    alt=""
+                    width={"100%"}
+                    height="700px"
+                  />
+                ) : (
+                  <embed
+                    src={`${BaseUrl}${document.url.split("8090/")[1]}`}
+                    type={document.tipoArchivo}
+                    width="100%"
+                    height="700px"
+                  />
+                )}
               </Carousel.Item>
             ))}
-            <Carousel.Item>
-              {/* <ExampleCarouselImage text="First slide" /> */}
-              <img src={2} alt="" />
-              <Carousel.Caption>
-                <h3>First slide label</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              {/* <ExampleCarouselImage text="Second slide" /> */}
-              <Carousel.Caption>
-                <h3>Second slide label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              {/* <ExampleCarouselImage text="Third slide" /> */}
-              <Carousel.Caption>
-                <h3>Third slide label</h3>
-                <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl
-                  consectetur.
-                </p>
-              </Carousel.Caption>
-            </Carousel.Item>
           </Carousel>
         </Modal.Body>
       </Modal>

@@ -11,8 +11,6 @@ const ExpedientsTab = ({}) => {
 
   const handleTabChange = (tabName) => {
     setActiveTab(tabName);
-    // setCurrentPage(1);
-    // setTotalPages(0);
   };
   return (
     <>

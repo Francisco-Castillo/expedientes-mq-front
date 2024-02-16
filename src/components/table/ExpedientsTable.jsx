@@ -68,7 +68,13 @@ const ExpedientsTable = () => {
               <td>{expedient.estado}</td>
               <td>{`${expedient.usuarioEmisor.nombre} ${expedient.usuarioEmisor.apellido}`}</td>
               <td>
-                <Dropdown>
+                <Dropdown
+                  key="end"
+                  id="dropdown-button-drop-end"
+                  drop="end"
+                  variant="secondary"
+                  title="Drop end"
+                >
                   <Dropdown.Toggle
                     style={{
                       backgroundColor: "rgba(217, 70, 70, 1)",

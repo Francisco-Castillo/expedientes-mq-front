@@ -34,12 +34,6 @@ const Tab = () => {
         >
           Expedientes
         </div>
-        {/* <div
-          className={`tab ${activeTab === "Documentos" ? "active" : ""}`}
-          onClick={() => handleTabChange("Documentos")}
-        >
-          Documentos
-        </div> */}
         <div
           className={`tab ${activeTab === "Consulta" ? "active" : ""}`}
           onClick={() => handleTabChange("Consulta")}
@@ -67,12 +61,6 @@ const Tab = () => {
             <ExpedientsTab />
           </div>
         )}
-        {/* {activeTab == "Documentos" && (
-          <div>
-            <New_document />
-            <DocumentsTable />
-          </div>
-        )} */}
         {activeTab == "Consulta" && (
           <div>
             <QueryContent />

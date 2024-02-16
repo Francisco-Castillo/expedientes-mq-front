@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import useExpedients from "../../hooks/useExpedients";
 import Pagination from "../Pagination";
 
-import { Table, Dropdown } from "react-bootstrap";
+import { Table, Dropdown, DropdownButton } from "react-bootstrap";
 
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +15,9 @@ import { IoSettingsSharp } from "react-icons/io5";
 
 import "../../styles/table.css";
 import Empty from "../card/empty";
+import New_document from "../modal/new_document";
+import MakePass from "../modal/makePass";
+import UpdateExpedient from "../modal/updateExpedient";
 
 const MyExpedientsTable = () => {
   const [expedients, setExpedients] = useState([]);
@@ -44,7 +47,6 @@ const MyExpedientsTable = () => {
     );
   }, [currentPage]);
 
-  console.log(expedients);
   return (
     <>
       <Table responsive striped bordered hover id="table-data">
@@ -69,7 +71,13 @@ const MyExpedientsTable = () => {
               <td>{expedient.estado}</td>
               <td>{`${expedient.usuario.nombre} ${expedient.usuario.apellido}`}</td>
               <td>
-                <Dropdown>
+                <Dropdown
+                  key="end"
+                  id="dropdown-button-drop-end"
+                  drop="end"
+                  variant="secondary"
+                  title="Drop end"
+                >
                   <Dropdown.Toggle
                     style={{
                       backgroundColor: "rgba(217, 70, 70, 1)",
@@ -83,6 +91,9 @@ const MyExpedientsTable = () => {
                     <Dropdown.Item onClick={() => viewExpedient(expedient.id)}>
                       Ver expediente
                     </Dropdown.Item>
+                    <UpdateExpedient expedientId={expedient.id} />
+                    <New_document expedientId={expedient.id} />
+                    <MakePass expedientId={expedient.id}></MakePass>
                   </Dropdown.Menu>
                 </Dropdown>
               </td>
