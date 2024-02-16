@@ -1,8 +1,10 @@
 import axios from "axios";
-import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
-import { onLogin } from "../store/auth";
 import { useNavigate } from "react-router-dom";
+
+import { onLogin } from "../store/auth";
+
+import Swal from "sweetalert2";
 
 const useUsers = () => {
   const dispatch = useDispatch();

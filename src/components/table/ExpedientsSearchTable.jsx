@@ -10,7 +10,7 @@ import Table from "react-bootstrap/Table";
 import { IoSettingsSharp } from "react-icons/io5";
 
 import "../../styles/table.css";
-import LoaderSearch from "../loaders/loaderSearch";
+import LoaderSearch from "../loaders/colorRIng";
 
 const ExpedientsSearchTable = ({
   resultSearch,

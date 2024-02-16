@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { onLogout } from "../store/auth";
+import { clearPages } from "../store/pages";
+import { clearTabs } from "../store/tab";
 
 import mmqicon from "../assets/ICONMMQ.svg";
 
@@ -25,7 +27,9 @@ const Navbar = () => {
 
   const logout = () => {
     dispatch(onLogout({}));
-    navigation("/");
+    dispatch(clearPages(0));
+    dispatch(clearTabs(""));
+    navigation("");
   };
 
   return (

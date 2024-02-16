@@ -1,4 +1,9 @@
 import axios from "axios";
+
+import { useDispatch, useSelector } from "react-redux";
+
+import { setTotalPages } from "../store/pages";
+
 import Swal from "sweetalert2";
 
 const customIcon = `
@@ -10,6 +15,10 @@ const customIcon = `
 
 const useExpedients = () => {
   const BaseUrl = import.meta.env.VITE_API_URL;
+
+  const { page } = useSelector((state) => state.pages);
+
+  const dispatch = useDispatch();
 
   const newExpedient = async (
     expedientNumber,
@@ -76,19 +85,14 @@ const useExpedients = () => {
     }
   };
 
-  const getMyExpedients = async (
-    setExpedients,
-    setTotalPages,
-    currentPage,
-    userId
-  ) => {
+  const getMyExpedients = async (setExpedients, userId) => {
     try {
       const { data } = await axios.get(
-        `${BaseUrl}/expedientes?caratuladorId=${userId}&page=${currentPage}&orderBy=fechaCaratulacion&orientation=desc`
+        `${BaseUrl}/expedientes?caratuladorId=${userId}&page=${page}&orderBy=fechaCaratulacion&orientation=desc`
       );
 
       setExpedients(data.items);
-      setTotalPages(data.totalPages);
+      dispatch(setTotalPages(data.totalPages));
     } catch (error) {
       Swal.fire({
         icon: "error",

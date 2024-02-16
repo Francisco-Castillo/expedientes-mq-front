@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+
+import useExpedients from "../hooks/useExpedients";
 
 import Navbar from "../components/navbar";
 
 import CarouselDocuments from "../components/carousel/carousel";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import useExpedients from "../hooks/useExpedients";
 
@@ -18,20 +22,21 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 const Expedient = () => {
   const [expedient, setExpedient] = useState({});
+  const { tab, subTab } = useSelector((state) => state.tab);
 
   const { expedientId } = useParams();
-
   const { getExpedient } = useExpedients();
 
   const navigate = useNavigate();
 
   const handleComeBack = () => {
-    navigate("/home");
+    navigate(`/${tab}/${subTab}`);
   };
 
   useEffect(() => {
     getExpedient(setExpedient, expedientId);
   }, []);
+
   return (
     <>
       <Navbar />

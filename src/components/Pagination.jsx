@@ -1,28 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 
-import "../styles/pagination.css";
+import { useDispatch, useSelector } from "react-redux";
+
+import { setPage } from "../store/pages";
+
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
-const Pagination = ({
-  currentPage,
-  setCurrentPage,
-  totalPages,
-  setIsLoading,
-}) => {
-  const [starterPage, setStarterPage] = useState(1);
+import "../styles/pagination.css";
+
+const Pagination = () => {
+  const { page, totalPages } = useSelector((state) => state.pages);
+
+  const dispatch = useDispatch();
 
   const handleNextPage = () => {
-    if (currentPage <= totalPages - 2) {
-      setCurrentPage((prev) => prev + 1);
-      setStarterPage((prev) => prev + 1);
-      setIsLoading(true);
+    if (page <= totalPages - 2) {
+      dispatch(setPage(page + 1));
     }
   };
 
   const handlePrevPage = () => {
-    if (currentPage != 0) {
-      setCurrentPage((prev) => prev - 1);
-      setStarterPage((prev) => prev - 1);
+    if (page != 0) {
+      dispatch(setPage(page - 1));
     }
   };
 
@@ -31,7 +30,7 @@ const Pagination = ({
       <span onClick={handlePrevPage} className="page-item">
         <FaArrowLeft />
       </span>
-      <span className="page-number">{starterPage}</span>
+      <span className="page-number">{page + 1}</span>
       <span onClick={handleNextPage} className="page-item">
         <FaArrowRight />
       </span>

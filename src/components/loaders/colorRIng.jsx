@@ -1,11 +1,13 @@
 import React from "react";
 
-import { MagnifyingGlass } from "react-loader-spinner";
+import { ColorRing } from "react-loader-spinner";
 
-const LoaderSearch = () => {
+import "../../styles/loader.css";
+
+const LoadColorRing = () => {
   return (
     <div className="loader-container">
-      <MagnifyingGlass
+      <ColorRing
         visible={true}
         height="80"
         width="80"
@@ -15,8 +17,9 @@ const LoaderSearch = () => {
         glassColor="#c0efff"
         color="#e15b64"
       />
+      CARGANDO
     </div>
   );
 };
 
-export default LoaderSearch;
+export default LoadColorRing;

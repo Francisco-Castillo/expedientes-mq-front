@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Esto ocupa toda la altura de la pantalla */
+  height: calc(23vw * 1.41);
 }
 
 /* Estilos adicionales para el spinner si es necesario */

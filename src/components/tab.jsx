@@ -1,72 +1,81 @@
-import React, { useState } from "react";
+import React from "react";
 
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux";
+
+import { setTab } from "../store/tab";
+
+import decodeToken from "../helpers/decodeToken";
 
 import UsersTable from "./table/UsersTable";
 import New_User from "./modal/new_user";
 import ExpedientsTab from "./expedientsTab";
 import QueryContent from "./queryContent";
-
-import decodeToken from "../helpers/decodeToken";
+import Welcome from "./card/welcome";
 
 import "../styles/tab.css";
-import Welcome from "./card/welcome";
 
 const Tab = () => {
   const { token } = useSelector((state) => state.auth);
-
-  const [activeTab, setActiveTab] = useState();
+  const { tab } = useSelector((state) => state.tab);
 
   const { areaId } = decodeToken(token);
 
   const authorizedLevel = import.meta.env.VITE_HIGH_LVL;
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleTabChange = (tabName) => {
-    setActiveTab(tabName);
+    dispatch(setTab(tabName.toLowerCase()));
+    navigate(`/${tabName.toLowerCase()}`);
   };
 
   return (
     <>
       <div className="tab-header">
         <div
-          className={`tab ${activeTab === "Expedientes" ? "active" : ""}`}
-          onClick={() => handleTabChange("Expedientes")}
+          className={`tab ${tab === "expedientes" ? "active" : "disable"}`}
+          onClick={() => handleTabChange("expedientes")}
         >
           Expedientes
         </div>
         <div
-          className={`tab ${activeTab === "Consulta" ? "active" : ""}`}
-          onClick={() => handleTabChange("Consulta")}
+          className={`tab ${tab === "consulta" ? "active" : "disable"}`}
+          onClick={() => handleTabChange("consulta")}
         >
           Consulta
         </div>
         {areaId === Number(authorizedLevel) ? (
           <div
-            className={`tab ${activeTab === "Usuarios" ? "active" : ""}`}
-            onClick={() => handleTabChange("Usuarios")}
+            className={`tab ${tab === "usuarios" ? "active" : "disable"}`}
+            onClick={() => handleTabChange("usuarios")}
           >
             Usuarios
           </div>
-        ) : null}
+        ) : (
+          ""
+        )}
       </div>
 
       <div className="tab-content">
-        {activeTab == null && (
+        {tab == "" && (
           <div>
             <Welcome />
           </div>
         )}
-        {activeTab == "Expedientes" && (
+        {tab == "expedientes" && (
           <div>
             <ExpedientsTab />
           </div>
         )}
-        {activeTab == "Consulta" && (
+        {tab == "consulta" && (
           <div>
             <QueryContent />
           </div>
         )}
-        {activeTab == "Usuarios" && (
+        {tab == "usuarios" && (
           <div>
             <New_User />
             <UsersTable />

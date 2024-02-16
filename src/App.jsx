@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/app.css";
 
 import "./styles/app.css";
+import ExpedientsTab from "./components/expedientsTab";
 
 const router = createBrowserRouter([
   {
@@ -19,25 +20,25 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        path: "",
         element: <Login />,
       },
       {
-        path: "/new/expedient",
-        element: <New_Expedient />,
-      },
-      {
-        path: "/home",
+        path: "/*",
         element: <Home />,
       },
       {
-        path: "/expedient/:expedientId",
+        path: "/expediente/:expedientId",
         element: <Expedient />,
       },
       {
-        path: "/updatePassword",
+        path: "/actualizar-contraseña",
         element: <FirsLogin />,
       },
+      // {
+      //   path: "/expedientes",
+      //   element: <ExpedientsTab />,
+      // },
     ],
   },
 ]);

@@ -11,6 +11,7 @@ import decodeToken from "../../helpers/decodeToken";
 import getDate from "../../helpers/getDate";
 
 import { IoIosSave } from "react-icons/io";
+import { VscNewFile } from "react-icons/vsc";
 
 import "../../styles/new_expedient.css";
 
@@ -64,17 +65,9 @@ const New_Expedient = () => {
 
   return (
     <>
-      <Button
-        variant="light"
-        style={{
-          borderRadius: "4px",
-          padding: "10px 20px",
-          marginBottom: "10px",
-        }}
-        onClick={handleShow}
-      >
+      <div className="newExpedient" onClick={handleShow}>
         Caratular Expediente
-      </Button>
+      </div>
 
       <Modal
         size="lg"

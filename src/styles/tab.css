@@ -4,7 +4,7 @@
   margin-top: 5px;
 }
 
-.tab {
+.tab.disable {
   flex: 1;
   text-align: center;
   padding: 10px 20px;
@@ -16,12 +16,20 @@
 
 .tab.active {
   background-color: rgba(212, 25, 25, 1);
-  /* Color de fondo activo */
-  color: #fff; /* Color del texto activo */
+
+  color: #fff;
+  flex: 1;
+  text-align: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: inherit;
 }
 
-.tab:hover {
-  background-color: #ccc;
+.tab.tab.disable:hover {
+  background-color: rgba(212, 25, 25, 1);
+  color: #fff;
 }
 
 /* Estilos del contenido de los tabs */

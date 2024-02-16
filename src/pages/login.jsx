@@ -15,18 +15,11 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { login } = useUsers();
-  // const navigation = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await login(username, password, setIsLoading);
-      // setIsLoading(true);
-      // setTimeout(() => {
-      //   setIsLoading(false);
-      //   navigation("/home");
-      // }, 1000);
-      // navigation("/home");
     } catch (error) {
       console.log(error);
     }

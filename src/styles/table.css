@@ -2,13 +2,17 @@
   box-shadow: 0 10px 4px rgba(0, 0, 0, 0.1);
 
   & td {
-    padding: 10px;
+    padding: 5px;
     text-align: left;
     /* border: 1px solid #ccc; */
   }
   & th {
-    padding: 10px;
+    padding: 5px;
     background: rgba(217, 70, 70, 1);
     color: white;
   }
+}
+
+table {
+  height: calc(23vw * 1.41);
 }
