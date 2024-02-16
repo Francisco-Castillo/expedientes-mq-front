@@ -1,25 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import Carousel from "react-bootstrap/Carousel";
 
 import useDocuments from "../../hooks/useDocuments";
 
-import { Button, Modal, Form, Dropdown } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 import { IoDocuments } from "react-icons/io5";
-import { BiSolidDownload } from "react-icons/bi";
-
-import MMQ from "../../assets/MMQ.svg";
 
 const BaseUrl = import.meta.env.VITE_API_URL;
 function CarouselDocuments({ expedientId }) {
-  const { getDocuments, GetDocumentView } = useDocuments();
+  const { getDocuments } = useDocuments();
 
   const [show, setShow] = useState(false);
 
   const [documents, setDocuments] = useState([]);
-
-  const [viewDocument, setViewDocument] = useState();
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -27,7 +22,6 @@ function CarouselDocuments({ expedientId }) {
     getDocuments(expedientId, setDocuments);
   };
 
-  console.log(documents);
   return (
     <>
       <IoDocuments

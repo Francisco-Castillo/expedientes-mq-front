@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import Navbar from "../components/navbar";
 
@@ -8,19 +8,13 @@ import CarouselDocuments from "../components/carousel/carousel";
 
 import useExpedients from "../hooks/useExpedients";
 
-import { RiArrowGoBackLine } from "react-icons/ri";
-
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { AiFillPrinter } from "react-icons/ai";
-import { IoDocuments } from "react-icons/io5";
-
-import { useNavigate } from "react-router-dom";
-
-import useDocuments from "../hooks/useDocuments";
 
 import svg from "../assets/MMQ.svg";
 
 import "../styles/expedient.css";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 const Expedient = () => {
   const [expedient, setExpedient] = useState({});
@@ -28,17 +22,12 @@ const Expedient = () => {
   const { expedientId } = useParams();
 
   const { getExpedient } = useExpedients();
-  const { getDocuments } = useDocuments();
 
   const navigate = useNavigate();
 
   const handleComeBack = () => {
     navigate("/home");
   };
-
-  // const viewDocuments = async (expedientId) => {
-  //   await getDocuments(expedientId);
-  // };
 
   useEffect(() => {
     getExpedient(setExpedient, expedientId);
@@ -49,20 +38,35 @@ const Expedient = () => {
 
       <section className="expedient-section">
         <div>
-          <div>
-            <CarouselDocuments expedientId={expedientId} />
-          </div>
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip id="tooltip">Ver documentos</Tooltip>}
+          >
+            <div>
+              <CarouselDocuments expedientId={expedientId} />
+            </div>
+          </OverlayTrigger>
           <br />
-          <div>
-            <AiFillPrinter className="button-back" />
-          </div>
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip id="tooltip">Imprimir</Tooltip>}
+          >
+            <div>
+              <AiFillPrinter className="button-back" />
+            </div>
+          </OverlayTrigger>
           <br />
-          <div>
-            <FaArrowAltCircleLeft
-              className="button-back"
-              onClick={handleComeBack}
-            />
-          </div>
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip id="tooltip">Volver</Tooltip>}
+          >
+            <div>
+              <FaArrowAltCircleLeft
+                className="button-back"
+                onClick={handleComeBack}
+              />
+            </div>
+          </OverlayTrigger>
         </div>
         <div className="container-expedient">
           <div className="expedient-info">
