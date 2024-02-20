@@ -6,6 +6,7 @@ import getDateTime from "../helpers/getDate";
 import decodeToken from "../helpers/decodeToken";
 
 import { setTotalPages } from "../store/pages";
+import { setStatus, setType } from "../store/expedient";
 
 import Swal from "sweetalert2";
 
@@ -25,8 +26,6 @@ const useExpedients = () => {
     (state) => state.filters
   );
   const { page } = useSelector((state) => state.pages);
-  const { token } = useSelector((state) => state.auth);
-  const { areaName, userId } = decodeToken(token);
 
   const dispatch = useDispatch();
 
@@ -39,6 +38,9 @@ const useExpedients = () => {
     typeExpedient,
     setShow
   ) => {
+    const { token } = useSelector((state) => state.auth);
+    const { areaName, userId } = decodeToken(token);
+
     try {
       await axios.post(`${BaseUrl}/expedientes/caratular`, {
         numero: `${expedientNumber}-${codigoPresupuestario}`,
@@ -98,7 +100,7 @@ const useExpedients = () => {
         `${BaseUrl}/expedientes?caratuladorId=${userId}&page=${page}&orderBy=fechaCaratulacion&orientation=desc`
       );
 
-      setExpedients(data.items);
+      await setExpedients(data.items);
       dispatch(setTotalPages(data.totalPages));
     } catch (error) {
       Swal.fire({
@@ -112,10 +114,10 @@ const useExpedients = () => {
     }
   };
 
-  const listExpedientTypes = async (setExpedientTypes) => {
+  const listExpedientTypes = async () => {
     try {
       const { data } = await axios.get(`${BaseUrl}/expedientes/tipos`);
-      setExpedientTypes(data);
+      dispatch(setType(data));
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -128,10 +130,10 @@ const useExpedients = () => {
     }
   };
 
-  const listExpedientStates = async (setExpedientStates) => {
+  const listExpedientStates = async () => {
     try {
       const { data } = await axios.get(`${BaseUrl}/expedientes/estados`);
-      setExpedientStates(data);
+      dispatch(setStatus(data));
     } catch (error) {
       Swal.fire({
         icon: "error",

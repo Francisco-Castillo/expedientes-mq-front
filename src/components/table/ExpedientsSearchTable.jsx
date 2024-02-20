@@ -15,7 +15,7 @@ const ExpedientsSearchTable = ({ resultSearch }) => {
   const navigation = useNavigate();
 
   const viewExpedient = (expedientId) => {
-    navigation(`/expedient/${expedientId}`);
+    navigation(`/expediente/${expedientId}`);
   };
 
   return (

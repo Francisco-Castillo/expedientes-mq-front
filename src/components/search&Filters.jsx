@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-
-import useExpedients from "../hooks/useExpedients";
 
 import {
   filterEndDate,
@@ -10,6 +8,8 @@ import {
   filterStartDate,
   filterStatus,
 } from "../store/filters";
+
+import { setSearch } from "../store/search";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -19,34 +19,16 @@ import { Form, Button } from "react-bootstrap";
 
 import "../styles/search.css";
 
-const SearchAndFilters = ({ setResultSearch, resultSearch }) => {
-  const [search, setSearch] = useState(null);
-
-  const [expedientTypes, setExpedientTypes] = useState([]);
-  const [expedientStates, setExpedientStates] = useState([]);
-
-  const { page } = useSelector((state) => state.pages);
-
-  const { searchExpedients, listExpedientTypes, listExpedientStates } =
-    useExpedients();
+const SearchAndFilters = () => {
+  const { status, type } = useSelector((state) => state.expedient);
 
   const dispatch = useDispatch();
-
-  const handleSearch = async () => {
-    await searchExpedients(setResultSearch, search);
-  };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSearch();
     }
   };
-
-  useEffect(() => {
-    handleSearch();
-    listExpedientTypes(setExpedientTypes);
-    listExpedientStates(setExpedientStates);
-  }, [page]);
 
   return (
     <Container
@@ -65,7 +47,7 @@ const SearchAndFilters = ({ setResultSearch, resultSearch }) => {
               placeholder="Buscar"
               className="me-2"
               aria-label="Search"
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => dispatch(setSearch(e.target.value))}
             />
             <Button variant="light" onClick={handleKeyDown}>
               Buscar
@@ -83,7 +65,7 @@ const SearchAndFilters = ({ setResultSearch, resultSearch }) => {
               onChange={(e) => dispatch(filterStatus(e.target.value))}
             >
               <option value="">Seleccionar Estado</option>
-              {expedientStates.map((state, index) => (
+              {status.map((state, index) => (
                 <option value={state} key={index}>
                   {state}
                 </option>
@@ -101,7 +83,7 @@ const SearchAndFilters = ({ setResultSearch, resultSearch }) => {
               onChange={(e) => dispatch(filterExpedientType(e.target.value))}
             >
               <option value="">Seleccionar tipo</option>
-              {expedientTypes.map((type, index) => (
+              {type.map((type, index) => (
                 <option value={type} key={index}>
                   {type}
                 </option>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
@@ -16,10 +16,12 @@ import QueryContent from "./queryContent";
 import Welcome from "./card/welcome";
 
 import "../styles/tab.css";
+import { onLoad } from "../store/load";
 
 const Tab = () => {
   const { token } = useSelector((state) => state.auth);
   const { tab } = useSelector((state) => state.tab);
+  const { loadStatus } = useSelector((state) => state.load);
 
   const { areaId } = decodeToken(token);
 
@@ -30,7 +32,7 @@ const Tab = () => {
 
   const handleTabChange = (tabName) => {
     dispatch(setTab(tabName.toLowerCase()));
-    dispatch(clearPages(0));
+    dispatch(onLoad(true));
     navigate(`/${tabName.toLowerCase()}`);
   };
 

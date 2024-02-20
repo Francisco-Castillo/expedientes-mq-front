@@ -23,7 +23,7 @@ import "../../styles/table.css";
 const MyExpedientsTable = () => {
   const { token } = useSelector((state) => state.auth);
   const { page } = useSelector((state) => state.pages);
-  const { status } = useSelector((state) => state.load);
+  const { loadStatus } = useSelector((state) => state.load);
 
   const { userId } = decodeToken(token);
 
@@ -40,17 +40,21 @@ const MyExpedientsTable = () => {
 
   useEffect(() => {
     getMyExpedients(setExpedients, userId);
-  }, [page || expedients]);
+  }, [expedients]);
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(onLoad(false));
-    }, 1000);
-  }, [status]);
+    if (loadStatus) {
+      const timer = setTimeout(() => {
+        dispatch(onLoad(false));
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [loadStatus]);
 
   return (
     <>
-      {status ? (
+      {loadStatus ? (
         <LoadColorRing />
       ) : (
         <>

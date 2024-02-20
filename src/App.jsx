@@ -1,17 +1,18 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import useExpedients from "./hooks/useExpedients";
+import { useEffect } from "react";
+
+import { AppRouter } from "./router/appRouter";
 import ErrorPage from "./pages/error-page";
 import Login from "./pages/login";
-import New_Expedient from "./components/modal/new_expedient";
 import Home from "./pages/home";
-import { AppRouter } from "./router/appRouter";
 import Expedient from "./pages/expedient";
 import FirsLogin from "./pages/firsLogin";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./styles/app.css";
 
 import "./styles/app.css";
-import ExpedientsTab from "./components/expedientsTab";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,13 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const { listExpedientStates, listExpedientTypes } = useExpedients();
+
+  useEffect(() => {
+    listExpedientTypes();
+    listExpedientStates();
+  }, []);
+
   return (
     <div>
       <div>
