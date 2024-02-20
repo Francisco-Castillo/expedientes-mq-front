@@ -29,7 +29,7 @@ const Navbar = () => {
     dispatch(onLogout({}));
     dispatch(clearPages(0));
     dispatch(clearTabs(""));
-    navigation("");
+    navigation("/login");
   };
 
   return (

@@ -13,8 +13,13 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { AiFillPrinter } from "react-icons/ai";
+import { IoMdDownload } from "react-icons/io";
+import { MdDownload } from "react-icons/md";
 
-import svg from "../assets/MMQ.svg";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Table from "react-bootstrap/Table";
 
 import "../styles/expedient.css";
 
@@ -39,66 +44,97 @@ const Expedient = () => {
     <>
       <Navbar />
 
-      <section className="expedient-section">
-        <div>
-          <OverlayTrigger
-            placement="top"
-            overlay={<Tooltip id="tooltip">Ver documentos</Tooltip>}
-          >
-            <div>
-              <CarouselDocuments expedientId={expedientId} />
-            </div>
-          </OverlayTrigger>
-          <br />
-          <OverlayTrigger
-            placement="top"
-            overlay={<Tooltip id="tooltip">Imprimir</Tooltip>}
-          >
-            <div>
-              <AiFillPrinter className="button-back" />
-            </div>
-          </OverlayTrigger>
-          <br />
-          <OverlayTrigger
-            placement="top"
-            overlay={<Tooltip id="tooltip">Volver</Tooltip>}
-          >
-            <div>
-              <FaArrowAltCircleLeft
-                className="button-back"
-                onClick={handleComeBack}
-              />
-            </div>
-          </OverlayTrigger>
-        </div>
-        <div className="container-expedient">
-          <div className="expedient-info">
-            <img className="logo" src={svg} alt="" />
-            <h1 className="expedient-title">Municipalidad de Monte Quemado</h1>
-          </div>
+      <Container
+        style={{
+          marginTop: "20px",
+          justifyContent: "center",
+          alignItems: "center",
+          display: "block ",
+        }}
+      >
+        <Row>
+          <Col id="expedient-name">
+            <FaArrowAltCircleLeft
+              className="button-back"
+              onClick={handleComeBack}
+            />
 
-          <h1 className="expedient-name">Expediente N° {expedient.numero}</h1>
-
-          <div className="expedient-description">
+            <h1>Expediente N° {expedient.numero}</h1>
+          </Col>
+        </Row>
+        <Row id="expedient-description">
+          <Col ms={6}>
             <ul>
               <li>
-                <strong> Fecha: </strong> {expedient.fechaCaratulacion}
+                <strong> Estado: </strong> {expedient.estado}
               </li>
               <li>
                 <strong> Iniciado: </strong> {expedient.iniciador}
               </li>
               <li>
-                <strong> Extracto: </strong> {expedient.referencia}
+                <strong> Referencia: </strong> {expedient.referencia}
               </li>
             </ul>
-
-            <p>
-              <strong> Descripción: </strong>
-              {expedient.descripcion}
-            </p>
-          </div>
-        </div>
-      </section>
+          </Col>
+          <Col ms={6}>
+            {" "}
+            <ul>
+              <li>
+                <strong> Fecha: </strong> {expedient.fechaCaratulacion}
+              </li>
+              <li>
+                <strong> Descripción: </strong>
+                {expedient.descripcion}
+              </li>
+            </ul>
+          </Col>
+        </Row>
+        <Row>
+          <h3 className="expedient-title">Historial</h3>
+          <Table striped bordered hover id="table-data">
+            <thead>
+              <tr>
+                <th>Orden</th>
+                <th>Referencia</th>
+                <th>Tipo de Documento</th>
+                <th>Fecha de Vinculación</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+                <td>
+                  {" "}
+                  <OverlayTrigger
+                    placement="top"
+                    overlay={<Tooltip id="tooltip">Imprimir</Tooltip>}
+                  >
+                    <div>
+                      <MdDownload className="button-back" />
+                    </div>
+                  </OverlayTrigger>
+                </td>
+                <td>
+                  {" "}
+                  <OverlayTrigger
+                    placement="top"
+                    overlay={<Tooltip id="tooltip">Ver documentos</Tooltip>}
+                  >
+                    <div>
+                      <CarouselDocuments expedientId={expedientId} />
+                    </div>
+                  </OverlayTrigger>
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+        </Row>
+      </Container>
     </>
   );
 };

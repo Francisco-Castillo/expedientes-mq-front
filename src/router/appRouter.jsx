@@ -12,7 +12,7 @@ export const AppRouter = () => {
     <>
       {/* <Navbar /> */}
       <Routes>
-        <Route path="" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/*" element={<Home />} />
         <Route path="/expediente/:expedientId" element={<Expedient />} />
         <Route path="/actualizar-contraseña" element={<FirsLogin />} />

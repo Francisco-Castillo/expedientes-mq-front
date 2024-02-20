@@ -14,7 +14,7 @@ const Login = () => {
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { status } = useSelector((state) => state.load);
+  const { loadStatus } = useSelector((state) => state.load);
 
   const { login } = useUsers();
 
@@ -29,7 +29,7 @@ const Login = () => {
 
   return (
     <>
-      {status ? (
+      {loadStatus ? (
         <Loader />
       ) : (
         <div className="container-login">
