@@ -5,6 +5,7 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 
 import { setTab } from "../store/tab";
+import { clearPages } from "../store/pages";
 
 import decodeToken from "../helpers/decodeToken";
 
@@ -29,6 +30,7 @@ const Tab = () => {
 
   const handleTabChange = (tabName) => {
     dispatch(setTab(tabName.toLowerCase()));
+    dispatch(clearPages(0));
     navigate(`/${tabName.toLowerCase()}`);
   };
 

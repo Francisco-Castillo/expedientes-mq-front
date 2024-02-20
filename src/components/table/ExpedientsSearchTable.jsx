@@ -10,27 +10,13 @@ import Table from "react-bootstrap/Table";
 import { IoSettingsSharp } from "react-icons/io5";
 
 import "../../styles/table.css";
-import LoaderSearch from "../loaders/colorRIng";
 
-const ExpedientsSearchTable = ({
-  resultSearch,
-  totalPages,
-  setCurrentPage,
-  currentPage,
-}) => {
-  const [isLoading, setIsLoading] = useState(false);
-
+const ExpedientsSearchTable = ({ resultSearch }) => {
   const navigation = useNavigate();
 
   const viewExpedient = (expedientId) => {
     navigation(`/expedient/${expedientId}`);
   };
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 500);
-  // }, [isLoading, currentPage, setCurrentPage]);
 
   return (
     <>
@@ -83,12 +69,7 @@ const ExpedientsSearchTable = ({
             </tbody>
           </Table>
 
-          <Pagination
-            totalPages={totalPages}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            setIsLoading={setIsLoading}
-          />
+          <Pagination />
         </div>
       ) : (
         <SearchEmpty />

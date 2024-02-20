@@ -32,7 +32,8 @@ const useDocuments = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
 
       console.log(error);
@@ -51,7 +52,8 @@ const useDocuments = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }
@@ -66,7 +68,8 @@ const useDocuments = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }
@@ -81,7 +84,8 @@ const useDocuments = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }

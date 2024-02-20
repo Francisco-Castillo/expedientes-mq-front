@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { useSelector } from "react-redux/es/hooks/useSelector";
+
 import Loader from "../components/loaders/loader";
 
 import useUsers from "../hooks/useUsers";
@@ -12,14 +14,14 @@ const Login = () => {
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
 
-  const [isLoading, setIsLoading] = useState(false);
+  const { status } = useSelector((state) => state.load);
 
   const { login } = useUsers();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await login(username, password, setIsLoading);
+      await login(username, password);
     } catch (error) {
       console.log(error);
     }
@@ -27,7 +29,7 @@ const Login = () => {
 
   return (
     <>
-      {isLoading ? (
+      {status ? (
         <Loader />
       ) : (
         <div className="container-login">

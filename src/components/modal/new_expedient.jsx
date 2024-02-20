@@ -1,17 +1,12 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useState } from "react";
 
-import { Form, Button, Modal } from "react-bootstrap";
+import { Form, Button, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import useExpedients from "../../hooks/useExpedients";
 import useAreas from "../../hooks/useAreas";
 
-import decodeToken from "../../helpers/decodeToken";
-
-import getDate from "../../helpers/getDate";
-
 import { IoIosSave } from "react-icons/io";
-import { VscNewFile } from "react-icons/vsc";
+import { FaFileSignature } from "react-icons/fa6";
 
 import "../../styles/new_expedient.css";
 
@@ -24,11 +19,7 @@ const New_Expedient = () => {
   const [description, setDescription] = useState();
   const [codigoPresupuestario, setCodigoPresupuestario] = useState();
 
-  const date = getDate();
-
   const [areas, setAreas] = useState([]);
-
-  const { token } = useSelector((state) => state.auth);
 
   const [show, setShow] = useState(false);
 
@@ -36,8 +27,6 @@ const New_Expedient = () => {
     useExpedients();
 
   const { getAreas } = useAreas();
-
-  const { areaName, userId } = decodeToken(token);
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -53,21 +42,23 @@ const New_Expedient = () => {
       expedientNumber,
       codigoPresupuestario,
       reference,
-      date,
       description,
       codigoTramite,
       expedientType,
-      userId,
-      areaName,
       setShow
     );
   };
 
   return (
     <>
-      <div className="newExpedient" onClick={handleShow}>
-        Caratular Expediente
-      </div>
+      <OverlayTrigger
+        placement="right"
+        overlay={<Tooltip id="tooltip">Caratular Expediente</Tooltip>}
+      >
+        <div className="newExpedient" onClick={handleShow}>
+          <FaFileSignature style={{ fontSize: "22px" }} />
+        </div>
+      </OverlayTrigger>
 
       <Modal
         size="lg"

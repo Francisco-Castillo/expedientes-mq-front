@@ -2,6 +2,9 @@ import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import getDateTime from "../helpers/getDate";
+import decodeToken from "../helpers/decodeToken";
+
 import { setTotalPages } from "../store/pages";
 
 import Swal from "sweetalert2";
@@ -16,7 +19,14 @@ const customIcon = `
 const useExpedients = () => {
   const BaseUrl = import.meta.env.VITE_API_URL;
 
+  const date = getDateTime();
+
+  const { status, expedientType, startDate, endDate } = useSelector(
+    (state) => state.filters
+  );
   const { page } = useSelector((state) => state.pages);
+  const { token } = useSelector((state) => state.auth);
+  const { areaName, userId } = decodeToken(token);
 
   const dispatch = useDispatch();
 
@@ -24,12 +34,9 @@ const useExpedients = () => {
     expedientNumber,
     codigoPresupuestario,
     reference,
-    date,
     description,
     codigoTramite,
     typeExpedient,
-    userId,
-    areaName,
     setShow
   ) => {
     try {
@@ -59,13 +66,12 @@ const useExpedients = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }
   };
-
-  //
 
   const getExpedients = async (setExpedients, userId) => {
     try {
@@ -79,7 +85,8 @@ const useExpedients = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }
@@ -98,7 +105,8 @@ const useExpedients = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }
@@ -113,7 +121,8 @@ const useExpedients = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }
@@ -128,7 +137,8 @@ const useExpedients = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }
@@ -143,37 +153,28 @@ const useExpedients = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }
   };
 
-  const searchExpedients = async (
-    setResultSearch,
-    currentPage,
-    search,
-    setTotalPages,
-    filterStartDate,
-    filterEndDate,
-    filterState,
-    filterExpedientType
-  ) => {
+  const searchExpedients = async (setResultSearch, search) => {
     try {
       const { data } = await axios.get(
-        `${BaseUrl}/expedientes?universalFilter=${search}&startDate=${filterStartDate}&endDate${filterEndDate}&status=${filterState}&type${filterExpedientType}&page=${currentPage}`
+        `${BaseUrl}/expedientes?universalFilter=${search}&startDate=${startDate}&endDate${endDate}&status=${status}&type${expedientType}&page=${page}`
       );
 
-      const serverTotalPages = data.totalPages;
-
-      setTotalPages(serverTotalPages);
+      dispatch(setTotalPages(data.totalPages));
       setResultSearch(data.items);
     } catch (error) {
       Swal.fire({
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }
@@ -197,7 +198,8 @@ const useExpedients = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }
@@ -215,7 +217,8 @@ const useExpedients = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }
@@ -253,7 +256,8 @@ const useExpedients = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }

@@ -35,10 +35,6 @@ const router = createBrowserRouter([
         path: "/actualizar-contraseña",
         element: <FirsLogin />,
       },
-      // {
-      //   path: "/expedientes",
-      //   element: <ExpedientsTab />,
-      // },
     ],
   },
 ]);

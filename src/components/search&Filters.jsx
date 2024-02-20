@@ -1,39 +1,39 @@
 import React, { useEffect, useState } from "react";
 
+import { useSelector, useDispatch } from "react-redux";
+
 import useExpedients from "../hooks/useExpedients";
+
+import {
+  filterEndDate,
+  filterExpedientType,
+  filterStartDate,
+  filterStatus,
+} from "../store/filters";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import { Form, Button } from "react-bootstrap";
 
 import "../styles/search.css";
 
-const SearchAndFilters = ({ setResultSearch, currentPage, setTotalPages }) => {
+const SearchAndFilters = ({ setResultSearch, resultSearch }) => {
   const [search, setSearch] = useState(null);
-  const [filterState, setFilterState] = useState("");
-  const [filterExpedientType, setFilterExpedientType] = useState("");
-  const [filterStartDate, setFilterStartDate] = useState("");
-  const [filterEndDate, setFilterEndDate] = useState("");
+
   const [expedientTypes, setExpedientTypes] = useState([]);
   const [expedientStates, setExpedientStates] = useState([]);
+
+  const { page } = useSelector((state) => state.pages);
 
   const { searchExpedients, listExpedientTypes, listExpedientStates } =
     useExpedients();
 
+  const dispatch = useDispatch();
+
   const handleSearch = async () => {
-    await searchExpedients(
-      setResultSearch,
-      currentPage,
-      search,
-      setTotalPages,
-      filterStartDate,
-      filterEndDate,
-      filterState,
-      filterExpedientType
-    );
+    await searchExpedients(setResultSearch, search);
   };
 
   const handleKeyDown = (e) => {
@@ -46,14 +46,7 @@ const SearchAndFilters = ({ setResultSearch, currentPage, setTotalPages }) => {
     handleSearch();
     listExpedientTypes(setExpedientTypes);
     listExpedientStates(setExpedientStates);
-  }, [
-    search,
-    currentPage,
-    filterState,
-    filterEndDate,
-    filterStartDate,
-    filterExpedientType,
-  ]);
+  }, [page]);
 
   return (
     <Container
@@ -87,8 +80,7 @@ const SearchAndFilters = ({ setResultSearch, currentPage, setTotalPages }) => {
             <Form.Label style={{ color: "white" }}>Estado</Form.Label>
             <Form.Select
               aria-label="Default select example"
-              value={filterState}
-              onChange={(e) => setFilterState(e.target.value)}
+              onChange={(e) => dispatch(filterStatus(e.target.value))}
             >
               <option value="">Seleccionar Estado</option>
               {expedientStates.map((state, index) => (
@@ -106,7 +98,7 @@ const SearchAndFilters = ({ setResultSearch, currentPage, setTotalPages }) => {
             </Form.Label>
             <Form.Select
               aria-label="Default select example"
-              onChange={(e) => setFilterExpedientType(e.target.value)}
+              onChange={(e) => dispatch(filterExpedientType(e.target.value))}
             >
               <option value="">Seleccionar tipo</option>
               {expedientTypes.map((type, index) => (
@@ -128,7 +120,7 @@ const SearchAndFilters = ({ setResultSearch, currentPage, setTotalPages }) => {
             <Form.Control
               type="date"
               id="date-filter"
-              onChange={(e) => setFilterStartDate(e.target.value)}
+              onChange={(e) => dispatch(filterStartDate(e.target.value))}
             />
           </Form.Group>
         </Col>
@@ -144,7 +136,7 @@ const SearchAndFilters = ({ setResultSearch, currentPage, setTotalPages }) => {
             <Form.Control
               type="date"
               id="date-filter"
-              onChange={(e) => setFilterEndDate(e.target.value)}
+              onChange={(e) => dispatch(filterEndDate(e.target.value))}
             />
           </Form.Group>
         </Col>

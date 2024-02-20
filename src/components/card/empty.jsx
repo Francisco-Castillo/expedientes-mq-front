@@ -12,7 +12,7 @@ const Empty = () => {
         alignItems: "center",
         justifyContent: "center",
         width: "18rem",
-        marginTop:"100px"
+        marginTop: "100px",
       }}
     >
       <Card
@@ -21,10 +21,6 @@ const Empty = () => {
           borderStyle: "none",
         }}
       >
-        {/* <Card.Img
-          variant="top"
-          src="https://i.postimg.cc/V669bTjv/6016221.png"
-        /> */}
         <Card.Body>
           <Card.Title style={{ textAlign: "center" }}>
             Sin resultados

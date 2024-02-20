@@ -1,10 +1,5 @@
 import React, { useState } from "react";
 
-import { useDispatch } from "react-redux";
-import { onLogin } from "../store/auth";
-
-import { useNavigate } from "react-router-dom";
-
 import useUsers from "../hooks/useUsers";
 
 import svg from "../assets/MMQ.svg";
@@ -13,16 +8,14 @@ import "../styles/login.css";
 const FirsLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
 
   const { updatePassword, login } = useUsers();
-  const navigation = useNavigate();
 
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
       await updatePassword(password, email);
-      await login(email, password, dispatch, onLogin, navigation);
+      await login(email, password);
     } catch (error) {
       console.error(error);
     }

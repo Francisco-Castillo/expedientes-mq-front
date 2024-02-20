@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { useParams, useNavigate, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
 import useExpedients from "../hooks/useExpedients";
@@ -8,9 +8,8 @@ import useExpedients from "../hooks/useExpedients";
 import Navbar from "../components/navbar";
 
 import CarouselDocuments from "../components/carousel/carousel";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-import useExpedients from "../hooks/useExpedients";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import { FaArrowAltCircleLeft } from "react-icons/fa";
 import { AiFillPrinter } from "react-icons/ai";
@@ -18,7 +17,6 @@ import { AiFillPrinter } from "react-icons/ai";
 import svg from "../assets/MMQ.svg";
 
 import "../styles/expedient.css";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 const Expedient = () => {
   const [expedient, setExpedient] = useState({});

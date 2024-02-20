@@ -1,14 +1,19 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
+
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import { onLogin } from "../store/auth";
+import { setTotalPages } from "../store/pages";
+import { onLoad } from "../store/load";
 
 import Swal from "sweetalert2";
 
 const useUsers = () => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
+
+  const { page } = useSelector((state) => state.pages);
 
   const customIcon = `
     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder-check" width="30" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -43,23 +48,24 @@ const useUsers = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
 
       console.log(error);
     }
   };
 
-  const login = async (username, password, setIsLoading) => {
+  const login = async (username, password) => {
     try {
       const { data } = await axios.post(`${BaseUrl}/login`, {
         username,
         password,
       });
       dispatch(onLogin(data));
-      setIsLoading(true);
+      dispatch(onLoad(true));
       setTimeout(() => {
-        setIsLoading(false);
+        dispatch(onLoad(false));
         navigation("/home");
       }, 1000);
     } catch (error) {
@@ -68,7 +74,11 @@ const useUsers = () => {
         console.log(error.response.status);
 
         if (error.response.data.messages[0] === "Debe cambiar su contraseña.") {
-          navigation("/updatePassword");
+          dispatch(onLoad(true));
+          setTimeout(() => {
+            dispatch(onLoad(false));
+            navigation("/actualizar-contraseña");
+          }, 1000);
         }
       } else if (error.message) {
         console.log("Mensaje de error:", error.message);
@@ -77,27 +87,27 @@ const useUsers = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
 
       console.log(error);
     }
   };
 
-  const getUsers = async (setUsers, setTotalPages, currentPage) => {
+  const getUsers = async (setUsers) => {
     try {
-      const { data } = await axios.get(
-        `${BaseUrl}/usuarios?page=${currentPage}`
-      );
+      const { data } = await axios.get(`${BaseUrl}/usuarios?page=${page}`);
 
       setUsers(data.items);
-      setTotalPages(data.totalPages);
+      dispatch(setTotalPages(data.totalPages));
     } catch (error) {
       Swal.fire({
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
 
       console.log(error);
@@ -116,7 +126,8 @@ const useUsers = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
 
       console.log(error);
@@ -144,7 +155,8 @@ const useUsers = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
 
       console.log(error.message);
@@ -168,7 +180,8 @@ const useUsers = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }
@@ -191,7 +204,8 @@ const useUsers = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }
@@ -208,7 +222,8 @@ const useUsers = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        text: error.message,
+        titleText: error.response.status,
+        text: error.response.data.messages[0],
       });
       console.log(error);
     }

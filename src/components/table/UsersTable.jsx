@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 
+import { useSelector } from "react-redux/es/hooks/useSelector";
+
 import { Dropdown, Table } from "react-bootstrap";
 
 import Empty from "../card/empty";
 import UserEdit from "../modal/userEdit";
+import Pagination from "../Pagination";
 
 import useUsers from "../../hooks/useUsers";
 
 import { IoSettingsSharp } from "react-icons/io5";
-import Pagination from "../Pagination";
 
 const UsersTable = () => {
   const [users, setUsers] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
+
+  const { page } = useSelector((state) => state.pages);
 
   const { getUsers, changeState } = useUsers();
 
@@ -26,8 +28,8 @@ const UsersTable = () => {
   };
 
   useEffect(() => {
-    getUsers(setUsers, setTotalPages, currentPage);
-  }, [currentPage, users]);
+    getUsers(setUsers);
+  }, [page, users]);
 
   return (
     <>
@@ -115,15 +117,7 @@ const UsersTable = () => {
           ))}
         </tbody>
       </Table>
-      {users.length ? (
-        <Pagination
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-        />
-      ) : (
-        <Empty />
-      )}
+      {users.length ? <Pagination /> : <Empty />}
     </>
   );
 };
