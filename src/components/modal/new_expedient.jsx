@@ -55,8 +55,18 @@ const New_Expedient = () => {
         placement="right"
         overlay={<Tooltip id="tooltip">Caratular Expediente</Tooltip>}
       >
-        <div className="newExpedient" onClick={handleShow}>
-          <FaFileSignature style={{ fontSize: "22px" }} />
+        <div
+          style={{
+            textAlign: "center",
+            display: "inline-block",
+            verticalAlign: "middle",
+          }}
+        >
+          <FaFileSignature
+            onClick={handleShow}
+            // style={{ fontSize: "45px" }}
+            className="newExpedient"
+          />
         </div>
       </OverlayTrigger>
 

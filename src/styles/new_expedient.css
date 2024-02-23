@@ -32,15 +32,12 @@
 }
 
 .newExpedient {
+  font-size: 45px;
   text-align: center;
-  padding: 10px 20px;
+
   cursor: pointer;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
 }
 
 .newExpedient:hover {
-  background-color: rgba(212, 25, 25, 1);
-  color: #fff;
+  color: rgba(212, 25, 25, 1);
 }

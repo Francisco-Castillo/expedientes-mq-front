@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(23vw * 1.41);
+  height: calc(30vw * 1.41);
 }
 
 /* Estilos adicionales para el spinner si es necesario */

@@ -22,7 +22,14 @@ const ExpedientsSearchTable = ({ resultSearch }) => {
     <>
       {resultSearch.length ? (
         <div>
-          <Table responsive striped bordered hover id="table-data">
+          <Table
+            responsive
+            striped
+            bordered
+            hover
+            id="table-data"
+            className={`table ${resultSearch.length == 1 ? "short" : ""}`}
+          >
             <thead>
               <tr>
                 <th>Número</th>

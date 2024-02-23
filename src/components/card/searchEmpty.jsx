@@ -17,14 +17,10 @@ const SearchEmpty = () => {
     >
       <Card
         style={{
-          backgroundColor: "rgba(217, 217, 217, 1)",
+          backgroundColor: "rgba(255, 255, 255, 0.5)",
           borderStyle: "none",
         }}
       >
-        {/* <Card.Img
-          variant="top"
-          src="https://i.postimg.cc/V669bTjv/6016221.png"
-        /> */}
         <Card.Body>
           <Card.Title style={{ textAlign: "center" }}>
             Su búsqueda no arrojó ningún resultado

@@ -30,7 +30,7 @@ const LoadColorRing = () => {
           wrapperStyle={{}}
           wrapperClass="MagnifyingGlass-wrapper"
           glassColor="#c0efff"
-          color="#e15b64"
+          colors={["#b5002c", "#fbfbfb", "#20639d", "#f9d172", "#f37c3d"]}
         />
         Cargando...
       </div>

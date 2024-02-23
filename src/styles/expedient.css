@@ -11,10 +11,11 @@
   font-size: 35px;
   font-weight: bold;
   color: #ffffff;
-  text-align: left;
+  text-align: center;
   font-family: "Average Sans", sans-serif;
   background-color: rgba(212, 25, 25, 0.79);
   display: flex;
+  justify-content: space-between;
   border-radius: 5px;
 }
 

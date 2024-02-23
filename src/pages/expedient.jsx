@@ -6,20 +6,15 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import useExpedients from "../hooks/useExpedients";
 
 import Navbar from "../components/navbar";
-import CarouselDocuments from "../components/carousel/carousel";
 import DocumentsTable from "../components/table/DocumentsTable";
 
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
-
 import { FaArrowAltCircleLeft } from "react-icons/fa";
-import { AiFillPrinter } from "react-icons/ai";
-import { IoMdDownload } from "react-icons/io";
+
 import { MdDownload } from "react-icons/md";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Table from "react-bootstrap/Table";
 
 import "../styles/expedient.css";
 
@@ -41,8 +36,6 @@ const Expedient = () => {
     getExpedient(setExpedient, expedientId, setFiles);
   }, []);
 
-  console.log(expedient);
-
   return (
     <>
       <Navbar />
@@ -63,6 +56,8 @@ const Expedient = () => {
             />
 
             <h1>Expediente N° {expedient.numero}</h1>
+
+            <MdDownload className="button-back" />
           </Col>
         </Row>
         <Row id="expedient-description">
@@ -93,49 +88,7 @@ const Expedient = () => {
           </Col>
         </Row>
         <Row>
-          <h3 className="expedient-title">Historial</h3>
-          {/* <Table striped bordered hover id="table-data">
-            <thead>
-              <tr>
-                <th>Orden</th>
-                <th>Referencia</th>
-                <th>Tipo de Documento</th>
-                <th>Fecha de Vinculación</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>
-                  {" "}
-                  <OverlayTrigger
-                    placement="top"
-                    overlay={<Tooltip id="tooltip">Imprimir</Tooltip>}
-                  >
-                    <div>
-                      <MdDownload className="button-back" />
-                    </div>
-                  </OverlayTrigger>
-                </td>
-                <td>
-                  {" "}
-                  <OverlayTrigger
-                    placement="top"
-                    overlay={<Tooltip id="tooltip">Ver documentos</Tooltip>}
-                  >
-                    <div>
-                      <CarouselDocuments expedientId={expedientId} />
-                    </div>
-                  </OverlayTrigger>
-                </td>
-              </tr>
-            </tbody>
-          </Table> */}
+          <h3 className="expedient-title">Documentos</h3>
           <DocumentsTable files={files} expedientId={expedientId} />
         </Row>
       </Container>

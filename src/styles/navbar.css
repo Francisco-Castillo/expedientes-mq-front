@@ -26,7 +26,7 @@ header {
 
   .sistema {
     font-size: 35px;
-    text-shadow: 0 10px 6px rgba(0, 0, 1, 0.609);
+    text-shadow: 0 5px 6px rgba(0, 0, 1, 0.609);
 
     @media (max-width: 1100px) {
       font-size: 25px;
@@ -46,10 +46,11 @@ header {
     flex-direction: column;
     align-items: center;
     font-size: 14px;
+    text-shadow: 0 5px 3px rgba(0, 0, 1, 0.609);
   }
 
   #user-name {
-    text-shadow: 0 8px 3px rgba(0, 0, 1, 0.609);
+    text-shadow: 0 5px 3px rgba(0, 0, 1, 0.609);
   }
 
   .icon-login {

@@ -1,16 +1,23 @@
 import React from "react";
 
-import Dropdown from "react-bootstrap/Dropdown";
-import Table from "react-bootstrap/Table";
-
-import settings from "../../assets/settings.svg";
-
-import "../../styles/table.css";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { MdDownload } from "react-icons/md";
 import CarouselDocuments from "../carousel/carousel";
 
+import useDocuments from "../../hooks/useDocuments";
+
+import Table from "react-bootstrap/Table";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
+
+import { MdDownload } from "react-icons/md";
+
+import "../../styles/table.css";
+
 const DocumentsTable = ({ files, expedientId }) => {
+  const { DownloadDocument } = useDocuments();
+
+  const downloadFile = (fileName) => {
+    DownloadDocument(fileName);
+  };
+
   return (
     <Table responsive striped bordered hover id="table-data">
       <thead>
@@ -29,15 +36,28 @@ const DocumentsTable = ({ files, expedientId }) => {
             <td>{1}</td>
             <td>{document.observaciones}</td>
             <td>{document.tipoArchivo}</td>
-            <td>{document.fechaSubida}</td>
+            <td>
+              {document.fechaSubida
+                ? `${document.fechaSubida.slice(
+                    0,
+                    10
+                  )} ${document.fechaSubida.slice(11, 16)}`
+                : null}
+            </td>
             <td>
               {" "}
               <OverlayTrigger
                 placement="top"
-                overlay={<Tooltip id="tooltip">Imprimir</Tooltip>}
+                overlay={<Tooltip id="tooltip">Descargar</Tooltip>}
               >
                 <div>
-                  <MdDownload className="button-back" />
+                  <MdDownload
+                    className="button-back"
+                    onClick={() => downloadFile(document.nombre)}
+                    type="button"
+                    href=""
+                    download
+                  />
                 </div>
               </OverlayTrigger>
             </td>
@@ -45,7 +65,7 @@ const DocumentsTable = ({ files, expedientId }) => {
               {" "}
               <OverlayTrigger
                 placement="top"
-                overlay={<Tooltip id="tooltip">Ver documentos</Tooltip>}
+                overlay={<Tooltip id="tooltip">Ver documento</Tooltip>}
               >
                 <div>
                   <CarouselDocuments expedientId={expedientId} />

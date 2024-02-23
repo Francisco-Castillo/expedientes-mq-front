@@ -38,10 +38,9 @@ const useDocuments = () => {
     }
   };
 
-  const GetDocumentView = async (documentName, setViewDocument) => {
+  const DownloadDocument = async (documentName) => {
     try {
-      const { data } = await axios.get(`${BaseUrl}/documentos/${documentName}`);
-      setViewDocument(data);
+      await axios.get(`${BaseUrl}/documentos/${documentName}`);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -70,7 +69,7 @@ const useDocuments = () => {
     }
   };
 
-  return { newDocument, GetDocumentView, ListDocumentTypes };
+  return { newDocument, DownloadDocument, ListDocumentTypes };
 };
 
 export default useDocuments;
