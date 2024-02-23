@@ -11,7 +11,7 @@
   cursor: pointer;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: 5px;
 }
 
 .tab.active {
@@ -23,7 +23,7 @@
   padding: 10px 20px;
   cursor: pointer;
   border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: inherit;
 }
 

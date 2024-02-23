@@ -13,10 +13,6 @@
   }
 }
 
-/* table {
-  height: calc(23vw * 1.41);
-} */
-
 .table.short {
   height: calc(5vw * 1.41);
 }

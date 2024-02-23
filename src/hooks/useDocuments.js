@@ -14,7 +14,7 @@ const useDocuments = () => {
 
   const newDocument = async (formData, setShow) => {
     try {
-      const newDocument = await axios.post(`${BaseUrl}/documentos`, formData, {
+      await axios.post(`${BaseUrl}/documentos`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -31,28 +31,9 @@ const useDocuments = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
 
-      console.log(error);
-    }
-  };
-
-  const getDocuments = async (expedientId, setDocuments) => {
-    try {
-      const { data } = await axios.get(
-        `${BaseUrl}/expedientes/1?includeDocuments=true`
-      );
-      setDocuments(data.documentos);
-      // setTotalPages(data.totalPages);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        titleText: error.response.status,
-        text: error.response.data.messages[0],
-      });
       console.log(error);
     }
   };
@@ -67,7 +48,7 @@ const useDocuments = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }
@@ -83,13 +64,13 @@ const useDocuments = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }
   };
 
-  return { newDocument, getDocuments, GetDocumentView, ListDocumentTypes };
+  return { newDocument, GetDocumentView, ListDocumentTypes };
 };
 
 export default useDocuments;

@@ -1,18 +1,24 @@
 import React from "react";
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Login from "../pages/login";
-import New_Expedient from "../components/modal/new_expedient";
+
+import { useSelector } from "react-redux/es/hooks/useSelector";
+
+import { Navbar } from "react-bootstrap";
+
 import Home from "../pages/home";
 import Expedient from "../pages/expedient";
 import FirsLogin from "../pages/firsLogin";
-import ExpedientsTab from "../components/expedientsTab";
 
 export const AppRouter = () => {
+  const { status } = useSelector((state) => state.auth);
+
   return (
     <>
+      {/* {status === "authenticated" ? <Navbar /> : null} */}
       {/* <Navbar /> */}
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/*" element={<Home />} />
         <Route path="/expediente/:expedientId" element={<Expedient />} />
         <Route path="/actualizar-contraseña" element={<FirsLogin />} />

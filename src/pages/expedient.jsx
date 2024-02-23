@@ -6,8 +6,8 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import useExpedients from "../hooks/useExpedients";
 
 import Navbar from "../components/navbar";
-
 import CarouselDocuments from "../components/carousel/carousel";
+import DocumentsTable from "../components/table/DocumentsTable";
 
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
@@ -25,6 +25,7 @@ import "../styles/expedient.css";
 
 const Expedient = () => {
   const [expedient, setExpedient] = useState({});
+  const [files, setFiles] = useState([]);
   const { tab, subTab } = useSelector((state) => state.tab);
 
   const { expedientId } = useParams();
@@ -37,8 +38,10 @@ const Expedient = () => {
   };
 
   useEffect(() => {
-    getExpedient(setExpedient, expedientId);
+    getExpedient(setExpedient, expedientId, setFiles);
   }, []);
+
+  console.log(expedient);
 
   return (
     <>
@@ -91,7 +94,7 @@ const Expedient = () => {
         </Row>
         <Row>
           <h3 className="expedient-title">Historial</h3>
-          <Table striped bordered hover id="table-data">
+          {/* <Table striped bordered hover id="table-data">
             <thead>
               <tr>
                 <th>Orden</th>
@@ -132,7 +135,8 @@ const Expedient = () => {
                 </td>
               </tr>
             </tbody>
-          </Table>
+          </Table> */}
+          <DocumentsTable files={files} expedientId={expedientId} />
         </Row>
       </Container>
     </>

@@ -16,12 +16,12 @@ import "./styles/app.css";
 
 const router = createBrowserRouter([
   {
-    path: "",
+    path: "/",
     element: <AppRouter />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/login",
+        path: "/",
         element: <Login />,
       },
       {

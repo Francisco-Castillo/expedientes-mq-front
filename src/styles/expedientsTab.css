@@ -7,19 +7,21 @@
 }
 
 .tab.active {
+  flex: 1;
+  text-align: center;
   background-color: rgba(212, 25, 25, 1);
-  /* Color de fondo activo */
-  color: #fff; /* Color del texto activo */
+  color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .tab.disable {
   flex: 1;
   text-align: center;
-  padding: 10px 20px;
   cursor: pointer;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: 5px;
 }
 
 .tab:hover {

@@ -17,7 +17,7 @@
 }
 
 .page-item:hover {
-  background-color: #007bff;
+  background-color: rgba(212, 25, 25, 0.79);
   color: #fff;
 }
 

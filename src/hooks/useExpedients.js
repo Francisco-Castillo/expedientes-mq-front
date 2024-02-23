@@ -69,7 +69,7 @@ const useExpedients = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }
@@ -88,7 +88,7 @@ const useExpedients = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }
@@ -108,7 +108,7 @@ const useExpedients = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }
@@ -124,7 +124,7 @@ const useExpedients = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }
@@ -140,23 +140,26 @@ const useExpedients = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }
   };
 
-  const getExpedient = async (setExpedient, expedientId) => {
+  const getExpedient = async (setExpedient, expedientId, setFiles) => {
     try {
-      const { data } = await axios.get(`${BaseUrl}/expedientes/${expedientId}`);
+      const { data } =
+        await axios.get(`${BaseUrl}/expedientes/${expedientId}?includeDocuments=true
+      `);
       setExpedient(data);
+      setFiles(data.documentos);
     } catch (error) {
       Swal.fire({
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }
@@ -176,7 +179,7 @@ const useExpedients = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }
@@ -201,7 +204,7 @@ const useExpedients = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }
@@ -220,7 +223,7 @@ const useExpedients = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }
@@ -259,7 +262,7 @@ const useExpedients = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }

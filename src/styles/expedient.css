@@ -15,11 +15,13 @@
   font-family: "Average Sans", sans-serif;
   background-color: rgba(212, 25, 25, 0.79);
   display: flex;
+  border-radius: 5px;
 }
 
 #expedient-description {
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(196, 196, 196, 0.75);
   margin-top: 20px;
+  border-radius: 5px;
 }
 
 .button-back {

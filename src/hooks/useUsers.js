@@ -49,7 +49,7 @@ const useUsers = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
 
       console.log(error);
@@ -107,7 +107,7 @@ const useUsers = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
 
       console.log(error);
@@ -127,7 +127,7 @@ const useUsers = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
 
       console.log(error);
@@ -156,7 +156,7 @@ const useUsers = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
 
       console.log(error.message);
@@ -181,7 +181,7 @@ const useUsers = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }
@@ -205,7 +205,7 @@ const useUsers = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }
@@ -223,7 +223,7 @@ const useUsers = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
-        text: error.response.data.messages[0],
+        text: error.message,
       });
       console.log(error);
     }

@@ -4,7 +4,7 @@ import { Button, Modal, Form, Dropdown } from "react-bootstrap";
 
 import useDocuments from "../../hooks/useDocuments";
 
-import getDate from "../../helpers/getDate";
+import getDateTime from "../../helpers/getDate";
 
 import { IoIosSave } from "react-icons/io";
 
@@ -25,7 +25,7 @@ const New_document = ({ expedientId }) => {
 
   const { newDocument, ListDocumentTypes } = useDocuments();
 
-  const date = getDate();
+  const date = getDateTime();
 
   const formData = new FormData();
 
@@ -34,17 +34,21 @@ const New_document = ({ expedientId }) => {
   formData.append(
     "data",
     JSON.stringify({
-      fechaCreacion: date,
+      fechaSubida: date,
       observaciones: observations,
       tipoDocumentoId: Number(type),
       expedienteId: expedientId,
     })
   );
 
+  // console.log(formData);
+
   const handleUpload = async (e) => {
+    console.log(observations);
     e.preventDefault();
     await newDocument(formData, setShow);
   };
+
   return (
     <>
       <Dropdown.Item onClick={handleShow}>Vincular Archivo</Dropdown.Item>
@@ -99,7 +103,6 @@ const New_document = ({ expedientId }) => {
               className="document-textarea"
               cols="100"
               rows="10"
-              // value={observations}
               onChange={(e) => setObservations(e.target.value)}
             ></textarea>
           </form>

@@ -11,6 +11,7 @@ import { clearTabs } from "../store/tab";
 import mmqicon from "../assets/ICONMMQ.svg";
 
 import { FaUserAlt, FaPowerOff } from "react-icons/fa";
+import { HiUserCircle } from "react-icons/hi";
 
 import decodeToken from "../helpers/decodeToken";
 
@@ -29,23 +30,23 @@ const Navbar = () => {
     dispatch(onLogout({}));
     dispatch(clearPages(0));
     dispatch(clearTabs(""));
-    navigation("/login");
+    navigation("/");
   };
 
   return (
     <header>
-      <div className="container-logo">
-        <img src={mmqicon} alt="" />
+      <div className="container-logo-nav">
+        <img className="mmq-icon" src={mmqicon} alt="logo-mmq" />
         <div className="title">
-          <span>Municipalidad de</span>
-          <span>Monte Quemado</span>
+          <span className="title-mmq">Municipalidad de</span>
+          <span className="title-mmq">Monte Quemado</span>
         </div>
       </div>
-      <h3>Sistema de gestión de expedientes</h3>
+      <h3 className="sistema">Sistema de Gestión de Expedientes</h3>
       <div className="icon-login">
         <div className="icon">
-          <span>{`${name} ${lastName}`}</span>
-          <FaUserAlt style={{ fontSize: "30px" }} />
+          <HiUserCircle style={{ fontSize: "40px" }} />
+          <span id="user-name">{`${name} ${lastName}`}</span>
         </div>
         <button
           onClick={logout}
