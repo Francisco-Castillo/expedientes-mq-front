@@ -6,12 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { onLogin } from "../store/auth";
 import { setTotalPages } from "../store/pages";
 import { onLoad } from "../store/load";
+import { setUserSearchResult } from "../store/search";
 
 import Swal from "sweetalert2";
 
 const useUsers = () => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
+
+  const { search } = useSelector((state) => state.search);
 
   const { page } = useSelector((state) => state.pages);
 
@@ -211,12 +214,13 @@ const useUsers = () => {
     }
   };
 
-  const searchUser = async (searchTerm, setSearchResults) => {
+  const searchUser = async () => {
     try {
       const { data } = await axios.get(
-        `${BaseUrl}/usuarios?universalFilter=${searchTerm}`
+        `${BaseUrl}/usuarios?universalFilter=${search}`
       );
-      setSearchResults(data.items);
+      dispatch(setUserSearchResult(data.items));
+      dispatch(setTotalPages(data.totalPages));
     } catch (error) {
       Swal.fire({
         icon: "error",

@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch, useSelector } from "react-redux";
+
+import MakePassTable from "../table/makePassTable";
+import SearchUser from "../searchUser";
 
 import decodeToken from "../../helpers/decodeToken";
-import getDate from "../../helpers/getDate";
+import getDateTime from "../../helpers/getDate";
 
 import useExpedients from "../../hooks/useExpedients";
 
-import { Form, Dropdown, Modal, Button } from "react-bootstrap";
+import { clearSearchResult } from "../../store/search";
 
-import TuComponente from "../searchUser";
+import { Form, Dropdown, Modal, Button } from "react-bootstrap";
 
 import { MdDriveFileMove } from "react-icons/md";
 
@@ -26,9 +29,14 @@ const MakePass = ({ expedientId }) => {
 
   const { userId } = decodeToken(token);
 
-  const date = getDate();
+  const date = getDateTime();
 
-  const handleClose = () => setShow(false);
+  const dispatch = useDispatch();
+
+  const handleClose = () => {
+    setShow(false);
+    dispatch(clearSearchResult());
+  };
 
   const handleShow = () => {
     getExpedient(setExpedient, expedientId);
@@ -46,6 +54,7 @@ const MakePass = ({ expedientId }) => {
       observations,
       setShow
     );
+    dispatch(clearSearchResult());
   };
 
   return (
@@ -65,13 +74,12 @@ const MakePass = ({ expedientId }) => {
           closeButton
           style={{ backgroundColor: "rgba(235, 87, 87, 1)", color: "white" }}
         >
-          <Modal.Title>{`Pase de Expediente ${expedient.numero}`}</Modal.Title>
+          <Modal.Title>{`Pase de Expediente N° ${expedient.numero}`}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body style={{ padding: "30px" }}>
-          <Form id="expedient-form">
+          <Form id="user-form">
             <Form.Label htmlFor="">Motivo del pase :</Form.Label>
-
             <Form.Group className="mb-3">
               <Form.Control
                 className="me-2"
@@ -81,8 +89,12 @@ const MakePass = ({ expedientId }) => {
             </Form.Group>
 
             <Form.Label htmlFor="">Usuario :</Form.Label>
-            <TuComponente setUserReceiver={setUserReceiver} />
+            <Form.Group>
+              <SearchUser />
+            </Form.Group>
           </Form>
+
+          <MakePassTable setUserReceiver={setUserReceiver} />
         </Modal.Body>
         <Modal.Footer
           style={{

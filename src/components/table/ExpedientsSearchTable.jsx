@@ -13,7 +13,7 @@ import "../../styles/table.css";
 
 const ExpedientsSearchTable = () => {
   const navigation = useNavigate();
-  const { resultSearch } = useSelector((state) => state.search);
+  const { expedientSearchResult } = useSelector((state) => state.search);
 
   const viewExpedient = (expedientId) => {
     navigation(`/expediente/${expedientId}`);
@@ -21,7 +21,7 @@ const ExpedientsSearchTable = () => {
 
   return (
     <>
-      {resultSearch.length ? (
+      {expedientSearchResult.length ? (
         <div>
           <Table
             responsive
@@ -29,7 +29,9 @@ const ExpedientsSearchTable = () => {
             bordered
             hover
             id="table-data"
-            className={`table ${resultSearch.length == 1 ? "short" : ""}`}
+            className={`table ${
+              expedientSearchResult.length == 1 ? "short" : ""
+            }`}
           >
             <thead>
               <tr>
@@ -44,7 +46,7 @@ const ExpedientsSearchTable = () => {
             </thead>
 
             <tbody>
-              {resultSearch.map((expedient, index) => (
+              {expedientSearchResult.map((expedient, index) => (
                 <tr key={index}>
                   <td>{expedient.numero}</td>
                   <td>{expedient.fechaCaratulacion}</td>
@@ -76,7 +78,6 @@ const ExpedientsSearchTable = () => {
               ))}
             </tbody>
           </Table>
-
           <Pagination />
         </div>
       ) : (

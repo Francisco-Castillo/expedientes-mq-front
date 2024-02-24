@@ -8,6 +8,7 @@ import { filtersSlice } from "./filters";
 import { expedientSlice } from "./expedient";
 import { expedientsSlice } from "./expedients";
 import { searchSlice } from "./search";
+import { filesSlice } from "./files";
 
 import storage from "redux-persist/lib/storage";
 
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   expedient: expedientSlice.reducer,
   expedients: expedientsSlice.reducer,
   search: searchSlice.reducer,
+  files: filesSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

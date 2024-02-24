@@ -121,7 +121,7 @@ const MyExpedientsTable = () => {
                   ))}
                 </tbody>
               </Table>
-              <Pagination />
+              {expedients.length > 10 ? <Pagination /> : null}
             </>
           ) : (
             <Empty />

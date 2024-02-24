@@ -4,16 +4,32 @@ export const searchSlice = createSlice({
   name: "search",
   initialState: {
     search: "",
-    resultSearch: "",
+    userSearchResult: "",
+    expedientSearchResult: "",
   },
   reducers: {
     setSearch: (state, { payload }) => {
       state.search = payload;
     },
-    setResultSearch: (state, { payload }) => {
-      state.resultSearch = payload;
+    setUserSearchResult: (state, { payload }) => {
+      state.userSearchResult = payload;
+    },
+    setExpedientSearchResult: (state, { payload }) => {
+      state.expedientSearchResult = payload;
+    },
+    clearSearch: (state) => {
+      state.search = "";
+    },
+    clearSearchResult: (state) => {
+      state.userSearchResult = "";
     },
   },
 });
 
-export const { setSearch, setResultSearch } = searchSlice.actions;
+export const {
+  setSearch,
+  setUserSearchResult,
+  setExpedientSearchResult,
+  clearSearch,
+  clearSearchResult,
+} = searchSlice.actions;

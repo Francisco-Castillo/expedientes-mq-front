@@ -11,7 +11,7 @@ import ExpedientsSearchTable from "./table/ExpedientsSearchTable";
 import LoadColorRing from "./loaders/colorRIng";
 
 const QueryContent = () => {
-  const { resultSearch } = useSelector((state) => state.search);
+  const { expedientSearchResult } = useSelector((state) => state.search);
   const { loadStatus } = useSelector((state) => state.load);
 
   const { searchExpedients } = useExpedients();
@@ -23,7 +23,7 @@ const QueryContent = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [resultSearch]);
+  }, [expedientSearchResult]);
 
   useEffect(() => {
     if (loadStatus) {

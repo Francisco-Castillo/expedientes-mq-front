@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector, useDispatch } from "react-redux";
 
 import useExpedients from "../hooks/useExpedients";
 
@@ -20,20 +20,22 @@ import "../styles/expedient.css";
 
 const Expedient = () => {
   const [expedient, setExpedient] = useState({});
-  const [files, setFiles] = useState([]);
+
   const { tab, subTab } = useSelector((state) => state.tab);
+  const { files } = useSelector((state) => state.files);
 
   const { expedientId } = useParams();
   const { getExpedient } = useExpedients();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleComeBack = () => {
     navigate(`/${tab}/${subTab}`);
   };
 
   useEffect(() => {
-    getExpedient(setExpedient, expedientId, setFiles);
+    getExpedient(setExpedient, expedientId);
   }, []);
 
   return (

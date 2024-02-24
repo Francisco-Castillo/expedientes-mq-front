@@ -8,7 +8,8 @@ import decodeToken from "../helpers/decodeToken";
 import { setTotalPages } from "../store/pages";
 import { setStatus, setTypes } from "../store/expedients";
 import { setNumber } from "../store/expedient";
-import { setResultSearch } from "../store/search";
+import { setExpedientSearchResult } from "../store/search";
+import { setFiles } from "../store/files";
 
 import Swal from "sweetalert2";
 
@@ -147,7 +148,7 @@ const useExpedients = () => {
     }
   };
 
-  const getExpedient = async (setExpedient, expedientId, setFiles) => {
+  const getExpedient = async (setExpedient, expedientId) => {
     try {
       const { data } =
         await axios.get(`${BaseUrl}/expedientes/${expedientId}?includeDocuments=true
@@ -159,7 +160,7 @@ const useExpedients = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        titleText: error.response.status,
+        titleText: error.response,
         text: error.message,
       });
       console.log(error);
@@ -173,7 +174,7 @@ const useExpedients = () => {
       );
 
       dispatch(setTotalPages(data.totalPages));
-      dispatch(setResultSearch(data.items));
+      dispatch(setExpedientSearchResult(data.items));
     } catch (error) {
       Swal.fire({
         icon: "error",

@@ -18,13 +18,12 @@
 }
 
 #table-makePass {
-  height: calc(3vw * 1.41);
+  /* height: calc(3vw * 1.41); */
   box-shadow: 0 10px 4px rgba(0, 0, 0, 0.1);
 
   & td {
     padding: 5px;
     text-align: left;
-    /* border: 1px solid #ccc; */
   }
   & th {
     padding: 5px;
