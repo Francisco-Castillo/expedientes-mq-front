@@ -6,7 +6,9 @@ import getDateTime from "../helpers/getDate";
 import decodeToken from "../helpers/decodeToken";
 
 import { setTotalPages } from "../store/pages";
-import { setStatus, setType } from "../store/expedient";
+import { setStatus, setTypes } from "../store/expedients";
+import { setNumber } from "../store/expedient";
+import { setResultSearch } from "../store/search";
 
 import Swal from "sweetalert2";
 
@@ -22,36 +24,35 @@ const useExpedients = () => {
 
   const date = getDateTime();
 
-  const { status, expedientType, startDate, endDate } = useSelector(
+  const { expedientStatus, expedientType, startDate, endDate } = useSelector(
     (state) => state.filters
   );
+
+  const { type, description, budgetCode, reference, number, state } =
+    useSelector((state) => state.expedient);
+
   const { page } = useSelector((state) => state.pages);
+
+  const { search } = useSelector((state) => state.search);
 
   const dispatch = useDispatch();
 
-  const newExpedient = async (
-    expedientNumber,
-    codigoPresupuestario,
-    reference,
-    description,
-    codigoTramite,
-    typeExpedient,
-    setShow
-  ) => {
-    const { token } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
+
+  const newExpedient = async (setShow) => {
     const { areaName, userId } = decodeToken(token);
 
     try {
       await axios.post(`${BaseUrl}/expedientes/caratular`, {
-        numero: `${expedientNumber}-${codigoPresupuestario}`,
+        numero: `${number}-${budgetCode}`,
         referencia: reference,
         fechaCaratulacion: date,
         descripcion: description,
-        codigoTramite: codigoTramite,
+        // codigoTramite: codigoTramite,
         cantidadFojas: 8,
         monto: null,
-        tipo: typeExpedient,
-        estado: "Iniciado",
+        tipo: type,
+        estado: state,
         iniciador: areaName,
         usuario: {
           id: userId,
@@ -117,7 +118,7 @@ const useExpedients = () => {
   const listExpedientTypes = async () => {
     try {
       const { data } = await axios.get(`${BaseUrl}/expedientes/tipos`);
-      dispatch(setType(data));
+      dispatch(setTypes(data));
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -165,14 +166,14 @@ const useExpedients = () => {
     }
   };
 
-  const searchExpedients = async (setResultSearch, search) => {
+  const searchExpedients = async () => {
     try {
       const { data } = await axios.get(
-        `${BaseUrl}/expedientes?universalFilter=${search}&startDate=${startDate}&endDate${endDate}&status=${status}&type${expedientType}&page=${page}`
+        `${BaseUrl}/expedientes?universalFilter=${search}&startDate=${startDate}&endDate${endDate}&status=${expedientStatus}&type${expedientType}&page=${page}`
       );
 
       dispatch(setTotalPages(data.totalPages));
-      setResultSearch(data.items);
+      dispatch(setResultSearch(data.items));
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -210,13 +211,13 @@ const useExpedients = () => {
     }
   };
 
-  const lastExpedientNumber = async (setExpedientNumber) => {
+  const lastExpedientNumber = async () => {
     try {
       const { data } = await axios.get(
         `${BaseUrl}/parametros?name=ULTIMO_NUMERO_DE_EXPEDIENTE`
       );
       const lastNumber = Number(data.valor) + 1;
-      setExpedientNumber(lastNumber);
+      dispatch(setNumber(lastNumber));
     } catch (error) {
       Swal.fire({
         icon: "error",

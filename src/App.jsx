@@ -1,9 +1,11 @@
+import { useEffect } from "react";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import useExpedients from "./hooks/useExpedients";
-import { useEffect } from "react";
 
 import { AppRouter } from "./router/appRouter";
+
 import ErrorPage from "./pages/error-page";
 import Login from "./pages/login";
 import Home from "./pages/home";

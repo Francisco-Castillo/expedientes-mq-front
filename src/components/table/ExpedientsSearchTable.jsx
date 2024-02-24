@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import SearchEmpty from "../card/searchEmpty";
 import Pagination from "../Pagination";
@@ -11,8 +11,9 @@ import { IoSettingsSharp } from "react-icons/io5";
 
 import "../../styles/table.css";
 
-const ExpedientsSearchTable = ({ resultSearch }) => {
+const ExpedientsSearchTable = () => {
   const navigation = useNavigate();
+  const { resultSearch } = useSelector((state) => state.search);
 
   const viewExpedient = (expedientId) => {
     navigation(`/expediente/${expedientId}`);

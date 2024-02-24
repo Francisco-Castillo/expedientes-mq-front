@@ -1,9 +1,18 @@
 import { useState } from "react";
-
-import { Form, Button, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 
 import useExpedients from "../../hooks/useExpedients";
 import useAreas from "../../hooks/useAreas";
+
+import {
+  setBudgetCode,
+  setDescription,
+  setReference,
+  setType,
+  setClearAttributes,
+} from "../../store/expedient";
+
+import { Form, Button, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import { IoIosSave } from "react-icons/io";
 import { FaFileSignature } from "react-icons/fa6";
@@ -11,42 +20,34 @@ import { FaFileSignature } from "react-icons/fa6";
 import "../../styles/new_expedient.css";
 
 const New_Expedient = () => {
-  const [expedientNumber, setExpedientNumber] = useState();
-  const [reference, setReference] = useState();
-  const [expedientType, setExpedientType] = useState("");
-  const [expedientTypes, setExpedientTypes] = useState([]);
-  const [codigoTramite, setCodigoTramite] = useState();
-  const [description, setDescription] = useState();
-  const [codigoPresupuestario, setCodigoPresupuestario] = useState();
+  const { type, budgetCode, number } = useSelector((state) => state.expedient);
+
+  const { types } = useSelector((state) => state.expedients);
 
   const [areas, setAreas] = useState([]);
 
   const [show, setShow] = useState(false);
 
-  const { newExpedient, lastExpedientNumber, listExpedientTypes } =
-    useExpedients();
+  const { newExpedient, lastExpedientNumber } = useExpedients();
 
   const { getAreas } = useAreas();
 
-  const handleClose = () => setShow(false);
+  const dispatch = useDispatch();
+
+  const handleClose = () => {
+    setShow(false);
+    dispatch(setClearAttributes());
+  };
   const handleShow = () => {
     setShow(true);
     getAreas(setAreas);
-    lastExpedientNumber(setExpedientNumber);
-    listExpedientTypes(setExpedientTypes);
+    lastExpedientNumber();
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    await newExpedient(
-      expedientNumber,
-      codigoPresupuestario,
-      reference,
-      description,
-      codigoTramite,
-      expedientType,
-      setShow
-    );
+    newExpedient(setShow);
+    dispatch(setClearAttributes());
   };
 
   return (
@@ -62,11 +63,7 @@ const New_Expedient = () => {
             verticalAlign: "middle",
           }}
         >
-          <FaFileSignature
-            onClick={handleShow}
-            // style={{ fontSize: "45px" }}
-            className="newExpedient"
-          />
+          <FaFileSignature onClick={handleShow} className="newExpedient" />
         </div>
       </OverlayTrigger>
 
@@ -90,16 +87,16 @@ const New_Expedient = () => {
 
             <Form.Group className="mb-3">
               <Form.Control
-                defaultValue={expedientNumber}
+                defaultValue={number}
                 readOnly
                 style={{ width: "20%", marginBottom: "10px" }}
               />
               <Form.Select
                 aria-label="Default select example"
-                value={codigoPresupuestario}
-                onChange={(e) => setCodigoPresupuestario(e.target.value)}
+                value={budgetCode}
+                onChange={(e) => dispatch(setBudgetCode(e.target.value))}
               >
-                <option>Codigo Presupuestario</option>
+                <option value="">Codigo Presupuestario</option>
                 {areas
                   .filter((area) => area.codigoPresupuestario !== null)
                   .map((area, index) => (
@@ -115,11 +112,11 @@ const New_Expedient = () => {
             <Form.Group className="mb-3">
               <Form.Select
                 aria-label="Default select example"
-                value={expedientType}
-                onChange={(e) => setExpedientType(e.target.value)}
+                value={type}
+                onChange={(e) => dispatch(setType(e.target.value))}
               >
-                <option>Seleccionar</option>
-                {expedientTypes.map((type, index) => (
+                <option value="">Seleccionar</option>
+                {types.map((type, index) => (
                   <option value={type} key={index}>
                     {type}
                   </option>
@@ -132,7 +129,7 @@ const New_Expedient = () => {
             <Form.Group className="mb-3">
               <Form.Control
                 type="text"
-                onChange={(e) => setReference(e.target.value)}
+                onChange={(e) => dispatch(setReference(e.target.value))}
               />
             </Form.Group>
 
@@ -144,23 +141,9 @@ const New_Expedient = () => {
                 className="expedient-textarea"
                 cols="100"
                 rows="10"
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => dispatch(setDescription(e.target.value))}
               ></textarea>
             </Form.Group>
-            {/* <Form.Label htmlFor="">Codigo de tramite :</Form.Label>
-
-            <Form.Group className="mb-3">
-              <Form.Select
-                aria-label="Default select example"
-                // value={expedientTypes}
-                onChange={(e) => setCodigoTramite(e.target.value)}
-              >
-                <option value="Subsidio">Pago de factura</option>
-                <option value="Pago">Pago de servicios</option>
-                <option value="Compra">Pago de locacion</option>
-                <option value="Personal">Pago a proveedores</option>
-              </Form.Select>
-            </Form.Group> */}
           </Form>
         </Modal.Body>
         <Modal.Footer

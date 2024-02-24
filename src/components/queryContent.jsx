@@ -3,27 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 
 import useExpedients from "../hooks/useExpedients";
 
-import SearchAndFilters from "./search&Filters";
-import ExpedientsSearchTable from "./table/ExpedientsSearchTable";
-import LoadColorRing from "./loaders/colorRIng";
 import { onLoad } from "../store/load";
 import { clearPages } from "../store/pages";
 
-const QueryContent = () => {
-  const [resultSearch, setResultSearch] = useState([]);
+import SearchAndFilters from "./search&Filters";
+import ExpedientsSearchTable from "./table/ExpedientsSearchTable";
+import LoadColorRing from "./loaders/colorRIng";
 
-  const { search } = useSelector((state) => state.search);
+const QueryContent = () => {
+  const { resultSearch } = useSelector((state) => state.search);
   const { loadStatus } = useSelector((state) => state.load);
-  const { totalPages } = useSelector((state) => state.pages);
 
   const { searchExpedients } = useExpedients();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const handleSearch = async () => {
-      await searchExpedients(setResultSearch, search);
-    };
+  const handleSearch = async () => {
+    await searchExpedients();
+  };
 
+  useEffect(() => {
     handleSearch();
   }, [resultSearch]);
 
@@ -45,7 +43,7 @@ const QueryContent = () => {
       ) : (
         <>
           <SearchAndFilters />
-          <ExpedientsSearchTable resultSearch={resultSearch} />
+          <ExpedientsSearchTable />
         </>
       )}
     </>

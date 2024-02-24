@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -20,15 +20,9 @@ import { Form, Button } from "react-bootstrap";
 import "../styles/search.css";
 
 const SearchAndFilters = () => {
-  const { status, type } = useSelector((state) => state.expedient);
+  const { status, types } = useSelector((state) => state.expedients);
 
   const dispatch = useDispatch();
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
-  };
 
   return (
     <Container
@@ -49,9 +43,7 @@ const SearchAndFilters = () => {
               aria-label="Search"
               onChange={(e) => dispatch(setSearch(e.target.value))}
             />
-            <Button variant="light" onClick={handleKeyDown}>
-              Buscar
-            </Button>
+            <Button variant="light">Buscar</Button>
           </Form.Group>
         </Col>
       </Row>
@@ -83,7 +75,7 @@ const SearchAndFilters = () => {
               onChange={(e) => dispatch(filterExpedientType(e.target.value))}
             >
               <option value="">Seleccionar tipo</option>
-              {type.map((type, index) => (
+              {types.map((type, index) => (
                 <option value={type} key={index}>
                   {type}
                 </option>

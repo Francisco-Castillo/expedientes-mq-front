@@ -3,14 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 export const filtersSlice = createSlice({
   name: "filters",
   initialState: {
-    status: "",
+    expedientStatus: "",
     expedientType: "",
     startDate: "",
     endDate: "",
   },
   reducers: {
     filterStatus: (state, { payload }) => {
-      state.status = payload;
+      state.expedientStatus = payload;
     },
     filterExpedientType: (state, { payload }) => {
       state.expedientType = payload;
