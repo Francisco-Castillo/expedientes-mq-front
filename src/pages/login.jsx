@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector, useDispatch } from "react-redux";
 
 import Loader from "../components/loaders/loader";
 

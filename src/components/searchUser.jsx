@@ -12,8 +12,6 @@ import "../styles/makePass.css";
 import { useDispatch, useSelector } from "react-redux";
 
 const SearchUser = () => {
-  const { search } = useSelector((state) => state.search);
-
   const [showResults, setShowResults] = useState(false);
 
   const { searchUser } = useUsers();

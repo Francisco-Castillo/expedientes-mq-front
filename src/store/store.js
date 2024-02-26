@@ -9,6 +9,10 @@ import { expedientSlice } from "./expedient";
 import { expedientsSlice } from "./expedients";
 import { searchSlice } from "./search";
 import { filesSlice } from "./files";
+import { userSelectSlice } from "./User/userSelect";
+import { userDataSlice } from "./User/userData";
+import { newUserSlice } from "./User/newUser";
+import { areasSlice } from "./areas";
 
 import storage from "redux-persist/lib/storage";
 
@@ -32,6 +36,10 @@ const rootReducer = combineReducers({
   expedients: expedientsSlice.reducer,
   search: searchSlice.reducer,
   files: filesSlice.reducer,
+  userSelect: userSelectSlice.reducer,
+  userData: userDataSlice.reducer,
+  newUser: newUserSlice.reducer,
+  areas: areasSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

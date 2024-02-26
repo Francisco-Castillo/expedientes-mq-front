@@ -1,46 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import useUsers from "../../hooks/useUsers";
+
+import {
+  clearUserData,
+  updateAreaId,
+  updateLastName,
+  updateName,
+  updateDni,
+} from "../../store/User/userSelect";
 
 import { Dropdown, Modal, Button, Form } from "react-bootstrap";
 
-import useUsers from "../../hooks/useUsers";
-import useAreas from "../../hooks/useAreas";
-
 const UserEdit = ({ userEmail }) => {
-  const [name, setName] = useState();
-  const [lastName, setLastName] = useState();
-  const [DNI, setDNI] = useState();
-  const [email, setEmail] = useState();
-  const [userArea, setUserArea] = useState();
-
-  const [areas, setAreas] = useState([]);
-  const [user, SetUser] = useState({});
+  const { nombre, apellido, documento, email } = useSelector(
+    (state) => state.userSelect.user
+  );
+  const { descripcion } = useSelector((state) => state.userSelect.user.area);
+  const { areas } = useSelector((state) => state.areas);
+  const dispatch = useDispatch();
 
   const [show, setShow] = useState(false);
 
   const { updateUser, getUser } = useUsers();
-  const { getAreas } = useAreas();
 
-  const handleClose = () => setShow(false);
-  const handleShow = (e) => {
+  const handleClose = () => {
+    setShow(false);
+    dispatch(clearUserData());
+  };
+  const handleShow = async (e) => {
     setShow(true);
-    handleUpdate();
+    await getUser(userEmail);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateUser(name, lastName, DNI, email, user.id, setShow);
+    updateUser(setShow);
+    dispatch(clearUserData());
   };
-
-  const handleUpdate = async () => {
-    await getAreas(setAreas);
-    await getUser(SetUser, userEmail);
-    const area = await user.area;
-    setUserArea(area.descripcion);
-  };
-
-  // useEffect(() => {
-  //   handleUpdate();
-  // }, [show]);
 
   return (
     <>
@@ -72,16 +70,16 @@ const UserEdit = ({ userEmail }) => {
                 style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
                 className="form-select"
                 aria-label="Default select example"
-                onChange={(e) => setDependence(e.target.value)}
+                onChange={(e) => dispatch(updateAreaId(e.target.value))}
               >
                 <option>Seleccionar dependencia</option>
-                {areas.map((area, index) => (
+                {areas.map((e, index) => (
                   <option
-                    value={area.areaId}
+                    value={e.areaId}
                     key={index}
-                    disabled={userArea === area.descripcion}
+                    disabled={descripcion === e.descripcion}
                   >
-                    {area.descripcion}
+                    {e.descripcion}
                   </option>
                 ))}
               </Form.Select>
@@ -94,8 +92,8 @@ const UserEdit = ({ userEmail }) => {
                 style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
                 type="text"
                 className="expedient-input"
-                defaultValue={user.nombre}
-                onChange={(e) => setName(e.target.value)}
+                defaultValue={nombre}
+                onChange={(e) => dispatch(updateName(e.target.value))}
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -106,8 +104,8 @@ const UserEdit = ({ userEmail }) => {
                 style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
                 type="text"
                 className="expedient-input"
-                defaultValue={user.apellido}
-                onChange={(e) => setLastName(e.target.value)}
+                defaultValue={apellido}
+                onChange={(e) => dispatch(updateLastName(e.target.value))}
               />
             </Form.Group>
 
@@ -119,8 +117,8 @@ const UserEdit = ({ userEmail }) => {
                 style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
                 type="text"
                 className="expedient-input"
-                defaultValue={user.dni}
-                onChange={(e) => setDNI(e.target.value)}
+                defaultValue={documento}
+                onChange={(e) => dispatch(updateDni(e.target.value))}
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -131,8 +129,8 @@ const UserEdit = ({ userEmail }) => {
                 style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
                 type="email"
                 className="expedient-input"
-                defaultValue={user.email}
-                onChange={(e) => setEmail(e.target.value)}
+                defaultValue={email}
+                disabled
               />
             </Form.Group>
           </Form>

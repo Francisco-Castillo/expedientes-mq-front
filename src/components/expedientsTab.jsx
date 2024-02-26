@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { setSubTab } from "../store/tab";
 import { clearPages } from "../store/pages";
 import { onLoad } from "../store/load";
+import { clearSearch } from "../store/search";
 
 import ExpedientsTable from "./table/ExpedientsTable";
 import New_Expedient from "./modal/new_expedient";
@@ -18,7 +19,6 @@ import LoadColorRing from "./loaders/colorRIng";
 const ExpedientsTab = ({}) => {
   const { subTab } = useSelector((state) => state.tab);
   const { loadStatus } = useSelector((state) => state.load);
-  const { totalPages } = useSelector((state) => state.pages);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -34,6 +34,7 @@ const ExpedientsTab = ({}) => {
       const timer = setTimeout(() => {
         dispatch(onLoad(false));
         dispatch(clearPages(0));
+        dispatch(clearSearch());
       }, 1000);
 
       return () => clearTimeout(timer);

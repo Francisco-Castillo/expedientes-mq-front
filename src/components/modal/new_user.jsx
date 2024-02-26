@@ -1,36 +1,36 @@
 import React, { useEffect, useState } from "react";
 
+import {
+  setApellido,
+  setAreaId,
+  setDocumento,
+  setEmail,
+  setNombre,
+} from "../../store/User/newUser";
+
 import { Modal, Button } from "react-bootstrap";
 
 import useUsers from "../../hooks/useUsers";
-import useAreas from "../../hooks/useAreas";
 
 import { IoIosSave } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
 
 const New_User = () => {
-  const [name, setName] = useState();
-  const [lastName, setLastName] = useState();
-  const [DNI, setDNI] = useState();
-  const [email, setEmail] = useState();
-  const [areaId, setAreaId] = useState();
-  const [areas, setAreas] = useState([]);
+  const { areas } = useSelector((state) => state.areas);
 
   const [show, setShow] = useState(false);
+
+  const dispatch = useDispatch();
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const { newUser } = useUsers();
 
-  const { getAreas } = useAreas();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await newUser(name, lastName, DNI, email, areaId, setShow);
+    await newUser(setShow);
   };
-
-  useEffect(() => {
-    getAreas(setAreas);
-  }, []);
 
   return (
     <>
@@ -69,7 +69,7 @@ const New_User = () => {
               style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
               className="form-select"
               aria-label="Default select example"
-              onChange={(e) => setAreaId(e.target.value)}
+              onChange={(e) => dispatch(setAreaId(e.target.value))}
             >
               <option>Seleccionar dependencia</option>
               {areas.map((area, index) => (
@@ -86,7 +86,7 @@ const New_User = () => {
               style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
               type="text"
               className="expedient-input"
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => dispatch(setNombre(e.target.value))}
             />
 
             <label className="expedient-label" htmlFor="">
@@ -96,7 +96,7 @@ const New_User = () => {
               style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
               type="text"
               className="expedient-input"
-              onChange={(e) => setLastName(e.target.value)}
+              onChange={(e) => dispatch(setApellido(e.target.value))}
             />
 
             <label className="expedient-label" htmlFor="">
@@ -106,7 +106,7 @@ const New_User = () => {
               style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
               type="text"
               className="expedient-input"
-              onChange={(e) => setDNI(e.target.value)}
+              onChange={(e) => dispatch(setDocumento(e.target.value))}
             />
 
             <label className="expedient-label" htmlFor="">
@@ -116,7 +116,7 @@ const New_User = () => {
               style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
               type="email"
               className="expedient-input"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => dispatch(setEmail(e.target.value))}
             />
           </form>
         </Modal.Body>

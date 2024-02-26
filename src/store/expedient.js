@@ -17,6 +17,9 @@ export const expedientSlice = createSlice({
     setState: (state, { payload }) => {
       state.state = payload;
     },
+    updateState: (state, { payload: newState }) => {
+      state.state = newState;
+    },
     setNumber: (state, { payload }) => {
       state.number = payload;
     },
@@ -48,4 +51,5 @@ export const {
   setReference,
   setLastNumber,
   setClearAttributes,
+  updateState,
 } = expedientSlice.actions;

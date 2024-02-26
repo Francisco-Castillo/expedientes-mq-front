@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import useExpedients from "../../hooks/useExpedients";
-import useAreas from "../../hooks/useAreas";
 
 import {
   setBudgetCode,
@@ -24,13 +23,11 @@ const New_Expedient = () => {
 
   const { types } = useSelector((state) => state.expedients);
 
-  const [areas, setAreas] = useState([]);
+  const { areas } = useSelector((state) => state.areas);
 
   const [show, setShow] = useState(false);
 
   const { newExpedient, lastExpedientNumber } = useExpedients();
-
-  const { getAreas } = useAreas();
 
   const dispatch = useDispatch();
 
@@ -40,7 +37,6 @@ const New_Expedient = () => {
   };
   const handleShow = () => {
     setShow(true);
-    getAreas(setAreas);
     lastExpedientNumber();
   };
 

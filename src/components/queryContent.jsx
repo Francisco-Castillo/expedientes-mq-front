@@ -5,6 +5,7 @@ import useExpedients from "../hooks/useExpedients";
 
 import { onLoad } from "../store/load";
 import { clearPages } from "../store/pages";
+import { clearSearchResult } from "../store/search";
 
 import SearchAndFilters from "./search&Filters";
 import ExpedientsSearchTable from "./table/ExpedientsSearchTable";
@@ -30,6 +31,7 @@ const QueryContent = () => {
       const timer = setTimeout(() => {
         dispatch(onLoad(false));
         dispatch(clearPages(0));
+        dispatch(clearSearchResult());
       }, 1000);
 
       return () => clearTimeout(timer);

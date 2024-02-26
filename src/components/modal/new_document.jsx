@@ -7,6 +7,8 @@ import useDocuments from "../../hooks/useDocuments";
 import getDateTime from "../../helpers/getDate";
 
 import { IoIosSave } from "react-icons/io";
+import { BsFillFileEarmarkCheckFill } from "react-icons/bs";
+
 
 import "../../styles/new_document.css";
 

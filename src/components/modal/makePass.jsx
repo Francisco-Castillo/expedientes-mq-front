@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import MakePassTable from "../table/makePassTable";
 import SearchUser from "../searchUser";
 
-import decodeToken from "../../helpers/decodeToken";
 import getDateTime from "../../helpers/getDate";
 
 import useExpedients from "../../hooks/useExpedients";
@@ -25,9 +24,7 @@ const MakePass = ({ expedientId }) => {
 
   const { getExpedient, expedientPass } = useExpedients();
 
-  const { token } = useSelector((state) => state.auth);
-
-  const { userId } = decodeToken(token);
+  const { userId } = useSelector((state) => state.userData.user);
 
   const date = getDateTime();
 

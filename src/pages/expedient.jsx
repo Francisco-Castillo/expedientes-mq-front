@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import useExpedients from "../hooks/useExpedients";
 
@@ -28,7 +28,6 @@ const Expedient = () => {
   const { getExpedient } = useExpedients();
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleComeBack = () => {
     navigate(`/${tab}/${subTab}`);

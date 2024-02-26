@@ -3,7 +3,6 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 import getDateTime from "../helpers/getDate";
-import decodeToken from "../helpers/decodeToken";
 
 import { setTotalPages } from "../store/pages";
 import { setStatus, setTypes } from "../store/expedients";
@@ -28,28 +27,21 @@ const useExpedients = () => {
   const { expedientStatus, expedientType, startDate, endDate } = useSelector(
     (state) => state.filters
   );
-
   const { type, description, budgetCode, reference, number, state } =
     useSelector((state) => state.expedient);
-
   const { page } = useSelector((state) => state.pages);
-
   const { search } = useSelector((state) => state.search);
+  const { areaName, userId } = useSelector((state) => state.userData.user);
 
   const dispatch = useDispatch();
 
-  const { token } = useSelector((state) => state.auth);
-
   const newExpedient = async (setShow) => {
-    const { areaName, userId } = decodeToken(token);
-
     try {
       await axios.post(`${BaseUrl}/expedientes/caratular`, {
         numero: `${number}-${budgetCode}`,
         referencia: reference,
         fechaCaratulacion: date,
         descripcion: description,
-        // codigoTramite: codigoTramite,
         cantidadFojas: 8,
         monto: null,
         tipo: type,
@@ -154,7 +146,7 @@ const useExpedients = () => {
         await axios.get(`${BaseUrl}/expedientes/${expedientId}?includeDocuments=true
       `);
       setExpedient(data);
-      setFiles(data.documentos);
+      dispatch(setFiles(data.documentos));
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -187,9 +179,9 @@ const useExpedients = () => {
     }
   };
 
-  const updateExpedient = async (state, setShow, expedientId) => {
+  const updateExpedient = async (setShow, expedientId) => {
     try {
-      await axios.patch(`${BaseUrl}/${expedientId}/cambiar-estado`, {
+      await axios.put(`${BaseUrl}/${expedientId}/cambiar-estado`, {
         status: state,
       });
 

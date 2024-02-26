@@ -8,8 +8,6 @@ import { onLoad } from "../../store/load";
 
 import useExpedients from "../../hooks/useExpedients";
 
-import decodeToken from "../../helpers/decodeToken";
-
 import New_document from "../modal/new_document";
 import UpdateExpedient from "../modal/updateExpedient";
 import Pagination from "../Pagination";
@@ -23,11 +21,8 @@ import { IoSettingsSharp } from "react-icons/io5";
 import "../../styles/table.css";
 
 const ExpedientsTable = () => {
-  const { token } = useSelector((state) => state.auth);
-  const { page } = useSelector((state) => state.pages);
   const { loadStatus } = useSelector((state) => state.load);
-
-  const { userId } = decodeToken(token);
+  const { userId } = useSelector((state) => state.userData.user);
 
   const [expedients, setExpedients] = useState([]);
 

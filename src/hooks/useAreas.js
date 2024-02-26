@@ -1,15 +1,21 @@
 import axios from "axios";
+
+import { setAreas } from "../store/areas";
+import { useDispatch } from "react-redux";
+
 import Swal from "sweetalert2";
 
 const useAreas = () => {
   const BaseUrl = import.meta.env.VITE_API_URL;
 
-  const getAreas = async (setAreas) => {
+  const dispatch = useDispatch();
+
+  const getAreas = async () => {
     try {
       const { data } = await axios.get(
         `${BaseUrl}/areas?orderBy=nivel&orientation=asc`
       );
-      setAreas(data);
+      dispatch(setAreas(data));
     } catch (error) {
       Swal.fire({
         icon: "error",

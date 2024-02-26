@@ -7,6 +7,7 @@ import { onLogin } from "../store/auth";
 import { setTotalPages } from "../store/pages";
 import { onLoad } from "../store/load";
 import { setUserSearchResult } from "../store/search";
+import { setUser } from "../store/User/userSelect";
 
 import Swal from "sweetalert2";
 
@@ -17,6 +18,9 @@ const useUsers = () => {
   const { search } = useSelector((state) => state.search);
 
   const { page } = useSelector((state) => state.pages);
+  const { name, lastName, dni, id } = useSelector((state) => state.userSelect);
+  const { user } = useSelector((state) => state.newUser);
+  const { area } = useSelector((state) => state.newUser);
 
   const customIcon = `
     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder-check" width="30" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -27,15 +31,15 @@ const useUsers = () => {
 
   const BaseUrl = import.meta.env.VITE_API_URL;
 
-  const newUser = async (name, lastName, DNI, email, areaId, setShow) => {
+  const newUser = async (setShow) => {
     try {
       await axios.post(`${BaseUrl}/usuarios`, {
-        nombre: name,
-        apellido: lastName,
-        email: email,
-        documento: DNI,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        email: user.email,
+        documento: user.documento,
         area: {
-          id: areaId,
+          id: area.areaId,
         },
         password: "test",
       });
@@ -117,13 +121,12 @@ const useUsers = () => {
     }
   };
 
-  const getUser = async (setUser, userEmail) => {
+  const getUser = async (userEmail) => {
     try {
       const { data } = await axios.get(
         `${BaseUrl}/usuarios/user-info?email=${userEmail}`
       );
-
-      setUser(data);
+      dispatch(setUser(data));
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -137,13 +140,12 @@ const useUsers = () => {
     }
   };
 
-  const updateUser = async (name, lastName, DNI, userId, setShow) => {
+  const updateUser = async (setShow) => {
     try {
-      await axios.get(`${BaseUrl}/usuarios/cambiar-info`, {
+      await axios.put(`${BaseUrl}/usuarios/${id}`, {
         nombre: name,
         apellido: lastName,
-        documento: DNI,
-        id: userId,
+        documento: dni,
       });
 
       setShow(false);

@@ -7,22 +7,19 @@ import { useNavigate } from "react-router-dom";
 import { onLogout } from "../store/auth";
 import { clearPages } from "../store/pages";
 import { clearTabs } from "../store/tab";
+import { clearUserData } from "../store/User/userData";
 
 import mmqicon from "../assets/ICONMMQ.svg";
 
-import { FaUserAlt, FaPowerOff } from "react-icons/fa";
+import { FaPowerOff } from "react-icons/fa";
 import { HiUserCircle } from "react-icons/hi";
-
-import decodeToken from "../helpers/decodeToken";
 
 import "../styles/navbar.css";
 
 const Navbar = () => {
-  const { token } = useSelector((state) => state.auth);
+  const { name, lastName } = useSelector((state) => state.userData.user);
 
   const dispatch = useDispatch();
-
-  const { name, lastName } = decodeToken(token);
 
   const navigation = useNavigate();
 
@@ -30,6 +27,7 @@ const Navbar = () => {
     dispatch(onLogout({}));
     dispatch(clearPages(0));
     dispatch(clearTabs(""));
+    dispatch(clearUserData());
     navigation("/");
   };
 

@@ -1,29 +1,33 @@
 import React, { useState } from "react";
 
-import { Dropdown, Form, Modal, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+
+import { updateState } from "../../store/expedient";
 
 import useExpedients from "../../hooks/useExpedients";
 
 import { IoIosSave } from "react-icons/io";
 
+import { Dropdown, Form, Modal, Button } from "react-bootstrap";
+
 const UpdateExpedient = ({ expedientId }) => {
   const [expedient, setExpedient] = useState({});
-  const [states, setStates] = useState([]);
-  const [state, setState] = useState(null);
 
-  const { getExpedient, updateExpedient, listExpedientStates } =
-    useExpedients();
+  const { status } = useSelector((state) => state.expedients);
+
+  const { getExpedient, updateExpedient } = useExpedients();
+
+  const dispatch = useDispatch();
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = async () => {
     setShow(true);
     await getExpedient(setExpedient, expedientId);
-    await listExpedientStates(setStates);
   };
 
   const handleUpdate = async () => {
-    await updateExpedient(state, setShow, expedientId);
+    await updateExpedient(setShow, expedientId);
   };
 
   return (
@@ -69,10 +73,10 @@ const UpdateExpedient = ({ expedientId }) => {
               <Form.Label>Estado</Form.Label>
               <Form.Select
                 aria-label="Seleccionar estado"
-                onChange={(e) => setState(e.target.value)}
+                onChange={(e) => dispatch(updateState(e.target.value))}
               >
                 <option value="">Seleccionar Estado</option>
-                {states.map((state, index) => (
+                {status.map((state, index) => (
                   <option value={state} key={index}>
                     {state}
                   </option>

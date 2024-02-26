@@ -5,9 +5,6 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 
 import { setTab } from "../store/tab";
-import { clearPages } from "../store/pages";
-
-import decodeToken from "../helpers/decodeToken";
 
 import UsersTable from "./table/UsersTable";
 import New_User from "./modal/new_user";
@@ -19,11 +16,10 @@ import "../styles/tab.css";
 import { onLoad } from "../store/load";
 
 const Tab = () => {
-  const { token } = useSelector((state) => state.auth);
   const { tab } = useSelector((state) => state.tab);
-  const { loadStatus } = useSelector((state) => state.load);
+  const { areaId } = useSelector((state) => state.userData.user);
 
-  const { areaId } = decodeToken(token);
+  // console.log(areaId);
 
   const authorizedLevel = import.meta.env.VITE_HIGH_LVL;
 

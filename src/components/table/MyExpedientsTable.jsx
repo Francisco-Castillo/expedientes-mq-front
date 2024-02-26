@@ -5,8 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { onLoad } from "../../store/load";
 
-import decodeToken from "../../helpers/decodeToken";
-
 import { Table, Dropdown } from "react-bootstrap";
 import { IoSettingsSharp } from "react-icons/io5";
 
@@ -21,11 +19,8 @@ import LoadColorRing from "../loaders/colorRIng";
 import "../../styles/table.css";
 
 const MyExpedientsTable = () => {
-  const { token } = useSelector((state) => state.auth);
-  const { page } = useSelector((state) => state.pages);
   const { loadStatus } = useSelector((state) => state.load);
-
-  const { userId } = decodeToken(token);
+  const { userId } = useSelector((state) => state.userData.user);
 
   const { getMyExpedients } = useExpedients();
 
