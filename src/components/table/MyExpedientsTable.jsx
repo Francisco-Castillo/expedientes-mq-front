@@ -21,6 +21,7 @@ import "../../styles/table.css";
 const MyExpedientsTable = () => {
   const { loadStatus } = useSelector((state) => state.load);
   const { userId } = useSelector((state) => state.userData.user);
+  const { totalPages } = useSelector((state) => state.pages);
 
   const { getMyExpedients } = useExpedients();
 
@@ -116,7 +117,7 @@ const MyExpedientsTable = () => {
                   ))}
                 </tbody>
               </Table>
-              {expedients.length > 10 ? <Pagination /> : null}
+              {totalPages > 1 ? <Pagination /> : null}
             </>
           ) : (
             <Empty />

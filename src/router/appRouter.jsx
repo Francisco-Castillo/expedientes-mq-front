@@ -18,8 +18,8 @@ export const AppRouter = () => {
       {/* {status === "authenticated" ? <Navbar /> : null} */}
       {/* <Navbar /> */}
       <Routes>
+        <Route path="*" element={<Home />} />
         <Route path="/" element={<Login />} />
-        <Route path="/*" element={<Home />} />
         <Route path="/expediente/:expedientId" element={<Expedient />} />
         <Route path="/actualizar-contraseña" element={<FirsLogin />} />
       </Routes>

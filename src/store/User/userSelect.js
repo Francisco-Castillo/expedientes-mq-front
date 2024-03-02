@@ -23,19 +23,18 @@ export const userSelectSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload;
-      state.area = action.payload.area;
     },
-    updateLastName: (state, { payload: lastName }) => {
-      state.apellido = lastName;
+    updateLastName: (state, { payload: apellido }) => {
+      state.user.apellido = apellido;
     },
-    updateName: (state, { payload: name }) => {
-      state.nombre = name;
+    updateName: (state, { payload: nombre }) => {
+      state.user.nombre = nombre;
     },
-    updateDni: (state, { payload: codumento }) => {
-      state.documento = codumento;
+    updateDni: (state, { payload: documento }) => {
+      state.user.documento = documento;
     },
     updateAreaId: (state, { payload: areaId }) => {
-      state.area.id = areaId;
+      state.user.area.id = areaId;
     },
     clearUserData: (state) => {
       state.user = {

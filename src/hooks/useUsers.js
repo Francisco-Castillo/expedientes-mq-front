@@ -20,7 +20,8 @@ const useUsers = () => {
   const { page } = useSelector((state) => state.pages);
   const { name, lastName, dni, id } = useSelector((state) => state.userSelect);
   const { user } = useSelector((state) => state.newUser);
-  const { area } = useSelector((state) => state.newUser);
+  const { area } = useSelector((state) => state.newUser.user);
+
 
   const customIcon = `
     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder-check" width="30" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -39,7 +40,7 @@ const useUsers = () => {
         email: user.email,
         documento: user.documento,
         area: {
-          id: area.areaId,
+          id: area.id,
         },
         password: "test",
       });
@@ -55,7 +56,7 @@ const useUsers = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        titleText: error.response.status,
+        titleText: error.response,
         text: error.message,
       });
 

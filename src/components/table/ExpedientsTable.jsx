@@ -23,6 +23,7 @@ import "../../styles/table.css";
 const ExpedientsTable = () => {
   const { loadStatus } = useSelector((state) => state.load);
   const { userId } = useSelector((state) => state.userData.user);
+  const { totalPages } = useSelector((state) => state.pages);
 
   const [expedients, setExpedients] = useState([]);
 
@@ -119,7 +120,7 @@ const ExpedientsTable = () => {
                   ))}
                 </tbody>
               </Table>
-              <Pagination />
+              {totalPages > 1 ? <Pagination /> : null}
             </>
           ) : (
             <Empty />

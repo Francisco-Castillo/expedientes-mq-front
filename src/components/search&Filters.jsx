@@ -28,9 +28,9 @@ const SearchAndFilters = () => {
     <Container
       style={{
         backgroundColor: "rgba(217, 70, 70, 1)",
-        padding: "15px",
+        padding: "10px",
         borderRadius: "5px",
-        marginBottom: "10px",
+        marginBottom: "5px",
       }}
     >
       <Row>

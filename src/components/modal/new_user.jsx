@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import {
   setApellido,
@@ -35,7 +35,7 @@ const New_User = () => {
   return (
     <>
       <Button
-        variant="light"
+        variant="dark"
         style={{
           borderRadius: "4px",
           padding: "10px 20px",

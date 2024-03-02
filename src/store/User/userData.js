@@ -13,8 +13,8 @@ export const userDataSlice = createSlice({
     },
   },
   reducers: {
-    setUserData: (state, { payload: user }) => {
-      state.user = user;
+    setUserData: (state, action) => {
+      state.user = action.payload;
     },
     clearUserData: (state) => {
       state.user = {

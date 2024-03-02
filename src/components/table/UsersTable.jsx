@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { Dropdown, Table } from "react-bootstrap";
 
-import Empty from "../card/empty";
 import UserEdit from "../modal/userEdit";
 import Pagination from "../Pagination";
 
 import useUsers from "../../hooks/useUsers";
 
 import { IoSettingsSharp } from "react-icons/io5";
+import { onLoad } from "../../store/load";
 
 const UsersTable = () => {
   const [users, setUsers] = useState([]);
 
-  const { page } = useSelector((state) => state.pages);
+  const { totalPages } = useSelector((state) => state.pages);
+  const { loadStatus } = useSelector((state) => state.load);
 
   const { getUsers, changeState } = useUsers();
+  const dispatch = useDispatch();
 
   const handleChangeState = async (data) => {
     if (data.estado) {
@@ -29,7 +31,17 @@ const UsersTable = () => {
 
   useEffect(() => {
     getUsers(setUsers);
-  }, [page, users]);
+  }, [users]);
+
+  useEffect(() => {
+    if (loadStatus) {
+      const timer = setTimeout(() => {
+        dispatch(onLoad(false));
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [loadStatus]);
 
   return (
     <>
@@ -117,7 +129,7 @@ const UsersTable = () => {
           ))}
         </tbody>
       </Table>
-      {users.length ? <Pagination /> : <Empty />}
+      {totalPages > 1 ? <Pagination /> : null}
     </>
   );
 };

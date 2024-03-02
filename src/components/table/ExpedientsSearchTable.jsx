@@ -14,7 +14,7 @@ import "../../styles/table.css";
 const ExpedientsSearchTable = () => {
   const navigation = useNavigate();
   const { expedientSearchResult } = useSelector((state) => state.search);
-
+  const { totalPages } = useSelector((state) => state.pages);
   const viewExpedient = (expedientId) => {
     navigation(`/expediente/${expedientId}`);
   };
@@ -78,7 +78,7 @@ const ExpedientsSearchTable = () => {
               ))}
             </tbody>
           </Table>
-          <Pagination />
+          {totalPages >= 1 ? <Pagination /> : null}
         </div>
       ) : (
         <SearchEmpty />

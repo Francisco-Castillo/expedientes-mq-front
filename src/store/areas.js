@@ -16,8 +16,8 @@ export const areasSlice = createSlice({
     setAreas: (state, { payload: areas }) => {
       state.areas = areas;
     },
-    setArea: (state, { payload: area }) => {
-      state.area = area;
+    setArea: (state, action) => {
+      state.area = action.payload;
     },
   },
 });

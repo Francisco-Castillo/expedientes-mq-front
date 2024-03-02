@@ -15,20 +15,20 @@ export const newUserSlice = createSlice({
     },
   },
   reducers: {
-    setNombre: (state, { payload: nombre }) => {
-      state.nombre = nombre;
+    setNombre: (state, action) => {
+      state.user.nombre = action.payload;
     },
-    setApellido: (state, { payload: apellido }) => {
-      state.apellido = apellido;
+    setApellido: (state, action) => {
+      state.user.apellido = action.payload;
     },
-    setEmail: (state, { payload: email }) => {
-      state.email = email;
+    setEmail: (state, action) => {
+      state.user.email = action.payload;
     },
-    setDocumento: (state, { payload: documento }) => {
-      state.documento = documento;
+    setDocumento: (state, action) => {
+      state.user.documento = action.payload;
     },
-    setAreaId: (state, { payload: areaId }) => {
-      state.area.id = areaId;
+    setAreaId: (state, action) => {
+      state.user.area.id = action.payload;
     },
   },
 });
