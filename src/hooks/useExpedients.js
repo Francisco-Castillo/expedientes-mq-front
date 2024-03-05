@@ -187,8 +187,6 @@ const useExpedients = () => {
 
   const updateExpedient = async (setShow, expedientId) => {
     try {
-      console.log(typeof state);
-
       await axios.put(`${BaseUrl}/expedientes/${expedientId}/cambiar-estado`, {
         status: state,
       });
@@ -242,16 +240,13 @@ const useExpedients = () => {
     setShow
   ) => {
     try {
-      const pase = await axios.post(
-        `${BaseUrl}/expedientes/${expedientId}/pase`,
-        {
-          fechaHora: date,
-          observaciones: observations,
-          expedienteId: expedientId,
-          usuarioEmisorId: userId,
-          usuarioReceptorId: Number(userReceiverId),
-        }
-      );
+      await axios.post(`${BaseUrl}/expedientes/${expedientId}/pase`, {
+        fechaHora: date,
+        observaciones: observations,
+        expedienteId: expedientId,
+        usuarioEmisorId: userId,
+        usuarioReceptorId: Number(userReceiverId),
+      });
       setShow(false);
       Swal.fire({
         iconHtml: customIcon,

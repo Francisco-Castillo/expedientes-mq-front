@@ -1,7 +1,5 @@
 import React from "react";
-import React from "react";
 
-import { Link } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
@@ -23,7 +21,6 @@ const Tab = () => {
 
   const handleTabChange = (tabName) => {
     dispatch(setTab(tabName));
-    dispatch(setTab(tabName));
     dispatch(onLoad(true));
     dispatch(setSubTab(""));
     dispatch(clearFilters());
@@ -35,16 +32,12 @@ const Tab = () => {
       <div className="tab-header">
         <Link
           to="/expedientes"
-        <Link
-          to="/expedientes"
           className={`tab ${tab === "expedientes" ? "active" : "disable"}`}
           onClick={() => handleTabChange("expedientes")}
         >
           Expedientes
         </Link>
-        <Link
-          to="/consulta"
-        </Link>
+
         <Link
           to="/consulta"
           className={`tab ${tab === "consulta" ? "active" : "disable"}`}
@@ -52,17 +45,14 @@ const Tab = () => {
         >
           Consulta
         </Link>
-        </Link>
+
         {areaId === Number(authorizedLevel) ? (
-          <Link
-            to="/usuarios"
           <Link
             to="/usuarios"
             className={`tab ${tab === "usuarios" ? "active" : "disable"}`}
             onClick={() => handleTabChange("usuarios")}
           >
             Usuarios
-          </Link>
           </Link>
         ) : (
           ""
