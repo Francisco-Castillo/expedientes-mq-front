@@ -21,7 +21,7 @@ import "../../styles/table.css";
 const MyExpedientsTable = () => {
   const { loadStatus } = useSelector((state) => state.load);
   const { userId } = useSelector((state) => state.userData.user);
-  const { totalPages } = useSelector((state) => state.pages);
+  const { totalPages, page } = useSelector((state) => state.pages);
 
   const { getMyExpedients } = useExpedients();
 
@@ -36,7 +36,7 @@ const MyExpedientsTable = () => {
 
   useEffect(() => {
     getMyExpedients(setExpedients, userId);
-  }, [expedients]);
+  }, [page]);
 
   useEffect(() => {
     if (loadStatus) {

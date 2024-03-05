@@ -25,11 +25,11 @@ const useExpedients = () => {
   const date = getDateTime();
 
   const { expedientStatus, expedientType, startDate, endDate } = useSelector(
-    (state) => state.filters
+    (state) => state.filters.filter
   );
   const { type, description, budgetCode, reference, number, state } =
     useSelector((state) => state.expedient);
-  const { page } = useSelector((state) => state.pages);
+  const { page, totalPages } = useSelector((state) => state.pages);
   const { search } = useSelector((state) => state.search);
   const { areaName, userId } = useSelector((state) => state.userData.user);
 
@@ -74,8 +74,7 @@ const useExpedients = () => {
       const { data } = await axios.get(
         `${BaseUrl}/expedientes/bandeja-entrada/${userId}`
       );
-
-      setExpedients(data);
+      await setExpedients(data);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -102,6 +101,33 @@ const useExpedients = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
         titleText: error.response.status,
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
+  const searchExpedients = async () => {
+    try {
+      let url = `${BaseUrl}/expedientes?`;
+
+      if (search) url += `universalFilter=${search}&`;
+      if (startDate) url += `startDate=${startDate}&`;
+      if (endDate) url += `endDate=${endDate}&`;
+      if (expedientStatus) url += `status=${expedientStatus}&`;
+      if (expedientType) url += `tipos=${expedientType}&`;
+      if (page) url += `page=${page}&`;
+
+      const { data } = await axios.get(url);
+
+      dispatch(setTotalPages(data.totalPages));
+      dispatch(setExpedientSearchResult(data.items));
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        titleText: error.response ? error.response.status : "Error",
         text: error.message,
       });
       console.log(error);
@@ -159,29 +185,11 @@ const useExpedients = () => {
     }
   };
 
-  const searchExpedients = async () => {
-    try {
-      const { data } = await axios.get(
-        `${BaseUrl}/expedientes?universalFilter=${search}&startDate=${startDate}&endDate${endDate}&status=${expedientStatus}&type${expedientType}&page=${page}`
-      );
-
-      dispatch(setTotalPages(data.totalPages));
-      dispatch(setExpedientSearchResult(data.items));
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        titleText: error.response.status,
-        text: error.message,
-      });
-      console.log(error);
-    }
-  };
-
   const updateExpedient = async (setShow, expedientId) => {
     try {
-      await axios.put(`${BaseUrl}/${expedientId}/cambiar-estado`, {
+      console.log(typeof state);
+
+      await axios.put(`${BaseUrl}/expedientes/${expedientId}/cambiar-estado`, {
         status: state,
       });
 

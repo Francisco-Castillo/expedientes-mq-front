@@ -1,14 +1,17 @@
 import React from "react";
+import React from "react";
 
+import { Link } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 
 import { setTab, setSubTab } from "../store/tab";
 import { onLoad } from "../store/load";
+import { clearFilters } from "../store/filters";
+import { clearPages } from "../store/pages";
 
 import "../styles/tab.css";
-import { clearFilters } from "../store/filters";
 
 const Tab = () => {
   const { tab } = useSelector((state) => state.tab);
@@ -20,14 +23,18 @@ const Tab = () => {
 
   const handleTabChange = (tabName) => {
     dispatch(setTab(tabName));
+    dispatch(setTab(tabName));
     dispatch(onLoad(true));
     dispatch(setSubTab(""));
     dispatch(clearFilters());
+    dispatch(clearPages());
   };
 
   return (
     <>
       <div className="tab-header">
+        <Link
+          to="/expedientes"
         <Link
           to="/expedientes"
           className={`tab ${tab === "expedientes" ? "active" : "disable"}`}
@@ -37,18 +44,25 @@ const Tab = () => {
         </Link>
         <Link
           to="/consulta"
+        </Link>
+        <Link
+          to="/consulta"
           className={`tab ${tab === "consulta" ? "active" : "disable"}`}
           onClick={() => handleTabChange("consulta")}
         >
           Consulta
         </Link>
+        </Link>
         {areaId === Number(authorizedLevel) ? (
+          <Link
+            to="/usuarios"
           <Link
             to="/usuarios"
             className={`tab ${tab === "usuarios" ? "active" : "disable"}`}
             onClick={() => handleTabChange("usuarios")}
           >
             Usuarios
+          </Link>
           </Link>
         ) : (
           ""

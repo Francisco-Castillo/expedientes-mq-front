@@ -35,7 +35,7 @@ export const Root = () => {
           }
         >
           <Route
-            path="bandeja-de-entrada"
+            path="bandeja-de-entrada/:page?"
             element={
               <div style={{ padding: "0px 10px" }}>
                 <ProtectedRouter>
@@ -45,7 +45,8 @@ export const Root = () => {
             }
           />
           <Route
-            path="mis-expedientes"
+            path="mis-expedientes/:page
+            ?"
             element={
               <div style={{ padding: "0px 10px" }}>
                 <ProtectedRouter>

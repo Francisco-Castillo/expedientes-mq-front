@@ -10,6 +10,8 @@ import { setUserSearchResult } from "../store/search";
 import { setUser } from "../store/User/userSelect";
 
 import Swal from "sweetalert2";
+import decodeToken from "../helpers/decodeToken";
+import { setUserData } from "../store/User/userData";
 
 const useUsers = () => {
   const dispatch = useDispatch();
@@ -18,7 +20,10 @@ const useUsers = () => {
   const { search } = useSelector((state) => state.search);
 
   const { page } = useSelector((state) => state.pages);
-  const { name, lastName, dni, id } = useSelector((state) => state.userSelect);
+  const { nombre, apellido, documento, id } = useSelector(
+    (state) => state.userSelect.user
+  );
+  const { areaId } = useSelector((state) => state.userSelect.user.area);
   const { user } = useSelector((state) => state.newUser);
   const { area } = useSelector((state) => state.newUser.user);
 
@@ -70,7 +75,10 @@ const useUsers = () => {
         password,
       });
       dispatch(onLogin(data));
+      const dataUser = decodeToken(data.token);
+      dispatch(setUserData(dataUser));
       dispatch(onLoad(true));
+
       setTimeout(() => {
         dispatch(onLoad(false));
         navigation("/");
@@ -143,9 +151,12 @@ const useUsers = () => {
   const updateUser = async (setShow) => {
     try {
       await axios.put(`${BaseUrl}/usuarios/${id}`, {
-        nombre: name,
-        apellido: lastName,
-        documento: dni,
+        apellido: apellido,
+        nombre: nombre,
+        documento: documento,
+        area: {
+          id: areaId,
+        },
       });
 
       setShow(false);

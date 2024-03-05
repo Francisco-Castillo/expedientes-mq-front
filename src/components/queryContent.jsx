@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import useExpedients from "../hooks/useExpedients";
@@ -12,8 +12,10 @@ import ExpedientsSearchTable from "./table/ExpedientsSearchTable";
 import LoadColorRing from "./loaders/colorRIng";
 
 const QueryContent = () => {
-  const { expedientSearchResult } = useSelector((state) => state.search);
   const { loadStatus } = useSelector((state) => state.load);
+  const { page } = useSelector((state) => state.pages);
+  const { search } = useSelector((state) => state.search);
+  const { filter } = useSelector((state) => state.filters);
 
   const { searchExpedients } = useExpedients();
   const dispatch = useDispatch();
@@ -24,7 +26,17 @@ const QueryContent = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [expedientSearchResult]);
+  }, [page]);
+
+  useEffect(() => {
+    handleSearch();
+    dispatch(clearPages());
+  }, [filter]);
+
+  useEffect(() => {
+    handleSearch();
+    dispatch(clearPages());
+  }, [search]);
 
   useEffect(() => {
     if (loadStatus) {

@@ -23,7 +23,7 @@ import "../../styles/table.css";
 const ExpedientsInbox = () => {
   const { loadStatus } = useSelector((state) => state.load);
   const { userId } = useSelector((state) => state.userData.user);
-  const { totalPages } = useSelector((state) => state.pages);
+  const { totalPages, page } = useSelector((state) => state.pages);
 
   const [expedients, setExpedients] = useState([]);
 
@@ -38,7 +38,7 @@ const ExpedientsInbox = () => {
 
   useEffect(() => {
     getExpedients(setExpedients, userId);
-  }, [expedients]);
+  }, [page]);
 
   useEffect(() => {
     if (loadStatus) {

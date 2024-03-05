@@ -17,7 +17,9 @@ const UserEdit = ({ userEmail }) => {
   const { nombre, apellido, documento, email } = useSelector(
     (state) => state.userSelect.user
   );
+
   const { descripcion } = useSelector((state) => state.userSelect.user.area);
+
   const { areas } = useSelector((state) => state.areas);
   const dispatch = useDispatch();
 
@@ -29,6 +31,7 @@ const UserEdit = ({ userEmail }) => {
     setShow(false);
     dispatch(clearUserData());
   };
+
   const handleShow = async (e) => {
     setShow(true);
     await getUser(userEmail);
@@ -75,7 +78,7 @@ const UserEdit = ({ userEmail }) => {
                 <option>Seleccionar dependencia</option>
                 {areas.map((e, index) => (
                   <option
-                    value={e.areaId}
+                    value={e.id}
                     key={index}
                     disabled={descripcion === e.descripcion}
                   >
@@ -92,7 +95,7 @@ const UserEdit = ({ userEmail }) => {
                 style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
                 type="text"
                 className="expedient-input"
-                defaultValue={nombre}
+                value={nombre}
                 onChange={(e) => dispatch(updateName(e.target.value))}
               />
             </Form.Group>
@@ -104,7 +107,7 @@ const UserEdit = ({ userEmail }) => {
                 style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
                 type="text"
                 className="expedient-input"
-                defaultValue={apellido}
+                value={apellido}
                 onChange={(e) => dispatch(updateLastName(e.target.value))}
               />
             </Form.Group>
@@ -117,7 +120,7 @@ const UserEdit = ({ userEmail }) => {
                 style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
                 type="text"
                 className="expedient-input"
-                defaultValue={documento}
+                value={documento}
                 onChange={(e) => dispatch(updateDni(e.target.value))}
               />
             </Form.Group>
