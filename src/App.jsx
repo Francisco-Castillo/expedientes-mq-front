@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import useExpedients from "./hooks/useExpedients";
 import useAreas from "./hooks/useAreas";
 
-import router from "./components/router";
+import router from "./Router";
 
 import { RouterProvider } from "react-router-dom";
 
@@ -22,11 +22,9 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <div>
-        <RouterProvider router={router} />
-      </div>
-    </div>
+    <>
+      <RouterProvider router={router} />
+    </>
   );
 }
 

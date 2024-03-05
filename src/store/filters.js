@@ -21,6 +21,12 @@ export const filtersSlice = createSlice({
     filterEndDate: (state, { payload }) => {
       state.endDate = payload;
     },
+    clearFilters: (state) => {
+      state.startDate = "";
+      state.endDate = "";
+      state.expedientType = "";
+      state.expedientStatus = "";
+    },
   },
 });
 
@@ -29,4 +35,5 @@ export const {
   filterEndDate,
   filterExpedientType,
   filterStartDate,
+  clearFilters,
 } = filtersSlice.actions;

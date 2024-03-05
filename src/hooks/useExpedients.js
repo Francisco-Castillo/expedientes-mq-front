@@ -88,7 +88,7 @@ const useExpedients = () => {
     }
   };
 
-  const getMyExpedients = async (setExpedients, userId) => {
+  const getMyExpedients = async (setExpedients) => {
     try {
       const { data } = await axios.get(
         `${BaseUrl}/expedientes?caratuladorId=${userId}&page=${page}&orderBy=fechaCaratulacion&orientation=desc`

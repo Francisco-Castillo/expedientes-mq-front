@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
 
 import useExpedients from "../hooks/useExpedients";
 
-import Navbar from "../components/navbar";
 import DocumentsTable from "../components/table/DocumentsTable";
 
 import { FaArrowAltCircleLeft } from "react-icons/fa";
@@ -39,8 +38,6 @@ const Expedient = () => {
 
   return (
     <>
-      <Navbar />
-
       <Container
         style={{
           marginTop: "20px",

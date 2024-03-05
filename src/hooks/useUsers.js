@@ -22,7 +22,6 @@ const useUsers = () => {
   const { user } = useSelector((state) => state.newUser);
   const { area } = useSelector((state) => state.newUser.user);
 
-
   const customIcon = `
     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder-check" width="30" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -74,7 +73,7 @@ const useUsers = () => {
       dispatch(onLoad(true));
       setTimeout(() => {
         dispatch(onLoad(false));
-        navigation("/home");
+        navigation("/");
       }, 1000);
     } catch (error) {
       if (error.response) {

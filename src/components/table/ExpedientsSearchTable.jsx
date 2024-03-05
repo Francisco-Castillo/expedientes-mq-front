@@ -22,7 +22,7 @@ const ExpedientsSearchTable = () => {
   return (
     <>
       {expedientSearchResult.length ? (
-        <div>
+        <div style={{ padding: "0px 10px" }}>
           <Table
             responsive
             striped

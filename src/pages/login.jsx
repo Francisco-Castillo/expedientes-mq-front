@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Loader from "../components/loaders/loader";
 
@@ -26,7 +26,6 @@ const Login = () => {
       console.log(error);
     }
   };
-
   return (
     <>
       {loadStatus ? (

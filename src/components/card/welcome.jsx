@@ -13,8 +13,9 @@ const Welcome = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        width: "18rem",
+        width: "25rem",
         marginTop: "100px",
+        zIndex: "1",
       }}
     >
       <Card
