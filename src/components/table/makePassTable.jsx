@@ -7,6 +7,7 @@ import Pagination from "../Pagination";
 
 const MakePassTable = ({ setUserReceiver }) => {
   const { userSearchResult } = useSelector((state) => state.search);
+  const { totalPages } = useSelector((state) => state.pages);
 
   const handleUserSelect = (user) => {
     setUserReceiver(user);
@@ -49,7 +50,7 @@ const MakePassTable = ({ setUserReceiver }) => {
               ))}
             </tbody>
           </Table>
-          <Pagination />
+          {totalPages > 1 ? <Pagination /> : null}
         </>
       ) : null}
     </>

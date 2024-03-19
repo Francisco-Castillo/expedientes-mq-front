@@ -32,6 +32,10 @@
   background-color: rgba(212, 25, 25, 1);
   color: #fff;
 }
+.tab.tab.active:hover {
+  background-color: rgba(212, 25, 25, 1);
+  color: #fff;
+}
 
 /* Estilos del contenido de los tabs */
 .tab-content {

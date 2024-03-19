@@ -23,7 +23,7 @@ import thunk from "redux-thunk";
 const persistConfig = {
   key: root,
   storage,
-  whitelist: ["auth", "tab", "pages"],
+  whitelist: ["auth", "tab", "pages", "userData"],
 };
 
 const rootReducer = combineReducers({

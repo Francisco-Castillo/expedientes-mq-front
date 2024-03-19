@@ -3,23 +3,37 @@ import { createSlice } from "@reduxjs/toolkit";
 export const filtersSlice = createSlice({
   name: "filters",
   initialState: {
-    expedientStatus: "",
-    expedientType: "",
-    startDate: "",
-    endDate: "",
+    filter: {
+      expedientStatus: null,
+      expedientType: null,
+      startDate: null,
+      endDate: null,
+    },
   },
   reducers: {
     filterStatus: (state, { payload }) => {
-      state.expedientStatus = payload;
+      state.filter.expedientStatus = payload;
     },
     filterExpedientType: (state, { payload }) => {
-      state.expedientType = payload;
+      state.filter.expedientType = payload;
     },
     filterStartDate: (state, { payload }) => {
-      state.startDate = payload;
+      state.filter.startDate = payload;
     },
     filterEndDate: (state, { payload }) => {
-      state.endDate = payload;
+      state.filter.endDate = payload;
+    },
+    clearFilters: (state) => {
+      state.filter.startDate = null;
+      state.filter.endDate = null;
+      state.filter.expedientType = null;
+      state.filter.expedientStatus = null;
+    },
+    clearFilters: (state) => {
+      state.startDate = "";
+      state.endDate = "";
+      state.expedientType = "";
+      state.expedientStatus = "";
     },
   },
 });
@@ -29,4 +43,5 @@ export const {
   filterEndDate,
   filterExpedientType,
   filterStartDate,
+  clearFilters,
 } = filtersSlice.actions;

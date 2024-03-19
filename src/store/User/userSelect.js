@@ -6,7 +6,7 @@ export const userSelectSlice = createSlice({
     user: {
       apellido: "",
       area: {
-        id: null,
+        areaId: null,
         descripcion: "",
         referenciaId: null,
         nivel: null,
@@ -33,14 +33,14 @@ export const userSelectSlice = createSlice({
     updateDni: (state, { payload: documento }) => {
       state.user.documento = documento;
     },
-    updateAreaId: (state, { payload: areaId }) => {
-      state.user.area.id = areaId;
+    updateAreaId: (state, { payload }) => {
+      state.user.area.areaId = payload;
     },
     clearUserData: (state) => {
       state.user = {
         apellido: "",
         area: {
-          id: null,
+          areaId: null,
           descripcion: "",
           referenciaId: null,
           nivel: null,

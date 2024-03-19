@@ -1,27 +1,19 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
+import Welcome from "../components/card/welcome";
 
 import Tab from "../components/tab";
 
-import Navbar from "../components/navbar";
-
 import "../styles/home.css";
-import { useDispatch, useSelector } from "react-redux";
-import decodeToken from "../helpers/decodeToken";
-import { setUserData } from "../store/User/userData";
 
 const Home = () => {
-  const { token, status } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-
-  if (status !== "not-authenticated") {
-    const dataUser = decodeToken(token);
-    dispatch(setUserData(dataUser));
-  }
+  const { tab } = useSelector((state) => state.tab);
 
   return (
     <>
-      <Navbar />
       <Tab />
+      {tab == "" && <Welcome />}
     </>
   );
 };
