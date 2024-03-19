@@ -115,7 +115,7 @@ const useExpedients = () => {
       if (startDate) url += `startDate=${startDate}&`;
       if (endDate) url += `endDate=${endDate}&`;
       if (expedientStatus) url += `status=${expedientStatus}&`;
-      if (expedientType) url += `tipos=${expedientType}&`;
+      if (expedientType) url += `type=${expedientType}&`;
       if (page) url += `page=${page}&`;
 
       const { data } = await axios.get(url);
