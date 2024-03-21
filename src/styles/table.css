@@ -14,7 +14,7 @@
 }
 
 .table.short {
-  height: calc(5vw * 1.41);
+  height: calc(6vw * 1.41);
 }
 
 #table-makePass {

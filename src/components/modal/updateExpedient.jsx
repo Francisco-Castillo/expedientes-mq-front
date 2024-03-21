@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { updateState } from "../../store/expedient";
+import { updateState } from "../../store/expedients/expedient";
 
 import useExpedients from "../../hooks/useExpedients";
 
@@ -13,7 +13,7 @@ import { Dropdown, Form, Modal, Button } from "react-bootstrap";
 const UpdateExpedient = ({ expedientId }) => {
   const [expedient, setExpedient] = useState({});
 
-  const { status } = useSelector((state) => state.expedients);
+  const { status } = useSelector((state) => state.expedientProperties);
 
   const { getExpedient, updateExpedient } = useExpedients();
 

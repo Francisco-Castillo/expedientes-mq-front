@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -10,19 +10,44 @@ import {
 } from "../store/filters";
 
 import { setSearch } from "../store/search";
+import { clearPages } from "../store/pages";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
 import { Form, Button } from "react-bootstrap";
+
+import useExpedients from "../hooks/useExpedients";
 
 import "../styles/search.css";
 
 const SearchAndFilters = () => {
-  const { status, types } = useSelector((state) => state.expedients);
+  const { status, types } = useSelector((state) => state.expedientProperties);
+  const { page } = useSelector((state) => state.pages);
+  const { search } = useSelector((state) => state.search);
+  const { filter } = useSelector((state) => state.filters);
 
   const dispatch = useDispatch();
+
+  const { searchExpedients } = useExpedients();
+
+  const handleSearch = async () => {
+    await searchExpedients();
+  };
+
+  useEffect(() => {
+    handleSearch();
+    dispatch(clearPages());
+  }, [search]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [page]);
+
+  useEffect(() => {
+    handleSearch();
+    dispatch(clearPages());
+  }, [filter]);
 
   return (
     <Container

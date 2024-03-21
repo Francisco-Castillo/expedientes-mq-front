@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 
@@ -22,22 +22,16 @@ import "../../styles/table.css";
 
 const ExpedientsInbox = () => {
   const { loadStatus } = useSelector((state) => state.load);
-  const { userId } = useSelector((state) => state.userData.user);
-  const { totalPages, page } = useSelector((state) => state.pages);
 
-  const [expedients, setExpedients] = useState([]);
+  const { totalPages, page } = useSelector((state) => state.pages);
+  const { InboxExpedients } = useSelector((state) => state.expedients);
 
   const { getExpedients } = useExpedients();
 
-  const navigation = useNavigate();
   const dispatch = useDispatch();
 
-  const viewExpedient = (expedientId) => {
-    navigation(`/expediente/${expedientId}`);
-  };
-
   useEffect(() => {
-    getExpedients(setExpedients, userId);
+    getExpedients();
   }, [page]);
 
   useEffect(() => {
@@ -56,7 +50,7 @@ const ExpedientsInbox = () => {
         <LoadColorRing />
       ) : (
         <>
-          {expedients.length ? (
+          {InboxExpedients.length ? (
             <>
               {" "}
               <Table
@@ -65,7 +59,9 @@ const ExpedientsInbox = () => {
                 bordered
                 hover
                 id="table-data"
-                className={`table ${expedients.length == 1 ? "short" : ""}`}
+                className={`table ${
+                  InboxExpedients.length == 1 ? "short" : ""
+                }`}
               >
                 <thead>
                   <tr>
@@ -79,7 +75,7 @@ const ExpedientsInbox = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {expedients.map((expedient, index) => (
+                  {InboxExpedients.map((expedient, index) => (
                     <tr key={index}>
                       <td>{expedient.numero}</td>
                       <td>{expedient.fechaCaratulacion}</td>
@@ -105,11 +101,12 @@ const ExpedientsInbox = () => {
                             <IoSettingsSharp />
                           </Dropdown.Toggle>
                           <Dropdown.Menu>
-                            <Dropdown.Item
-                              onClick={() => viewExpedient(expedient.id)}
+                            <Link
+                              className="dropdown-item"
+                              to={`/expediente/${expedient.id}`}
                             >
                               Ver expediente
-                            </Dropdown.Item>
+                            </Link>
                             <UpdateExpedient expedientId={expedient.id} />
                             <New_document expedientId={expedient.id} />
                             <MakePass expedientId={expedient.id}></MakePass>

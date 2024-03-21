@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { onLoad } from "../../store/load";
@@ -20,23 +20,22 @@ import "../../styles/table.css";
 
 const MyExpedientsTable = () => {
   const { loadStatus } = useSelector((state) => state.load);
-  const { userId } = useSelector((state) => state.userData.user);
   const { totalPages, page } = useSelector((state) => state.pages);
+  const { myExpedients, refresh } = useSelector((state) => state.expedients);
 
   const { getMyExpedients } = useExpedients();
 
-  const [expedients, setExpedients] = useState([]);
-
-  const navigation = useNavigate();
   const dispatch = useDispatch();
 
-  const viewExpedient = (expedientId) => {
-    navigation(`/expediente/${expedientId}`);
-  };
+  useEffect(() => {
+    getMyExpedients();
+  }, [page]);
 
   useEffect(() => {
-    getMyExpedients(setExpedients, userId);
-  }, [page]);
+    if (refresh) {
+      getMyExpedients();
+    }
+  }, []);
 
   useEffect(() => {
     if (loadStatus) {
@@ -54,7 +53,7 @@ const MyExpedientsTable = () => {
         <LoadColorRing />
       ) : (
         <>
-          {expedients.length ? (
+          {myExpedients.length ? (
             <>
               <Table
                 responsive
@@ -62,7 +61,9 @@ const MyExpedientsTable = () => {
                 bordered
                 hover
                 id="table-data"
-                className={`table ${expedients.length == 1 ? "short" : "long"}`}
+                className={`table ${
+                  myExpedients.length == 1 ? "short" : "long"
+                }`}
               >
                 <thead>
                   <tr>
@@ -76,7 +77,7 @@ const MyExpedientsTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {expedients.map((expedient, index) => (
+                  {myExpedients.map((expedient, index) => (
                     <tr key={index}>
                       <td>{expedient.numero}</td>
                       <td>{expedient.fechaCaratulacion}</td>
@@ -102,11 +103,13 @@ const MyExpedientsTable = () => {
                             <IoSettingsSharp />
                           </Dropdown.Toggle>
                           <Dropdown.Menu>
-                            <Dropdown.Item
-                              onClick={() => viewExpedient(expedient.id)}
+                            <Link
+                              className="dropdown-item"
+                              to={`/expediente/${expedient.id}`}
                             >
                               Ver expediente
-                            </Dropdown.Item>
+                            </Link>
+
                             <UpdateExpedient expedientId={expedient.id} />
                             <New_document expedientId={expedient.id} />
                             <MakePass expedientId={expedient.id}></MakePass>

@@ -5,10 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import getDateTime from "../helpers/getDate";
 
 import { setTotalPages } from "../store/pages";
-import { setStatus, setTypes } from "../store/expedients";
-import { setNumber } from "../store/expedient";
+import { setStatus, setTypes } from "../store/expedients/expedientProperties";
+import { setNumber } from "../store/expedients/expedient";
 import { setExpedientSearchResult } from "../store/search";
 import { setFiles } from "../store/files";
+import {
+  setMyExpedients,
+  setInboxExpedients,
+} from "../store/expedients/expedients";
 
 import Swal from "sweetalert2";
 
@@ -29,7 +33,7 @@ const useExpedients = () => {
   );
   const { type, description, budgetCode, reference, number, state } =
     useSelector((state) => state.expedient);
-  const { page, totalPages } = useSelector((state) => state.pages);
+  const { page } = useSelector((state) => state.pages);
   const { search } = useSelector((state) => state.search);
   const { areaName, userId } = useSelector((state) => state.userData.user);
 
@@ -69,12 +73,12 @@ const useExpedients = () => {
     }
   };
 
-  const getExpedients = async (setExpedients, userId) => {
+  const getExpedients = async () => {
     try {
       const { data } = await axios.get(
         `${BaseUrl}/expedientes/bandeja-entrada/${userId}`
       );
-      await setExpedients(data);
+      dispatch(setInboxExpedients(data));
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -87,13 +91,13 @@ const useExpedients = () => {
     }
   };
 
-  const getMyExpedients = async (setExpedients) => {
+  const getMyExpedients = async () => {
     try {
       const { data } = await axios.get(
         `${BaseUrl}/expedientes?caratuladorId=${userId}&page=${page}&orderBy=fechaCaratulacion&orientation=desc`
       );
 
-      await setExpedients(data.items);
+      dispatch(setMyExpedients(data.items));
       dispatch(setTotalPages(data.totalPages));
     } catch (error) {
       Swal.fire({

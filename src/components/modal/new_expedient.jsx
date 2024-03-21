@@ -9,7 +9,9 @@ import {
   setReference,
   setType,
   setClearAttributes,
-} from "../../store/expedient";
+} from "../../store/expedients/expedient";
+
+import { refreshExpedientsList } from "../../store/expedients/expedients";
 
 import { Form, Button, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 
@@ -21,7 +23,7 @@ import "../../styles/new_expedient.css";
 const New_Expedient = () => {
   const { type, budgetCode, number } = useSelector((state) => state.expedient);
 
-  const { types } = useSelector((state) => state.expedients);
+  const { types } = useSelector((state) => state.expedientProperties);
 
   const { areas } = useSelector((state) => state.areas);
 
@@ -34,6 +36,7 @@ const New_Expedient = () => {
   const handleClose = () => {
     setShow(false);
     dispatch(setClearAttributes());
+    dispatch(refreshExpedientsList(false));
   };
   const handleShow = () => {
     setShow(true);
@@ -44,6 +47,7 @@ const New_Expedient = () => {
     e.preventDefault();
     newExpedient(setShow);
     dispatch(setClearAttributes());
+    dispatch(refreshExpedientsList(true));
   };
 
   return (

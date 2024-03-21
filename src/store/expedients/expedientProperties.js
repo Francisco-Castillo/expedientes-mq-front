@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const expedientsSlice = createSlice({
-  name: "expedients",
+export const expedientPropertiesSlice = createSlice({
+  name: "expedientProperties",
   initialState: {
     types: [],
     status: [],
@@ -16,4 +16,4 @@ export const expedientsSlice = createSlice({
   },
 });
 
-export const { setStatus, setTypes } = expedientsSlice.actions;
+export const { setStatus, setTypes } = expedientPropertiesSlice.actions;
