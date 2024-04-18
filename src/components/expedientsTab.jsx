@@ -43,7 +43,7 @@ const ExpedientsTab = ({}) => {
           Bandeja de Entrada
         </Link>
 
-        {(areaId === 15) & (areaName === "Mesa general de entradas") ? (
+        {areaName === "Mesa general de entradas" ? (
           <>
             {" "}
             <Link
