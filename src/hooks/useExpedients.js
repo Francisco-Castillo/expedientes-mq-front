@@ -41,7 +41,7 @@ const useExpedients = () => {
 
   const newExpedient = async (setShow) => {
     try {
-      await axios.post(`${BaseUrl}/expedientes/caratular`, {
+      await axios.post(`${BaseUrl}expedientes/caratular`, {
         numero: `${number}-${budgetCode}`,
         referencia: reference,
         fechaCaratulacion: date,
@@ -76,7 +76,7 @@ const useExpedients = () => {
   const getExpedients = async () => {
     try {
       const { data } = await axios.get(
-        `${BaseUrl}/expedientes/bandeja-entrada/${userId}`
+        `${BaseUrl}expedientes/bandeja-entrada/${userId}`
       );
       dispatch(setInboxExpedients(data));
     } catch (error) {
@@ -94,7 +94,7 @@ const useExpedients = () => {
   const getMyExpedients = async () => {
     try {
       const { data } = await axios.get(
-        `${BaseUrl}/expedientes?caratuladorId=${userId}&page=${page}&orderBy=fechaCaratulacion&orientation=desc`
+        `${BaseUrl}expedientes?caratuladorId=${userId}&page=${page}&orderBy=fechaCaratulacion&orientation=desc`
       );
 
       dispatch(setMyExpedients(data.items));
@@ -113,7 +113,7 @@ const useExpedients = () => {
 
   const searchExpedients = async () => {
     try {
-      let url = `${BaseUrl}/expedientes?`;
+      let url = `${BaseUrl}expedientes?`;
 
       if (search) url += `universalFilter=${search}&`;
       if (startDate) url += `startDate=${startDate}&`;
@@ -140,7 +140,7 @@ const useExpedients = () => {
 
   const listExpedientTypes = async () => {
     try {
-      const { data } = await axios.get(`${BaseUrl}/expedientes/tipos`);
+      const { data } = await axios.get(`${BaseUrl}expedientes/tipos`);
       dispatch(setTypes(data));
     } catch (error) {
       Swal.fire({
@@ -156,7 +156,7 @@ const useExpedients = () => {
 
   const listExpedientStates = async () => {
     try {
-      const { data } = await axios.get(`${BaseUrl}/expedientes/estados`);
+      const { data } = await axios.get(`${BaseUrl}expedientes/estados`);
       dispatch(setStatus(data));
     } catch (error) {
       Swal.fire({
@@ -173,7 +173,7 @@ const useExpedients = () => {
   const getExpedient = async (setExpedient, expedientId) => {
     try {
       const { data } =
-        await axios.get(`${BaseUrl}/expedientes/${expedientId}?includeDocuments=true
+        await axios.get(`${BaseUrl}expedientes/${expedientId}?includeDocuments=true
       `);
       setExpedient(data);
       dispatch(setFiles(data.documentos));
@@ -191,7 +191,7 @@ const useExpedients = () => {
 
   const updateExpedient = async (setShow, expedientId) => {
     try {
-      await axios.put(`${BaseUrl}/expedientes/${expedientId}/cambiar-estado`, {
+      await axios.put(`${BaseUrl}expedientes/${expedientId}/cambiar-estado`, {
         status: state,
       });
 
@@ -217,7 +217,7 @@ const useExpedients = () => {
   const lastExpedientNumber = async () => {
     try {
       const { data } = await axios.get(
-        `${BaseUrl}/parametros?name=ULTIMO_NUMERO_DE_EXPEDIENTE`
+        `${BaseUrl}parametros?name=ULTIMO_NUMERO_DE_EXPEDIENTE`
       );
       const lastNumber = Number(data.valor) + 1;
       dispatch(setNumber(lastNumber));
@@ -244,7 +244,7 @@ const useExpedients = () => {
     setShow
   ) => {
     try {
-      await axios.post(`${BaseUrl}/expedientes/${expedientId}/pase`, {
+      await axios.post(`${BaseUrl}expedientes/${expedientId}/pase`, {
         fechaHora: date,
         observaciones: observations,
         expedienteId: expedientId,

@@ -38,7 +38,7 @@ const useUsers = () => {
 
   const newUser = async (setShow) => {
     try {
-      await axios.post(`${BaseUrl}/usuarios`, {
+      await axios.post(`${BaseUrl}usuarios`, {
         nombre: user.nombre,
         apellido: user.apellido,
         email: user.email,
@@ -70,7 +70,7 @@ const useUsers = () => {
 
   const login = async (username, password) => {
     try {
-      const { data } = await axios.post(`${BaseUrl}/login`, {
+      const { data } = await axios.post(`${BaseUrl}login`, {
         username,
         password,
       });
@@ -112,7 +112,7 @@ const useUsers = () => {
 
   const getUsers = async (setUsers) => {
     try {
-      const { data } = await axios.get(`${BaseUrl}/usuarios?page=${page}`);
+      const { data } = await axios.get(`${BaseUrl}usuarios?page=${page}`);
 
       setUsers(data.items);
       dispatch(setTotalPages(data.totalPages));
@@ -132,7 +132,7 @@ const useUsers = () => {
   const getUser = async (userEmail) => {
     try {
       const { data } = await axios.get(
-        `${BaseUrl}/usuarios/user-info?email=${userEmail}`
+        `${BaseUrl}usuarios/user-info?email=${userEmail}`
       );
       dispatch(setUser(data));
     } catch (error) {
@@ -150,7 +150,7 @@ const useUsers = () => {
 
   const updateUser = async (setShow) => {
     try {
-      await axios.put(`${BaseUrl}/usuarios/${id}`, {
+      await axios.put(`${BaseUrl}usuarios/${id}`, {
         apellido: apellido,
         nombre: nombre,
         documento: documento,
@@ -181,7 +181,7 @@ const useUsers = () => {
 
   const updatePassword = async (password, email) => {
     try {
-      await axios.put(`${BaseUrl}/usuarios/cambiar-password`, {
+      await axios.put(`${BaseUrl}usuarios/cambiar-password`, {
         email,
         password,
       });
@@ -205,7 +205,7 @@ const useUsers = () => {
 
   const changeState = async (uid, estado) => {
     try {
-      await axios.put(`${BaseUrl}/usuarios/cambiar-estado`, {
+      await axios.put(`${BaseUrl}usuarios/cambiar-estado`, {
         id: String(uid),
         estado: estado,
       });
@@ -230,7 +230,7 @@ const useUsers = () => {
   const searchUser = async () => {
     try {
       const { data } = await axios.get(
-        `${BaseUrl}/usuarios?universalFilter=${search}`
+        `${BaseUrl}usuarios?universalFilter=${search}`
       );
       dispatch(setUserSearchResult(data.items));
       dispatch(setTotalPages(data.totalPages));

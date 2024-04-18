@@ -13,7 +13,7 @@ import "../styles/tab.css";
 
 const Tab = () => {
   const { tab } = useSelector((state) => state.tab);
-  const { areaId } = useSelector((state) => state.userData.user);
+  const { areaId, areaName } = useSelector((state) => state.userData.user);
 
   const authorizedLevel = import.meta.env.VITE_HIGH_LVL;
 
@@ -46,7 +46,7 @@ const Tab = () => {
           Consulta
         </Link>
 
-        {areaId === Number(authorizedLevel) ? (
+        {areaId === Number(authorizedLevel) && areaName == "Intendencia" ? (
           <Link
             to="/usuarios"
             className={`tab ${tab === "usuarios" ? "active" : "disable"}`}

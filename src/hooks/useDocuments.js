@@ -14,7 +14,7 @@ const useDocuments = () => {
 
   const newDocument = async (formData, setShow) => {
     try {
-      await axios.post(`${BaseUrl}/documentos`, formData, {
+      await axios.post(`${BaseUrl}documentos`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -38,9 +38,9 @@ const useDocuments = () => {
     }
   };
 
-  const DownloadDocument = async (documentName) => {
+  const viewDocument = async (documentName) => {
     try {
-      await axios.get(`${BaseUrl}/documentos/${documentName}`);
+      await axios.get(`${BaseUrl}documentos/${documentName}`);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -55,7 +55,7 @@ const useDocuments = () => {
 
   const ListDocumentTypes = async (setTypes) => {
     try {
-      const { data } = await axios.get(`${BaseUrl}//tipos-documentos`);
+      const { data } = await axios.get(`${BaseUrl}tipos-documentos`);
       setTypes(data);
     } catch (error) {
       Swal.fire({
@@ -69,7 +69,7 @@ const useDocuments = () => {
     }
   };
 
-  return { newDocument, DownloadDocument, ListDocumentTypes };
+  return { newDocument, viewDocument, ListDocumentTypes };
 };
 
 export default useDocuments;

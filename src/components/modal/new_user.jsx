@@ -32,6 +32,7 @@ const New_User = () => {
     await newUser(setShow);
   };
 
+  console.log(areas);
   return (
     <>
       <Button

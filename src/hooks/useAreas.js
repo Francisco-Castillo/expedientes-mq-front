@@ -13,7 +13,7 @@ const useAreas = () => {
   const getAreas = async () => {
     try {
       const { data } = await axios.get(
-        `${BaseUrl}/areas?orderBy=nivel&orientation=asc`
+        `${BaseUrl}areas?orderBy=nivel&orientation=asc&page=0&size=50`
       );
       dispatch(setAreas(data));
     } catch (error) {
