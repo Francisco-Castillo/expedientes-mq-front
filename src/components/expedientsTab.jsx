@@ -25,7 +25,7 @@ const ExpedientsTab = ({}) => {
     dispatch(onLoad(true));
     dispatch(clearPages());
   };
-
+  console.log(areaName);
   return (
     <>
       <div className="tabExpedients-header">
@@ -43,8 +43,7 @@ const ExpedientsTab = ({}) => {
           Bandeja de Entrada
         </Link>
 
-        {areaId === Number(authorizedLevel) &&
-        areaName == "Mesa general de entradas" ? (
+        {(areaId === 15) & (areaName === "Mesa general de entradas") ? (
           <>
             {" "}
             <Link
