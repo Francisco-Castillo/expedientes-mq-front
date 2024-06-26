@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-
 import useUsers from "../hooks/useUsers";
-
 import svg from "../assets/MMQ.svg";
-
 import "../styles/login.css";
+
 const FirsLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

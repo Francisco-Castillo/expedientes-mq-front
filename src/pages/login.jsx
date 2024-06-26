@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-
 import { useSelector } from "react-redux";
-
 import Loader from "../components/loaders/loader";
-
 import useUsers from "../hooks/useUsers";
-
 import svg from "../assets/MMQ.svg";
-
 import "../styles/login.css";
 
 const Login = () => {

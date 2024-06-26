@@ -43,7 +43,7 @@ const ExpedientsTab = ({}) => {
           Bandeja de Entrada
         </Link>
 
-        {areaName === "Mesa general de entradas" ? (
+        {/* {areaName === "Mesa general de entradas" ? ( */}
           <>
             {" "}
             <Link
@@ -61,9 +61,9 @@ const ExpedientsTab = ({}) => {
             </Link>
             {subTab === "mis-expedientes" && <New_Expedient />}
           </>
-        ) : (
+        {/* ) : (
           ""
-        )}
+        )} */}
       </div>
       <Outlet />
     </>

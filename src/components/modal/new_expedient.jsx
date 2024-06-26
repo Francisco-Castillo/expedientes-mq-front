@@ -6,6 +6,9 @@ import useExpedients from "../../hooks/useExpedients";
 import {
   setBudgetCode,
   setDescription,
+  setDate,
+  setMonto,
+  setResponsable,
   setReference,
   setType,
   setClearAttributes,
@@ -124,8 +127,34 @@ const New_Expedient = () => {
               </Form.Select>
             </Form.Group>
 
-            <Form.Label htmlFor="">Referencia :</Form.Label>
+            {/* FECHA INGRESADA POR EL USUARIO */}
+            <Form.Label htmlFor="">Fecha :</Form.Label>
+            <Form.Group className="mb-3">
+              <Form.Control
+                type="date"
+                onChange={(e) => dispatch(setDate(e.target.value))}
+              />
+            </Form.Group>
 
+            {/* MONTO A INGRESAR POR INPUT */}
+            <Form.Label htmlFor="">Monto :</Form.Label>
+            <Form.Group className="mb-3">
+              <Form.Control
+                type="number"
+                onChange={(e) => dispatch(setMonto(e.target.value))}
+              />
+            </Form.Group>
+
+              {/* PERMITE INGRESAR UN RESPONSABLE */}
+              <Form.Label htmlFor="">Responsable :</Form.Label>
+            <Form.Group className="mb-3">
+              <Form.Control
+                type="text"
+                onChange={(e) => dispatch(setResponsable(e.target.value))}
+              />
+            </Form.Group>
+
+            <Form.Label htmlFor="">Referencia :</Form.Label>
             <Form.Group className="mb-3">
               <Form.Control
                 type="text"
