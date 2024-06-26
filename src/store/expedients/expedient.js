@@ -17,6 +17,15 @@ export const expedientSlice = createSlice({
     setState: (state, { payload }) => {
       state.state = payload;
     },
+    setDate: (state, { payload }) => {
+      state.date = payload;
+    },
+    setMonto: (state, { payload }) => {
+      state.monto = payload;
+    },
+    setResponsable: (state, { payload }) => {
+      state.responsable = payload;
+    },
     updateState: (state, { payload: newState }) => {
       state.state = newState;
     },
@@ -44,6 +53,9 @@ export const expedientSlice = createSlice({
 
 export const {
   setState,
+  setDate,
+  setMonto,
+  setResponsable,
   setType,
   setBudgetCode,
   setDescription,
