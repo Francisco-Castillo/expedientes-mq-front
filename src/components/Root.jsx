@@ -19,8 +19,6 @@ export const Root = () => {
     <>
       <ProtectedRouter>
         <Navbar />
-      </ProtectedRouter>
-      <ProtectedRouter>
         <Home />
       </ProtectedRouter>
 

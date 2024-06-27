@@ -7,15 +7,22 @@ import { Link } from "react-router-dom";
 import { onLogout } from "../store/auth";
 import { clearPages } from "../store/pages";
 import { clearTabs } from "../store/tab";
-import { clearUserData, setUserData } from "../store/User/userData";
+import { clearUserData } from "../store/User/userData";
+import { onLoad } from "../store/load";
 
 import mmqicon from "../assets/ICONMMQ.svg";
 
 import { FaPowerOff } from "react-icons/fa";
 import { HiUserCircle } from "react-icons/hi";
+import { FaUserAlt } from "react-icons/fa";
+import { BiSolidUserCircle } from "react-icons/bi";
+import { BiSolidUserAccount } from "react-icons/bi";
+import { TbUserSquare } from "react-icons/tb";
+import { PiUserSquareBold } from "react-icons/pi";
+import { PiUserSquareFill } from "react-icons/pi";
+import { BiSolidUserRectangle } from "react-icons/bi";
 
 import "../styles/navbar.css";
-import decodeToken from "../helpers/decodeToken";
 
 const Navbar = () => {
   const { name, lastName } = useSelector((state) => state.userData.user);
@@ -27,6 +34,7 @@ const Navbar = () => {
     dispatch(clearPages(0));
     dispatch(clearTabs(""));
     dispatch(clearUserData());
+    dispatch(onLoad(false));
   };
 
   return (
@@ -41,7 +49,7 @@ const Navbar = () => {
       <h3 className="sistema">Sistema de Gestión de Expedientes</h3>
       <div className="icon-login">
         <div className="icon">
-          <HiUserCircle style={{ fontSize: "40px" }} />
+          <BiSolidUserRectangle style={{ fontSize: "40px" }} />
           <span id="user-name">{`${name} ${lastName}`}</span>
         </div>
         <Link

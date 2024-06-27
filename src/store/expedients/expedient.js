@@ -9,6 +9,9 @@ export const expedientSlice = createSlice({
     reference: "",
     description: "",
     budgetCode: 0,
+    monto: null,
+    responsable: "",
+    date: null,
   },
   reducers: {
     setType: (state, { payload }) => {

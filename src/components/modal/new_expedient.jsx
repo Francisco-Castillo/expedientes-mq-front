@@ -93,11 +93,13 @@ const New_Expedient = () => {
                 defaultValue={number}
                 readOnly
                 style={{ width: "20%", marginBottom: "10px" }}
+                className="expedient-input"
               />
               <Form.Select
                 aria-label="Default select example"
                 value={budgetCode}
                 onChange={(e) => dispatch(setBudgetCode(e.target.value))}
+                className="expedient-input"
               >
                 <option value="">Codigo Presupuestario</option>
                 {areas
@@ -117,6 +119,7 @@ const New_Expedient = () => {
                 aria-label="Default select example"
                 value={type}
                 onChange={(e) => dispatch(setType(e.target.value))}
+                className="expedient-input"
               >
                 <option value="">Seleccionar</option>
                 {types.map((type, index) => (
@@ -133,6 +136,7 @@ const New_Expedient = () => {
               <Form.Control
                 type="date"
                 onChange={(e) => dispatch(setDate(e.target.value))}
+                className="expedient-input"
               />
             </Form.Group>
 
@@ -142,15 +146,17 @@ const New_Expedient = () => {
               <Form.Control
                 type="number"
                 onChange={(e) => dispatch(setMonto(e.target.value))}
+                className="expedient-input"
               />
             </Form.Group>
 
-              {/* PERMITE INGRESAR UN RESPONSABLE */}
-              <Form.Label htmlFor="">Responsable :</Form.Label>
+            {/* PERMITE INGRESAR UN RESPONSABLE */}
+            <Form.Label htmlFor="">Responsable :</Form.Label>
             <Form.Group className="mb-3">
               <Form.Control
                 type="text"
                 onChange={(e) => dispatch(setResponsable(e.target.value))}
+                className="expedient-input"
               />
             </Form.Group>
 
@@ -159,6 +165,7 @@ const New_Expedient = () => {
               <Form.Control
                 type="text"
                 onChange={(e) => dispatch(setReference(e.target.value))}
+                className="expedient-input"
               />
             </Form.Group>
 

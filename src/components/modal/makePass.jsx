@@ -82,6 +82,11 @@ const MakePass = ({ expedientId }) => {
                 className="me-2"
                 type="text"
                 onChange={(e) => setObservations(e.target.value)}
+                style={{
+                  borderColor: "rgb(188, 191, 194)",
+                  borderStyle: "solid",
+                  borderWidth: "1px",
+                }}
               />
             </Form.Group>
 

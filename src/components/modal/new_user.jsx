@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   setApellido,
@@ -13,7 +14,6 @@ import { Modal, Button } from "react-bootstrap";
 import useUsers from "../../hooks/useUsers";
 
 import { IoIosSave } from "react-icons/io";
-import { useDispatch, useSelector } from "react-redux";
 
 const New_User = () => {
   const { areas } = useSelector((state) => state.areas);
@@ -32,7 +32,6 @@ const New_User = () => {
     await newUser(setShow);
   };
 
-  console.log(areas);
   return (
     <>
       <Button

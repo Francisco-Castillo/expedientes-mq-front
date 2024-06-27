@@ -58,6 +58,7 @@ const UpdateExpedient = ({ expedientId }) => {
                 type="text"
                 defaultValue={expedient.fechaCaratulacion}
                 readOnly
+                className="expedient-input"
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -66,6 +67,7 @@ const UpdateExpedient = ({ expedientId }) => {
                 type="text"
                 defaultValue={expedient.tipo}
                 readOnly
+                className="expedient-input"
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -74,6 +76,7 @@ const UpdateExpedient = ({ expedientId }) => {
               <Form.Select
                 aria-label="Seleccionar estado"
                 onChange={(e) => dispatch(updateState(e.target.value))}
+                className="expedient-input"
               >
                 <option value="">Seleccionar Estado</option>
                 {status.map((state, index) => (
@@ -90,6 +93,7 @@ const UpdateExpedient = ({ expedientId }) => {
                 rows={3}
                 defaultValue={expedient.descripcion}
                 readOnly
+                className="expedient-input"
               />
             </Form.Group>
           </Form>

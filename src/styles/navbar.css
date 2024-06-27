@@ -50,7 +50,7 @@ header {
   }
 
   #user-name {
-    text-shadow: 0 5px 3px rgba(0, 0, 1, 0.609);
+    text-shadow: 0 3px 3px rgba(0, 0, 1, 0.609);
   }
 
   .icon-login {

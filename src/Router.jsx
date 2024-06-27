@@ -28,11 +28,11 @@ const router = createBrowserRouter([
         element: <ExpedientsTab />,
         children: [
           {
-            path: "bandeja-de-entrada", // <-- Ruta relativa
+            path: "bandeja-de-entrada",
             element: <ExpedientsInbox />,
           },
           {
-            path: "mis-expedientes", // <-- Ruta relativa
+            path: "mis-expedientes",
             element: <MyExpedientsTable />,
           },
         ],

@@ -26,13 +26,23 @@ const customIcon = `
 const useExpedients = () => {
   const BaseUrl = import.meta.env.VITE_API_URL;
 
-  const date = getDateTime();
+  // const date = getDateTime();
 
   const { expedientStatus, expedientType, startDate, endDate } = useSelector(
     (state) => state.filters.filter
   );
-  const { type, description, budgetCode, reference, number, state } =
-    useSelector((state) => state.expedient);
+  const {
+    type,
+    description,
+    budgetCode,
+    reference,
+    number,
+    state,
+    monto,
+    responsable,
+    date,
+  } = useSelector((state) => state.expedient);
+
   const { page } = useSelector((state) => state.pages);
   const { search } = useSelector((state) => state.search);
   const { areaName, userId } = useSelector((state) => state.userData.user);
@@ -47,7 +57,8 @@ const useExpedients = () => {
         fechaCaratulacion: date,
         descripcion: description,
         cantidadFojas: 8,
-        monto: null,
+        monto: monto,
+        responsable: responsable,
         tipo: type,
         estado: state,
         iniciador: areaName,
@@ -217,7 +228,7 @@ const useExpedients = () => {
   const lastExpedientNumber = async () => {
     try {
       const { data } = await axios.get(
-        `${BaseUrl}parametros?name=ULTIMO_NUMERO_DE_EXPEDIENTE`
+        `${BaseUrl}/parametros?name=ULTIMO_NUMERO_DE_EXPEDIENTE`
       );
       const lastNumber = Number(data.valor) + 1;
       dispatch(setNumber(lastNumber));

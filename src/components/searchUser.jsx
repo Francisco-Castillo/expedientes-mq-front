@@ -32,6 +32,11 @@ const SearchUser = () => {
           aria-label="Search"
           onChange={handleSearch}
           onBlur={() => setShowResults(false)}
+          style={{
+            borderColor: "rgb(188, 191, 194)",
+            borderStyle: "solid",
+            borderWidth: "1px",
+          }}
         />
         <InputGroup.Text id="basic-addon1">
           <FaSearch />

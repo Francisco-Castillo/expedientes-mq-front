@@ -19,7 +19,7 @@
 .expedient-textarea {
   width: 100%;
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid rgb(188, 191, 194);
   border-radius: 4px;
   background-color: rgba(217, 217, 217, 1);
 }
@@ -39,4 +39,9 @@
 
 .newExpedient:hover {
   color: rgba(212, 25, 25, 1);
+}
+
+.expedient-input {
+  border: 1px solid rgb(188, 191, 194) !important;
+  border-radius: 4px !important;
 }
