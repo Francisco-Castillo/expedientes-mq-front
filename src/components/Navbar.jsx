@@ -13,13 +13,6 @@ import { onLoad } from "../store/load";
 import mmqicon from "../assets/ICONMMQ.svg";
 
 import { FaPowerOff } from "react-icons/fa";
-import { HiUserCircle } from "react-icons/hi";
-import { FaUserAlt } from "react-icons/fa";
-import { BiSolidUserCircle } from "react-icons/bi";
-import { BiSolidUserAccount } from "react-icons/bi";
-import { TbUserSquare } from "react-icons/tb";
-import { PiUserSquareBold } from "react-icons/pi";
-import { PiUserSquareFill } from "react-icons/pi";
 import { BiSolidUserRectangle } from "react-icons/bi";
 
 import "../styles/navbar.css";

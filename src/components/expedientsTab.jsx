@@ -16,8 +16,6 @@ const ExpedientsTab = ({}) => {
   const { subTab } = useSelector((state) => state.tab);
   const { areaId, areaName } = useSelector((state) => state.userData.user);
 
-  const authorizedLevel = import.meta.env.VITE_HIGH_LVL;
-
   const dispatch = useDispatch();
 
   const handleTabChange = (tabName) => {

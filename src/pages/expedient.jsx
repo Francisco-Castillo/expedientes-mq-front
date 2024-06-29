@@ -22,7 +22,7 @@ const Expedient = () => {
   const BaseUrl = import.meta.env.VITE_API_URL;
 
   const handleComeBack = () => {
-    navigate(`/${tab}/${subTab}`);
+    navigate(`/home/${tab}/${subTab}`);
   };
 
   useEffect(() => {

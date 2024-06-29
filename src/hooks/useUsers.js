@@ -81,7 +81,7 @@ const useUsers = () => {
 
       setTimeout(() => {
         dispatch(onLoad(false));
-        navigation("/");
+        navigation("/home");
       }, 1000);
     } catch (error) {
       if (error.response) {

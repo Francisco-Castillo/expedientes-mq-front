@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Route, Routes } from "react-router-dom";
 
 import ProtectedRouter from "../helpers/ProtectedRouter";
@@ -42,8 +41,7 @@ export const Root = () => {
             }
           />
           <Route
-            path="mis-expedientes/:page
-            ?"
+            path="mis-expedientes/:page?"
             element={
               <div style={{ padding: "0px 10px" }}>
                 <ProtectedRouter>
@@ -53,7 +51,6 @@ export const Root = () => {
             }
           />
         </Route>
-
         <Route
           path="/consulta"
           element={
