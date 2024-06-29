@@ -1,5 +1,5 @@
 import { Root } from "./components/Root";
-import ErrorPage from "./pages/error-page";
+import ErrorPage from "./pages/errorPage";
 import Login from "./pages/login";
 import Home from "./pages/home";
 import Expedient from "./pages/expedient";
