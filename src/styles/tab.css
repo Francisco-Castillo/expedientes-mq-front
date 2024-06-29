@@ -1,0 +1,44 @@
+.tab-header {
+  display: flex;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  gap: 10px;
+  padding: 10px;
+}
+
+.tab.disable {
+  flex: 1;
+  text-align: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+.tab.active {
+  background-color: rgba(212, 25, 25, 1);
+  color: #fff;
+  flex: 1;
+  text-align: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  cursor: inherit;
+}
+
+.tab.tab.disable:hover {
+  background-color: rgba(212, 25, 25, 1);
+  color: #fff;
+}
+.tab.tab.active:hover {
+  background-color: rgba(212, 25, 25, 1);
+  color: #fff;
+}
+
+/* Estilos del contenido de los tabs */
+.tab-content {
+  /* border: 1px solid #ccc; */
+  padding: 10px;
+}

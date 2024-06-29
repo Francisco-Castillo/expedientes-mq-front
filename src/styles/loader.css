@@ -1,0 +1,11 @@
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(30vw * 1.41);
+}
+
+/* Estilos adicionales para el spinner si es necesario */
+.loader-container .spinner-border {
+  /* Agrega estilos personalizados al spinner si es necesario */
+}

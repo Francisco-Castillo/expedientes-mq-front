@@ -1,0 +1,33 @@
+#table-data {
+  box-shadow: 0 10px 4px rgba(0, 0, 0, 0.1);
+
+  & td {
+    padding: 5px;
+    text-align: left;
+    /* border: 1px solid #ccc; */
+  }
+  & th {
+    padding: 5px;
+    background: rgba(217, 70, 70, 1);
+    color: white;
+  }
+}
+
+.table.short {
+  height: calc(6vw * 1.41);
+}
+
+#table-makePass {
+  /* height: calc(3vw * 1.41); */
+  box-shadow: 0 10px 4px rgba(0, 0, 0, 0.1);
+
+  & td {
+    padding: 5px;
+    text-align: left;
+  }
+  & th {
+    padding: 5px;
+    background: rgba(217, 70, 70, 1);
+    color: white;
+  }
+}
