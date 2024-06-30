@@ -1,17 +1,16 @@
 import React, { useEffect } from "react";
-
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { onLoad } from "../../store/load";
 
 import useExpedients from "../../hooks/useExpedients";
 
 import New_document from "../modal/new_document";
-import UpdateExpedient from "../modal/updateExpedient";
-import Pagination from "../Pagination";
 import MakePass from "../modal/makePass";
+import UpdateExpedient from "../modal/updateExpedient";
+
+import Pagination from "../Pagination";
 import Empty from "../card/empty";
 import LoadColorRing from "../loaders/colorRIng";
 
@@ -21,18 +20,23 @@ import { IoSettingsSharp } from "react-icons/io5";
 import "../../styles/table.css";
 
 const ExpedientsInbox = () => {
-  const { loadStatus } = useSelector((state) => state.load);
-
-  const { totalPages, page } = useSelector((state) => state.pages);
-  const { InboxExpedients } = useSelector((state) => state.expedients);
-
-  const { getExpedients } = useExpedients();
-
   const dispatch = useDispatch();
+  const { loadStatus } = useSelector((state) => state.load);
+  const { InboxExpedients, refreshExpedientsInbox } = useSelector(
+    (state) => state.expedients
+  );
+
+  const { getExpedientsInbox } = useExpedients();
 
   useEffect(() => {
-    getExpedients();
-  }, [page]);
+    getExpedientsInbox();
+  }, []);
+
+  useEffect(() => {
+    if (refreshExpedientsInbox) {
+      getExpedientsInbox();
+    }
+  }, [refreshExpedientsInbox]);
 
   useEffect(() => {
     if (loadStatus) {
@@ -42,7 +46,7 @@ const ExpedientsInbox = () => {
 
       return () => clearTimeout(timer);
     }
-  }, [loadStatus]);
+  }, [loadStatus, dispatch]);
 
   return (
     <>
@@ -52,7 +56,6 @@ const ExpedientsInbox = () => {
         <>
           {InboxExpedients.length ? (
             <>
-              {" "}
               <Table
                 responsive
                 striped
@@ -60,7 +63,7 @@ const ExpedientsInbox = () => {
                 hover
                 id="table-data"
                 className={`table ${
-                  InboxExpedients.length == 1 ? "short" : ""
+                  InboxExpedients.length === 1 ? "short" : ""
                 }`}
               >
                 <thead>
@@ -117,7 +120,6 @@ const ExpedientsInbox = () => {
                   ))}
                 </tbody>
               </Table>
-              {totalPages > 1 ? <Pagination /> : null}
             </>
           ) : (
             <Empty />

@@ -10,6 +10,7 @@ import getDateTime from "../../helpers/getDate";
 import useExpedients from "../../hooks/useExpedients";
 
 import { clearSearchResult } from "../../store/search";
+import { SetRefreshExpedientsInbox } from "../../store/expedients/expedients";
 
 import { Form, Dropdown, Modal, Button } from "react-bootstrap";
 
@@ -19,10 +20,11 @@ const MakePass = ({ expedientId }) => {
   const [expedient, setExpedient] = useState({});
   const [userReceiver, setUserReceiver] = useState({});
   const [observations, setObservations] = useState("");
+  const [passNumber, setPassNumber] = useState();
 
   const [show, setShow] = useState(false);
 
-  const { getExpedient, expedientPass } = useExpedients();
+  const { getExpedient, expedientPass, lastPassNumber } = useExpedients();
 
   const { userId } = useSelector((state) => state.userData.user);
 
@@ -33,14 +35,17 @@ const MakePass = ({ expedientId }) => {
   const handleClose = () => {
     setShow(false);
     dispatch(clearSearchResult());
+    dispatch(SetRefreshExpedientsInbox(false));
   };
 
   const handleShow = () => {
-    getExpedient(setExpedient, expedientId);
     setShow(true);
+    getExpedient(setExpedient, expedientId);
+    lastPassNumber(setPassNumber, expedientId);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     expedientPass(
       userId,
       userReceiver.id,
@@ -49,9 +54,11 @@ const MakePass = ({ expedientId }) => {
       date,
       expedientId,
       observations,
-      setShow
+      setShow,
+      passNumber
     );
     dispatch(clearSearchResult());
+    dispatch(SetRefreshExpedientsInbox(true));
   };
 
   return (

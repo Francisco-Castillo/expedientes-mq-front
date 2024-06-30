@@ -66,6 +66,7 @@ const useExpedients = () => {
           id: userId,
         },
       });
+
       setShow(false);
       Swal.fire({
         iconHtml: customIcon,
@@ -84,7 +85,7 @@ const useExpedients = () => {
     }
   };
 
-  const getExpedients = async () => {
+  const getExpedientsInbox = async () => {
     try {
       const { data } = await axios.get(
         `${BaseUrl}expedientes/bandeja-entrada/${userId}`
@@ -244,6 +245,26 @@ const useExpedients = () => {
     }
   };
 
+  const lastPassNumber = async (setPassNumber, expedientId) => {
+    try {
+      const { data } = await axios.get(
+        `${BaseUrl}/expedientes/${expedientId}/buscar-ultimo-pase`
+      );
+      const lastNumber = Number(data.id);
+
+      setPassNumber(lastNumber);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        titleText: error.response.status,
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
   const expedientPass = async (
     userId,
     userReceiverId,
@@ -252,16 +273,29 @@ const useExpedients = () => {
     date,
     expedientId,
     observations,
-    setShow
+    setShow,
+    passNumber
   ) => {
     try {
-      await axios.post(`${BaseUrl}expedientes/${expedientId}/pase`, {
-        fechaHora: date,
-        observaciones: observations,
-        expedienteId: expedientId,
-        usuarioEmisorId: userId,
-        usuarioReceptorId: Number(userReceiverId),
-      });
+      if (passNumber) {
+        await axios.post(`${BaseUrl}expedientes/${expedientId}/pase`, {
+          id: passNumber,
+          fechaHora: date,
+          observaciones: observations,
+          expedienteId: expedientId,
+          usuarioEmisorId: userId,
+          usuarioReceptorId: Number(userReceiverId),
+        });
+      } else {
+        await axios.post(`${BaseUrl}expedientes/${expedientId}/pase`, {
+          fechaHora: date,
+          observaciones: observations,
+          expedienteId: expedientId,
+          usuarioEmisorId: userId,
+          usuarioReceptorId: Number(userReceiverId),
+        });
+      }
+
       setShow(false);
       Swal.fire({
         iconHtml: customIcon,
@@ -285,12 +319,13 @@ const useExpedients = () => {
     updateExpedient,
     getExpedient,
     listExpedientTypes,
-    getExpedients,
+    getExpedientsInbox,
     searchExpedients,
     lastExpedientNumber,
     listExpedientStates,
     expedientPass,
     getMyExpedients,
+    lastPassNumber,
   };
 };
 

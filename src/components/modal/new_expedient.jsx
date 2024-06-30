@@ -14,7 +14,7 @@ import {
   setClearAttributes,
 } from "../../store/expedients/expedient";
 
-import { refreshExpedientsList } from "../../store/expedients/expedients";
+import { SetRefreshMyExpedientsList } from "../../store/expedients/expedients";
 
 import { Form, Button, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 
@@ -39,7 +39,7 @@ const New_Expedient = () => {
   const handleClose = () => {
     setShow(false);
     dispatch(setClearAttributes());
-    dispatch(refreshExpedientsList(false));
+    dispatch(SetRefreshMyExpedientsList(false));
   };
   const handleShow = () => {
     setShow(true);
@@ -50,7 +50,7 @@ const New_Expedient = () => {
     e.preventDefault();
     newExpedient(setShow);
     dispatch(setClearAttributes());
-    dispatch(refreshExpedientsList(true));
+    dispatch(SetRefreshMyExpedientsList(true));
   };
 
   return (
