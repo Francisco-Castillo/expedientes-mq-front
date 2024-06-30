@@ -245,14 +245,19 @@ const useExpedients = () => {
     }
   };
 
-  const lastPassNumber = async (setPassNumber, expedientId) => {
+  const lastPassNumber = async (
+    setPassNumber,
+    setActualUserReceiverId,
+    expedientId
+  ) => {
     try {
       const { data } = await axios.get(
         `${BaseUrl}/expedientes/${expedientId}/buscar-ultimo-pase`
       );
       const lastNumber = Number(data.id);
-
+      console.log(data);
       setPassNumber(lastNumber);
+      setActualUserReceiverId(data.usuarioReceptorId);
     } catch (error) {
       Swal.fire({
         icon: "error",

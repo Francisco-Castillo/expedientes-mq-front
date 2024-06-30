@@ -9,7 +9,7 @@ import { FaCheckCircle } from "react-icons/fa";
 
 import "../../styles/makePass.css";
 
-const MakePassTable = ({ setUserReceiver }) => {
+const MakePassTable = ({ setSelectUserReceiver }) => {
   const { userSearchResult } = useSelector((state) => state.search);
   const { totalPages } = useSelector((state) => state.pages);
   const { name, lastName } = useSelector((state) => state.userData.user);
@@ -17,7 +17,7 @@ const MakePassTable = ({ setUserReceiver }) => {
   const userFullName = `${name} ${lastName}`;
 
   const handleUserSelect = (user) => {
-    setUserReceiver(user);
+    setSelectUserReceiver(user);
   };
 
   return (
