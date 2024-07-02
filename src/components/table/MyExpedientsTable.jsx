@@ -76,7 +76,6 @@ const MyExpedientsTable = () => {
                     <th>Número</th>
                     <th>Iniciado</th>
                     <th>Tipo de Expediente</th>
-                    <th>Descripción</th>
                     <th>Estado</th>
                     <th>Caratulado por</th>
                     <th>Acciones</th>
@@ -88,7 +87,6 @@ const MyExpedientsTable = () => {
                       <td>{expedient.numero}</td>
                       <td>{expedient.fechaCaratulacion}</td>
                       <td>{expedient.tipo}</td>
-                      <td>{expedient.descripcion}</td>
                       <td>{expedient.estado}</td>
                       <td>{`${expedient.usuario.nombre} ${expedient.usuario.apellido}`}</td>
                       <td>

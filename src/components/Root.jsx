@@ -23,7 +23,7 @@ export const Root = () => {
 
       <Routes>
         <Route
-          path="/expedientes"
+          path="expedientes"
           element={
             <ProtectedRouter>
               <ExpedientsTab />
@@ -52,7 +52,7 @@ export const Root = () => {
           />
         </Route>
         <Route
-          path="/consulta"
+          path="consulta/:page?"
           element={
             <ProtectedRouter>
               <QueryContent />
@@ -60,7 +60,7 @@ export const Root = () => {
           }
         />
         <Route
-          path="/usuarios"
+          path="usuarios"
           element={
             <ProtectedRouter>
               <UsersTable />
@@ -68,7 +68,7 @@ export const Root = () => {
           }
         />
         <Route
-          path="/expediente/:expedientId"
+          path="expediente/:expedientId"
           element={
             <ProtectedRouter>
               <Expedient />
@@ -76,7 +76,7 @@ export const Root = () => {
           }
         />
         <Route
-          path="/actualizar-contraseña"
+          path="actualizar-contraseña"
           element={
             <ProtectedRouter>
               <FirsLogin />

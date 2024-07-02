@@ -20,7 +20,7 @@ const Welcome = () => {
     >
       <Card
         style={{
-          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          backgroundColor: "inherit",
           borderStyle: "none",
           alignItems: "center",
         }}

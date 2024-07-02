@@ -31,7 +31,7 @@ const Tab = () => {
     <>
       <div className="tab-header">
         <Link
-          to="/home/expedientes"
+          to="/expedientes"
           className={`tab ${tab === "expedientes" ? "active" : "disable"}`}
           onClick={() => handleTabChange("expedientes")}
         >
@@ -39,7 +39,7 @@ const Tab = () => {
         </Link>
 
         <Link
-          to="/home/consulta"
+          to="/consulta"
           className={`tab ${tab === "consulta" ? "active" : "disable"}`}
           onClick={() => handleTabChange("consulta")}
         >
@@ -48,7 +48,7 @@ const Tab = () => {
 
         {areaId === Number(authorizedLevel) && areaName == "Intendencia" ? (
           <Link
-            to="/home/usuarios"
+            to="/usuarios"
             className={`tab ${tab === "usuarios" ? "active" : "disable"}`}
             onClick={() => handleTabChange("usuarios")}
           >

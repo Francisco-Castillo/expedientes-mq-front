@@ -3,37 +3,45 @@ import { createSlice } from "@reduxjs/toolkit";
 export const filtersSlice = createSlice({
   name: "filters",
   initialState: {
-    filter: {
-      expedientStatus: null,
-      expedientType: null,
-      startDate: null,
-      endDate: null,
-    },
+    expedientStatus: null,
+    expedientType: null,
+    startDate: null,
+    endDate: null,
+    filterActive: false,
   },
   reducers: {
     filterStatus: (state, { payload }) => {
-      state.filter.expedientStatus = payload;
+      state.expedientStatus = payload;
+      {
+        !payload ? (state.filterActive = false) : (state.filterActive = true);
+      }
     },
     filterExpedientType: (state, { payload }) => {
-      state.filter.expedientType = payload;
+      state.expedientType = payload;
+      {
+        !payload ? (state.filterActive = false) : (state.filterActive = true);
+      }
     },
     filterStartDate: (state, { payload }) => {
-      state.filter.startDate = payload;
+      state.startDate = payload;
+      {
+        !payload ? (state.filterActive = false) : (state.filterActive = true);
+      }
     },
     filterEndDate: (state, { payload }) => {
-      state.filter.endDate = payload;
+      state.endDate = payload;
+      {
+        !payload ? (state.filterActive = false) : (state.filterActive = true);
+      }
+    },
+    filterActive: (state, { payload }) => {
+      state.endDate = payload;
     },
     clearFilters: (state) => {
-      state.filter.startDate = null;
-      state.filter.endDate = null;
-      state.filter.expedientType = null;
-      state.filter.expedientStatus = null;
-    },
-    clearFilters: (state) => {
-      state.startDate = "";
-      state.endDate = "";
-      state.expedientType = "";
-      state.expedientStatus = "";
+      state.startDate = null;
+      state.endDate = null;
+      state.expedientType = null;
+      state.expedientStatus = null;
     },
   },
 });
@@ -43,5 +51,6 @@ export const {
   filterEndDate,
   filterExpedientType,
   filterStartDate,
+  filterActive,
   clearFilters,
 } = filtersSlice.actions;

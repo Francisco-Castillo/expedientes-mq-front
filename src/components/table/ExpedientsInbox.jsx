@@ -10,7 +10,6 @@ import New_document from "../modal/new_document";
 import MakePass from "../modal/makePass";
 import UpdateExpedient from "../modal/updateExpedient";
 
-import Pagination from "../Pagination";
 import Empty from "../card/empty";
 import LoadColorRing from "../loaders/colorRIng";
 
@@ -71,7 +70,6 @@ const ExpedientsInbox = () => {
                     <th>Número</th>
                     <th>Iniciado</th>
                     <th>Tipo de Expediente</th>
-                    <th>Descripción</th>
                     <th>Estado</th>
                     <th>Enviado por</th>
                     <th>Acciones</th>
@@ -83,7 +81,6 @@ const ExpedientsInbox = () => {
                       <td>{expedient.numero}</td>
                       <td>{expedient.fechaCaratulacion}</td>
                       <td>{expedient.tipo}</td>
-                      <td>{expedient.descripcion}</td>
                       <td>{expedient.estado}</td>
                       <td>{`${expedient.usuarioEmisor.nombre} ${expedient.usuarioEmisor.apellido}`}</td>
                       <td>

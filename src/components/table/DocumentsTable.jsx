@@ -2,18 +2,11 @@ import React from "react";
 
 import FileView from "../modal/fileView";
 
-import useDocuments from "../../hooks/useDocuments";
-
-import Table from "react-bootstrap/Table";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
-
-import { MdDownload } from "react-icons/md";
+import { OverlayTrigger, Tooltip, Table } from "react-bootstrap";
 
 import "../../styles/table.css";
 
-const DocumentsTable = ({ files, expedientId }) => {
-  const { viewDocument } = useDocuments();
-
+const DocumentsTable = ({ files }) => {
   return (
     <Table responsive striped bordered hover id="table-data">
       <thead>
@@ -21,8 +14,6 @@ const DocumentsTable = ({ files, expedientId }) => {
           <th>Referencia</th>
           <th>Tipo de Documento</th>
           <th>Fecha de Vinculación</th>
-          <th></th>
-          {/* <th></th> */}
         </tr>
       </thead>
       <tbody>
@@ -38,23 +29,6 @@ const DocumentsTable = ({ files, expedientId }) => {
                   )} ${document.fechaSubida.slice(11, 16)}`
                 : null}
             </td>
-            {/* <td>
-              {" "}
-              <OverlayTrigger
-                placement="top"
-                overlay={<Tooltip id="tooltip">Descargar</Tooltip>}
-              >
-                <div>
-                  <MdDownload
-                    className="button-back"
-                    onClick={() => downloadFile(document.nombre)}
-                    type="button"
-                    href=""
-                    download
-                  />
-                </div>
-              </OverlayTrigger>
-            </td> */}
             <td>
               {" "}
               <OverlayTrigger

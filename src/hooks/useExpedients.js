@@ -29,7 +29,7 @@ const useExpedients = () => {
   // const date = getDateTime();
 
   const { expedientStatus, expedientType, startDate, endDate } = useSelector(
-    (state) => state.filters.filter
+    (state) => state.filters
   );
   const {
     type,

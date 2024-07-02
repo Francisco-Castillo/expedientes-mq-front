@@ -37,7 +37,6 @@ const ExpedientsSearchTable = () => {
                 <th>Número</th>
                 <th>Iniciado</th>
                 <th>Tipo de Expediente</th>
-                <th>Descripción</th>
                 <th>Estado</th>
                 <th>Enviado por</th>
                 <th>Acciones</th>
@@ -50,7 +49,6 @@ const ExpedientsSearchTable = () => {
                   <td>{expedient.numero}</td>
                   <td>{expedient.fechaCaratulacion}</td>
                   <td>{expedient.tipo}</td>
-                  <td>{expedient.descripcion}</td>
                   <td>{expedient.estado}</td>
                   <td>{`${expedient.usuario.nombre} ${expedient.usuario.apellido}`}</td>
                   <td>

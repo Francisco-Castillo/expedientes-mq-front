@@ -10,6 +10,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "../styles/expedient.css";
 import axios from "axios";
+import Navbar from "../components/Navbar";
 
 const Expedient = () => {
   const [expedient, setExpedient] = useState({});
@@ -22,7 +23,7 @@ const Expedient = () => {
   const BaseUrl = import.meta.env.VITE_API_URL;
 
   const handleComeBack = () => {
-    navigate(`/home/${tab}/${subTab}`);
+    navigate(`/${tab}/${subTab}`);
   };
 
   useEffect(() => {
@@ -50,6 +51,7 @@ const Expedient = () => {
 
   return (
     <>
+      <Navbar />
       <Container
         style={{
           marginTop: "20px",
@@ -86,6 +88,9 @@ const Expedient = () => {
             <ul>
               <li>
                 <strong> Fecha: </strong> {expedient.fechaCaratulacion}
+              </li>
+              <li>
+                <strong> Monto: </strong> $ {expedient.monto}
               </li>
               <li>
                 <strong> Descripción: </strong> {expedient.descripcion}

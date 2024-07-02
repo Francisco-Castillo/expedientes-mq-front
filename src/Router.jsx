@@ -1,7 +1,6 @@
 import { Root } from "./components/Root";
 import ErrorPage from "./pages/errorPage";
 import Login from "./pages/login";
-import Home from "./pages/home";
 import Expedient from "./pages/expedient";
 import FirsLogin from "./pages/firsLogin";
 
@@ -12,8 +11,6 @@ import MyExpedientsTable from "./components/table/MyExpedientsTable";
 import QueryContent from "./components/queryContent";
 import UsersTable from "./components/table/UsersTable";
 
-import ProtectedRouter from "./helpers/ProtectedRouter";
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,77 +18,41 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/home",
-    element: (
-      <ProtectedRouter>
-        <Root />
-      </ProtectedRouter>
-    ),
+    path: "*",
+    element: <Root />,
     children: [
       {
-        path: "/home/expedientes",
-        element: (
-          <ProtectedRouter>
-            <ExpedientsTab />
-          </ProtectedRouter>
-        ),
+        path: "expedientes",
+        element: <ExpedientsTab />,
         children: [
           {
             path: "bandeja-de-entrada",
-            element: (
-              <ProtectedRouter>
-                <ExpedientsInbox />
-              </ProtectedRouter>
-            ),
+            element: <ExpedientsInbox />,
           },
           {
             path: "mis-expedientes",
-            element: (
-              <ProtectedRouter>
-                <MyExpedientsTable />
-              </ProtectedRouter>
-            ),
+            element: <MyExpedientsTable />,
           },
         ],
       },
       {
-        path: "/home/consulta",
-        element: (
-          <ProtectedRouter>
-            <QueryContent />
-          </ProtectedRouter>
-        ),
+        path: "consulta",
+        element: <QueryContent />,
       },
       {
-        path: "/home/usuarios",
-        element: (
-          <ProtectedRouter>
-            <UsersTable />
-          </ProtectedRouter>
-        ),
+        path: "usuarios",
+        element: <UsersTable />,
       },
     ],
   },
   {
-    path: "/expediente/:expedientId",
-    element: (
-      <ProtectedRouter>
-        <Expedient />
-      </ProtectedRouter>
-    ),
+    path: "expediente/:expedientId",
+    element: <Expedient />,
   },
   {
-    path: "/actualizar-contraseña",
-    element: (
-      <ProtectedRouter>
-        <FirsLogin />
-      </ProtectedRouter>
-    ),
+    path: "actualizar-contraseña",
+    element: <FirsLogin />,
   },
-  // {
-  //   path: "/login",
-  //   element: <Login />,
-  // },
 ]);
 
 export default router;
