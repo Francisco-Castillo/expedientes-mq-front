@@ -143,8 +143,8 @@ const New_Expedient = () => {
               >
                 <option value="">Seleccionar</option>
                 {types.map((type, index) => (
-                  <option value={type} key={index}>
-                    {type}
+                  <option value={type.type} key={index}>
+                    {` ${type.descripcion}`}
                   </option>
                 ))}
               </Form.Select>
