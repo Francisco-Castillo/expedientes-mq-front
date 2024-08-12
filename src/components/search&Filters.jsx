@@ -108,7 +108,7 @@ const SearchAndFilters = () => {
               <option value="">Seleccionar tipo</option>
               {types.map((type, index) => (
                 <option value={type} key={index}>
-                  {type}
+                  {type.description}
                 </option>
               ))}
             </Form.Select>
