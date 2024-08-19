@@ -165,7 +165,70 @@ const useExpedients = () => {
       console.log(error);
     }
   };
-
+  const createExpedientType = async (name) => {
+    try {
+      await axios.post(`${BaseUrl}tipos-expedientes`, {
+        descripcion: name,
+      });
+      // Swal.fire({
+      //   iconHtml: customIcon,
+      //   text: "Tipo de Expediente generado exitosamente!",
+      //   confirmButtonColor: "rgba(235, 87, 87, 1)",
+      // });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        titleText: error.response.status,
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+  const updateExpedientType = async (expedientTypeId, updateValue) => {
+    try {
+      await axios.put(`${BaseUrl}tipos-expedientes/${expedientTypeId}`, {
+        id: expedientTypeId,
+        descripcion: updateValue.descripcion,
+      });
+      // Swal.fire({
+      //   iconHtml: customIcon,
+      //   text: "Tipo de Expediente actualizado exitosamente!",
+      //   confirmButtonColor: "rgba(235, 87, 87, 1)",
+      // });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        titleText: error.response.status,
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+  const deleteExpedientType = async (expedientTypeId) => {
+    try {
+      await axios.delete(`${BaseUrl}tipos-expedientes/${expedientTypeId}`, {
+        descripcion: "",
+      });
+      // Swal.fire({
+      //   iconHtml: customIcon,
+      //   text: "Tipo de Expediente borrado exitosamente!",
+      //   confirmButtonColor: "rgba(235, 87, 87, 1)",
+      // });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        titleText: error.response.status,
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
   const listExpedientStates = async () => {
     try {
       const { data } = await axios.get(`${BaseUrl}expedientes/estados`);
@@ -331,6 +394,9 @@ const useExpedients = () => {
     expedientPass,
     getMyExpedients,
     lastPassNumber,
+    createExpedientType,
+    updateExpedientType,
+    deleteExpedientType,
   };
 };
 

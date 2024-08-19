@@ -1,0 +1,13 @@
+.input-settings {
+  border-color: inherit;
+  border-style: none;
+  width: 100%;
+}
+
+.input-settings:hover {
+  cursor: pointer;
+}
+
+/* .input-settings::selection {
+  color: inherit;
+} */

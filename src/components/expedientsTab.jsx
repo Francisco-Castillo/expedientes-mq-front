@@ -11,6 +11,7 @@ import { onLoad } from "../store/load";
 import New_Expedient from "./modal/new_expedient";
 
 import "../styles/expedientsTab.css";
+import Settings from "./modal/settings";
 
 const ExpedientsTab = ({}) => {
   const { subTab } = useSelector((state) => state.tab);
@@ -57,6 +58,7 @@ const ExpedientsTab = ({}) => {
               Mis Expedientes
             </Link>
             {subTab === "mis-expedientes" && <New_Expedient />}
+            {subTab === "mis-expedientes" && <Settings />}
           </>
         ) : (
           ""
