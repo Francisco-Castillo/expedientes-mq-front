@@ -10,6 +10,7 @@ import ExpedientsInbox from "./components/table/ExpedientsInbox";
 import MyExpedientsTable from "./components/table/MyExpedientsTable";
 import QueryContent from "./components/queryContent";
 import UsersTable from "./components/table/UsersTable";
+import AreasTable from "./components/table/AreasTables";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "usuarios",
         element: <UsersTable />,
+      },
+      {
+        path: "areas",
+        element: <AreasTable />,
       },
     ],
   },

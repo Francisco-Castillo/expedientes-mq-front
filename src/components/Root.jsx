@@ -12,6 +12,7 @@ import ExpedientsTab from "./expedientsTab";
 import MyExpedientsTable from "./table/MyExpedientsTable";
 import QueryContent from "./queryContent";
 import UsersTable from "./table/UsersTable";
+import AreasTable from "./table/AreasTables";
 
 export const Root = () => {
   return (
@@ -64,6 +65,14 @@ export const Root = () => {
           element={
             <ProtectedRouter>
               <UsersTable />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path="areas"
+          element={
+            <ProtectedRouter>
+              <AreasTable />
             </ProtectedRouter>
           }
         />

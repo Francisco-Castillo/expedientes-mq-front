@@ -43,7 +43,7 @@ const TypeTable = () => {
   };
 
   return (
-    <Table responsive striped bordered hover id="table-makePass">
+    <Table responsive bordered hover id="table-makePass">
       <thead>
         <tr>
           <th>Tipos de expedientes</th>
