@@ -66,8 +66,6 @@ const AreasTable = () => {
               <tr>
                 <th style={{ textAlign: "center" }}>Descripcion</th>
                 <th style={{ textAlign: "center" }}>Codigo Presupuestario</th>
-                <th style={{ textAlign: "center" }}>Nivel</th>
-                <th style={{ textAlign: "center" }}>Referencia id</th>
                 <th style={{ textAlign: "center" }}>Acciones</th>
               </tr>
             </thead>
@@ -77,10 +75,6 @@ const AreasTable = () => {
                   <td style={{ textAlign: "center" }}>{area.descripcion}</td>
                   <td style={{ textAlign: "center" }}>
                     {area.codigoPresupuestario || "-"}
-                  </td>
-                  <td style={{ textAlign: "center" }}>{area.nivel}</td>
-                  <td style={{ textAlign: "center" }}>
-                    {area.referenciaId || "-"}
                   </td>
                   <td style={{ textAlign: "center" }}>
                     <Dropdown>
