@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import useAreas from "../../hooks/useAreas";
 
 import { Dropdown, Modal, Button, Form } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 const AreaEdit = ({
   areaId,
@@ -23,6 +24,8 @@ const AreaEdit = ({
   const [show, setShow] = useState(false);
 
   const { updateArea, getAreas } = useAreas();
+
+  const { areas } = useSelector((state) => state.areas);
 
   const handleClose = () => {
     getAreas();
@@ -91,30 +94,35 @@ const AreaEdit = ({
                 onChange={(e) => setCodigoPresupuestario(e.target.value)}
               />
             </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label className="expedient-label" htmlFor="">
-                Nivel :
-              </Form.Label>
-              <Form.Control
-                style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
-                type="number"
-                className="expedient-input"
-                defaultValue={nivel}
-                onChange={(e) => setNivel(e.target.value)}
-              />
-            </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label className="expedient-label" htmlFor="">
-                Referencia ID :
-              </Form.Label>
-              <Form.Control
-                style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
-                type="number"
-                className="expedient-input"
-                defaultValue={referenciaId}
-                onChange={(e) => setReferenciaId(e.target.value)}
-              />
+              {nivel > 1 ? (
+                <>
+                  <Form.Label className="expedient-label" htmlFor="">
+                    Depende de :
+                  </Form.Label>
+                  <Form.Select
+                    style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
+                    type="number"
+                    className="expedient-input"
+                    onChange={(e) => setReferenciaId(e.target.value)}
+                    onSelect={(e) => setReferenciaId(e.target.value)}
+                  >
+                    <option>Seleccionar </option>
+                    {areas
+                      .filter((area) => area.nivel < nivel)
+                      .map((area, index) => (
+                        <option
+                          value={area.id}
+                          key={index}
+                          disabled={descripcion === area.descripcion}
+                        >
+                          {area.descripcion}
+                        </option>
+                      ))}
+                  </Form.Select>
+                </>
+              ) : null}
             </Form.Group>
           </Form>
         </Modal.Body>

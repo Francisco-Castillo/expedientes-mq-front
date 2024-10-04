@@ -4,12 +4,15 @@ import { Modal, Button } from "react-bootstrap";
 
 import { IoIosSave } from "react-icons/io";
 import useAreas from "../../hooks/useAreas";
+import { useSelector } from "react-redux";
 
 const NewArea = () => {
   const [descripcion, setDescripcion] = useState("");
   const [codigoPresupuestario, setCodigoPresupuestario] = useState("");
   const [nivel, setNivel] = useState();
   const [referenciaId, setReferenciaId] = useState();
+
+  const { areas } = useSelector((state) => state.areas);
 
   const [show, setShow] = useState(false);
 
@@ -77,24 +80,21 @@ const NewArea = () => {
             />
 
             <label className="expedient-label" htmlFor="">
-              Referencia Id :
+              Depende de :
             </label>
-            <input
+            <select
               style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
-              type="number"
-              className="expedient-input"
+              className="form-select"
+              aria-label="Default select example"
               onChange={(e) => setReferenciaId(e.target.value)}
-            />
-
-            <label className="expedient-label" htmlFor="">
-              Nivel :
-            </label>
-            <input
-              style={{ backgroundColor: "rgba(217, 217, 217, 1) " }}
-              type="number"
-              className="expedient-input"
-              onChange={(e) => setNivel(e.target.value)}
-            />
+            >
+              <option>Seleccionar</option>
+              {areas.map((area, index) => (
+                <option value={area.id} key={index}>
+                  {area.descripcion}
+                </option>
+              ))}
+            </select>
           </form>
         </Modal.Body>
         <Modal.Footer

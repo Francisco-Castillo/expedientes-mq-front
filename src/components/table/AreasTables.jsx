@@ -28,8 +28,14 @@ const AreasTable = () => {
   const dispatch = useDispatch();
 
   const handleDeleted = async (areaId) => {
-    await deleteArea(areaId);
-    await getAreas();
+    const isConfirmed = window.confirm(
+      "¿Estás seguro de que deseas eliminar esta área?"
+    );
+
+    if (isConfirmed) {
+      await deleteArea(areaId);
+      await getAreas();
+    }
   };
 
   useEffect(() => {
@@ -58,20 +64,24 @@ const AreasTable = () => {
           <Table responsive striped bordered hover id="table-data">
             <thead>
               <tr>
-                <th>Descripcion</th>
-                <th>Codigo Presupuestario</th>
-                <th>Nivel</th>
-                <th>Referencia id</th>
+                <th style={{ textAlign: "center" }}>Descripcion</th>
+                <th style={{ textAlign: "center" }}>Codigo Presupuestario</th>
+                <th style={{ textAlign: "center" }}>Nivel</th>
+                <th style={{ textAlign: "center" }}>Referencia id</th>
                 <th style={{ textAlign: "center" }}>Acciones</th>
               </tr>
             </thead>
             <tbody>
               {areas.map((area, index) => (
                 <tr key={index}>
-                  <td>{area.descripcion}</td>
-                  <td>{area.codigoPresupuestario || "0"}</td>
-                  <td>{area.nivel}</td>
-                  <td>{area.referenciaId || "0"}</td>
+                  <td style={{ textAlign: "center" }}>{area.descripcion}</td>
+                  <td style={{ textAlign: "center" }}>
+                    {area.codigoPresupuestario || "-"}
+                  </td>
+                  <td style={{ textAlign: "center" }}>{area.nivel}</td>
+                  <td style={{ textAlign: "center" }}>
+                    {area.referenciaId || "-"}
+                  </td>
                   <td style={{ textAlign: "center" }}>
                     <Dropdown>
                       <Dropdown.Toggle

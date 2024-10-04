@@ -20,8 +20,14 @@ const TypeTable = () => {
   const [validated, setValidated] = useState(false);
 
   const handleDelete = async (id) => {
-    await deleteExpedientType(id);
-    await listExpedientTypes();
+    const isConfirmed = window.confirm(
+      "¿Estás seguro de que deseas eliminar esta área?"
+    );
+
+    if (isConfirmed) {
+      await deleteExpedientType(id);
+      await listExpedientTypes();
+    }
   };
 
   const handleKeyDown = async (e, index, tipo) => {

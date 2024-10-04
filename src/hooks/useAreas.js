@@ -45,9 +45,11 @@ const useAreas = () => {
       await axios.post(`${BaseUrl}areas`, {
         descripcion: descripcion,
         referenciaId: referenciaId,
-        nivel: nivel,
+        nivel: parseInt(referenciaId) + 1,
         codigoPresupuestario: codigoPresupuestario,
       });
+
+      console.log(referenciaId + 1);
       Swal.fire({
         iconHtml: customIcon,
         text: "Area generado exitosamente!",
@@ -58,7 +60,7 @@ const useAreas = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        titleText: error.status,
+        titleText: error.code,
         text: error.message,
       });
       console.log(error);
@@ -88,7 +90,7 @@ const useAreas = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        titleText: error.response.status,
+        titleText: error.code,
         text: error.message,
       });
       console.log(error);
@@ -107,7 +109,7 @@ const useAreas = () => {
         icon: "error",
         confirmButtonColor: "rgba(235, 87, 87, 1)",
         title: "Oops...",
-        titleText: error.status,
+        titleText: error.code,
         text: error.message,
       });
       console.log(error);
