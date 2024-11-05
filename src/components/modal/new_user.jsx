@@ -72,11 +72,13 @@ const New_User = () => {
               onChange={(e) => dispatch(setAreaId(e.target.value))}
             >
               <option>Seleccionar dependencia</option>
-              {areas.map((area, index) => (
-                <option value={area.id} key={index}>
-                  {area.descripcion}
-                </option>
-              ))}
+              {areas
+                .filter((area) => area.codigoPresupuestario !== null)
+                .map((area, index) => (
+                  <option value={area.id} key={index}>
+                    {area.descripcion !== "admin" ? area.descripcion : null}
+                  </option>
+                ))}
             </select>
 
             <label className="expedient-label" htmlFor="">

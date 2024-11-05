@@ -72,39 +72,45 @@ const AreasTable = () => {
             <tbody>
               {areas.map((area, index) => (
                 <tr key={index}>
-                  <td style={{ textAlign: "center" }}>{area.descripcion}</td>
-                  <td style={{ textAlign: "center" }}>
-                    {area.codigoPresupuestario || "-"}
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <Dropdown>
-                      <Dropdown.Toggle
-                        style={{
-                          backgroundColor: "rgba(217, 70, 70, 1)",
-                          borderColor: "gray",
-                        }}
-                        id="dropdown-basic"
-                      >
-                        <IoSettingsSharp />
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <AreaEdit
-                          areaId={area.id}
-                          descripcion={area.descripcion}
-                          codigoPresupuestario={area.codigoPresupuestario}
-                          nivel={area.nivel}
-                          referenciaId={area.referenciaId}
-                        />
-                        <Dropdown.Item
-                          onClick={() => {
-                            handleDeleted(area.id);
-                          }}
-                        >
-                          Eliminar
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
+                  {area.descripcion !== "admin" ? (
+                    <>
+                      <td style={{ textAlign: "center" }}>
+                        {area.descripcion}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {area.codigoPresupuestario || "-"}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        <Dropdown>
+                          <Dropdown.Toggle
+                            style={{
+                              backgroundColor: "rgba(217, 70, 70, 1)",
+                              borderColor: "gray",
+                            }}
+                            id="dropdown-basic"
+                          >
+                            <IoSettingsSharp />
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu>
+                            <AreaEdit
+                              areaId={area.id}
+                              descripcion={area.descripcion}
+                              codigoPresupuestario={area.codigoPresupuestario}
+                              nivel={area.nivel}
+                              referenciaId={area.referenciaId}
+                            />
+                            <Dropdown.Item
+                              onClick={() => {
+                                handleDeleted(area.id);
+                              }}
+                            >
+                              Eliminar
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </td>
+                    </>
+                  ) : null}
                 </tr>
               ))}
             </tbody>
