@@ -74,14 +74,12 @@ const useExpedients = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
       });
     } catch (error) {
+      console.error("Error al crear expediente:", error);
       Swal.fire({
         icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        titleText: error.response.status,
-        text: error.message,
+        title: "Error",
+        text: error.message || "No se pudo crear el expediente",
       });
-      console.log(error);
     }
   };
 

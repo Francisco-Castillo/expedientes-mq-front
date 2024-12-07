@@ -49,16 +49,20 @@ const New_Expedient = () => {
     lastExpedientNumber();
   };
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-      setValidated(true);
-    } else {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Validación manual de campos
+    const form = e.currentTarget;
+    const isValid = form.checkValidity();
+
+    if (isValid) {
       newExpedient(setShow);
       dispatch(setClearAttributes());
       dispatch(SetRefreshMyExpedientsList(true));
+    } else {
+      // Opcional: mostrar mensaje de error o indicar campos inválidos
+      console.log("Por favor complete todos los campos requeridos");
     }
   };
 
