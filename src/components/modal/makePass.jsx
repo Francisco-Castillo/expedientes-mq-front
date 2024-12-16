@@ -10,19 +10,24 @@ import getDateTime from "../../helpers/getDate";
 import useExpedients from "../../hooks/useExpedients";
 
 import { clearSearchResult } from "../../store/search";
+import { SetRefreshExpedientsInbox } from "../../store/expedients/expedients";
 
 import { Form, Dropdown, Modal, Button } from "react-bootstrap";
 
 import { MdDriveFileMove } from "react-icons/md";
 
+import Swal from "sweetalert2";
+
 const MakePass = ({ expedientId }) => {
   const [expedient, setExpedient] = useState({});
-  const [userReceiver, setUserReceiver] = useState({});
+  const [selectUserReceiver, setSelectUserReceiver] = useState({});
   const [observations, setObservations] = useState("");
+  const [passNumber, setPassNumber] = useState();
+  const [actualUserReceiverId, setActualUserReceiverId] = useState();
 
   const [show, setShow] = useState(false);
 
-  const { getExpedient, expedientPass } = useExpedients();
+  const { getExpedient, expedientPass, lastPassNumber } = useExpedients();
 
   const { userId } = useSelector((state) => state.userData.user);
 
@@ -33,25 +38,39 @@ const MakePass = ({ expedientId }) => {
   const handleClose = () => {
     setShow(false);
     dispatch(clearSearchResult());
+    dispatch(SetRefreshExpedientsInbox(false));
   };
 
   const handleShow = () => {
-    getExpedient(setExpedient, expedientId);
     setShow(true);
+    getExpedient(setExpedient, expedientId);
+    lastPassNumber(setPassNumber, setActualUserReceiverId, expedientId);
   };
 
-  const handleSubmit = () => {
-    expedientPass(
-      userId,
-      userReceiver.id,
-      userReceiver.nombre,
-      userReceiver.apellido,
-      date,
-      expedientId,
-      observations,
-      setShow
-    );
-    dispatch(clearSearchResult());
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (actualUserReceiverId === Number(selectUserReceiver.id)) {
+      return Swal.fire({
+        icon: "error",
+        text: "El usuario seleccionado ya tiene en su poder este expediente!",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+      });
+    } else {
+      expedientPass(
+        userId,
+        selectUserReceiver.id,
+        selectUserReceiver.nombre,
+        selectUserReceiver.apellido,
+        date,
+        expedientId,
+        observations,
+        setShow,
+        passNumber
+      );
+      dispatch(clearSearchResult());
+      dispatch(SetRefreshExpedientsInbox(true));
+    }
   };
 
   return (
@@ -96,7 +115,10 @@ const MakePass = ({ expedientId }) => {
             </Form.Group>
           </Form>
 
-          <MakePassTable setUserReceiver={setUserReceiver} />
+          <MakePassTable
+            setSelectUserReceiver={setSelectUserReceiver}
+            actualUserReceiverId={actualUserReceiverId}
+          />
         </Modal.Body>
         <Modal.Footer
           style={{

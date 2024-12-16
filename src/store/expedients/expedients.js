@@ -5,7 +5,8 @@ export const expedientsSlice = createSlice({
   initialState: {
     myExpedients: [],
     InboxExpedients: [],
-    refresh: false,
+    refreshMyExpedientsList: false,
+    refreshExpedientsInbox: false,
   },
   reducers: {
     setMyExpedients: (state, { payload }) => {
@@ -14,11 +15,18 @@ export const expedientsSlice = createSlice({
     setInboxExpedients: (state, { payload }) => {
       state.InboxExpedients = payload;
     },
-    refreshExpedientsList: (state, { payload }) => {
-      state.refresh = payload;
+    SetRefreshMyExpedientsList: (state, { payload }) => {
+      state.refreshMyExpedientsList = payload;
+    },
+    SetRefreshExpedientsInbox: (state, { payload }) => {
+      state.refreshExpedientsInbox = payload;
     },
   },
 });
 
-export const { setMyExpedients, refreshExpedientsList, setInboxExpedients } =
-  expedientsSlice.actions;
+export const {
+  setMyExpedients,
+  SetRefreshMyExpedientsList,
+  setInboxExpedients,
+  SetRefreshExpedientsInbox,
+} = expedientsSlice.actions;

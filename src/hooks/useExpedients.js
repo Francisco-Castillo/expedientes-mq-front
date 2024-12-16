@@ -29,7 +29,7 @@ const useExpedients = () => {
   // const date = getDateTime();
 
   const { expedientStatus, expedientType, startDate, endDate } = useSelector(
-    (state) => state.filters.filter
+    (state) => state.filters
   );
   const {
     type,
@@ -66,6 +66,7 @@ const useExpedients = () => {
           id: userId,
         },
       });
+
       setShow(false);
       Swal.fire({
         iconHtml: customIcon,
@@ -73,18 +74,16 @@ const useExpedients = () => {
         confirmButtonColor: "rgba(235, 87, 87, 1)",
       });
     } catch (error) {
+      console.error("Error al crear expediente:", error);
       Swal.fire({
         icon: "error",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-        title: "Oops...",
-        titleText: error.response.status,
-        text: error.message,
+        title: "Error",
+        text: error.message || "No se pudo crear el expediente",
       });
-      console.log(error);
     }
   };
 
-  const getExpedients = async () => {
+  const getExpedientsInbox = async () => {
     try {
       const { data } = await axios.get(
         `${BaseUrl}expedientes/bandeja-entrada/${userId}`
@@ -164,7 +163,70 @@ const useExpedients = () => {
       console.log(error);
     }
   };
-
+  const createExpedientType = async (name) => {
+    try {
+      await axios.post(`${BaseUrl}tipos-expedientes`, {
+        descripcion: name,
+      });
+      // Swal.fire({
+      //   iconHtml: customIcon,
+      //   text: "Tipo de Expediente generado exitosamente!",
+      //   confirmButtonColor: "rgba(235, 87, 87, 1)",
+      // });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        titleText: error.response.status,
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+  const updateExpedientType = async (expedientTypeId, updateValue) => {
+    try {
+      await axios.put(`${BaseUrl}tipos-expedientes/${expedientTypeId}`, {
+        id: expedientTypeId,
+        descripcion: updateValue.descripcion,
+      });
+      // Swal.fire({
+      //   iconHtml: customIcon,
+      //   text: "Tipo de Expediente actualizado exitosamente!",
+      //   confirmButtonColor: "rgba(235, 87, 87, 1)",
+      // });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        titleText: error.response.status,
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+  const deleteExpedientType = async (expedientTypeId) => {
+    try {
+      await axios.delete(`${BaseUrl}tipos-expedientes/${expedientTypeId}`, {
+        descripcion: "",
+      });
+      // Swal.fire({
+      //   iconHtml: customIcon,
+      //   text: "Tipo de Expediente borrado exitosamente!",
+      //   confirmButtonColor: "rgba(235, 87, 87, 1)",
+      // });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        titleText: error.response.status,
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
   const listExpedientStates = async () => {
     try {
       const { data } = await axios.get(`${BaseUrl}expedientes/estados`);
@@ -244,6 +306,31 @@ const useExpedients = () => {
     }
   };
 
+  const lastPassNumber = async (
+    setPassNumber,
+    setActualUserReceiverId,
+    expedientId
+  ) => {
+    try {
+      const { data } = await axios.get(
+        `${BaseUrl}/expedientes/${expedientId}/buscar-ultimo-pase`
+      );
+      const lastNumber = Number(data.id);
+      console.log(data);
+      setPassNumber(lastNumber);
+      setActualUserReceiverId(data.usuarioReceptorId);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        confirmButtonColor: "rgba(235, 87, 87, 1)",
+        title: "Oops...",
+        titleText: error.response.status,
+        text: error.message,
+      });
+      console.log(error);
+    }
+  };
+
   const expedientPass = async (
     userId,
     userReceiverId,
@@ -252,16 +339,29 @@ const useExpedients = () => {
     date,
     expedientId,
     observations,
-    setShow
+    setShow,
+    passNumber
   ) => {
     try {
-      await axios.post(`${BaseUrl}expedientes/${expedientId}/pase`, {
-        fechaHora: date,
-        observaciones: observations,
-        expedienteId: expedientId,
-        usuarioEmisorId: userId,
-        usuarioReceptorId: Number(userReceiverId),
-      });
+      if (passNumber) {
+        await axios.post(`${BaseUrl}expedientes/${expedientId}/pase`, {
+          id: passNumber,
+          fechaHora: date,
+          observaciones: observations,
+          expedienteId: expedientId,
+          usuarioEmisorId: userId,
+          usuarioReceptorId: Number(userReceiverId),
+        });
+      } else {
+        await axios.post(`${BaseUrl}expedientes/${expedientId}/pase`, {
+          fechaHora: date,
+          observaciones: observations,
+          expedienteId: expedientId,
+          usuarioEmisorId: userId,
+          usuarioReceptorId: Number(userReceiverId),
+        });
+      }
+
       setShow(false);
       Swal.fire({
         iconHtml: customIcon,
@@ -285,12 +385,16 @@ const useExpedients = () => {
     updateExpedient,
     getExpedient,
     listExpedientTypes,
-    getExpedients,
+    getExpedientsInbox,
     searchExpedients,
     lastExpedientNumber,
     listExpedientStates,
     expedientPass,
     getMyExpedients,
+    lastPassNumber,
+    createExpedientType,
+    updateExpedientType,
+    deleteExpedientType,
   };
 };
 

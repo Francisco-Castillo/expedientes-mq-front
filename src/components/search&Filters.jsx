@@ -25,7 +25,8 @@ const SearchAndFilters = () => {
   const { status, types } = useSelector((state) => state.expedientProperties);
   const { page } = useSelector((state) => state.pages);
   const { search } = useSelector((state) => state.search);
-  const { filter } = useSelector((state) => state.filters);
+  const { expedientStatus, expedientType, startDate, endDate, filterActive } =
+    useSelector((state) => state.filters);
 
   const dispatch = useDispatch();
 
@@ -36,8 +37,10 @@ const SearchAndFilters = () => {
   };
 
   useEffect(() => {
-    handleSearch();
-    dispatch(clearPages());
+    if (search !== "") {
+      handleSearch();
+      dispatch(clearPages());
+    }
   }, [search]);
 
   useEffect(() => {
@@ -45,9 +48,12 @@ const SearchAndFilters = () => {
   }, [page]);
 
   useEffect(() => {
+    if (filterActive) {
+      handleSearch();
+      dispatch(clearPages());
+    }
     handleSearch();
-    dispatch(clearPages());
-  }, [filter]);
+  }, [expedientStatus, expedientType, startDate, endDate]);
 
   return (
     <Container
@@ -102,7 +108,7 @@ const SearchAndFilters = () => {
               <option value="">Seleccionar tipo</option>
               {types.map((type, index) => (
                 <option value={type} key={index}>
-                  {type}
+                  {type.description}
                 </option>
               ))}
             </Form.Select>

@@ -1,30 +1,29 @@
 import { Root } from "./components/Root";
-import ErrorPage from "./pages/error-page";
+import ErrorPage from "./pages/errorPage";
 import Login from "./pages/login";
-import Home from "./pages/home";
 import Expedient from "./pages/expedient";
 import FirsLogin from "./pages/firsLogin";
 
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import ExpedientsTab from "./components/expedientsTab";
-
 import ExpedientsInbox from "./components/table/ExpedientsInbox";
 import MyExpedientsTable from "./components/table/MyExpedientsTable";
 import QueryContent from "./components/queryContent";
 import UsersTable from "./components/table/UsersTable";
+import AreasTable from "./components/table/AreasTables";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <Login />,
     errorElement: <ErrorPage />,
+  },
+  {
+    path: "*",
+    element: <Root />,
     children: [
       {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/expedientes",
+        path: "expedientes",
         element: <ExpedientsTab />,
         children: [
           {
@@ -38,26 +37,26 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/consulta",
+        path: "consulta",
         element: <QueryContent />,
       },
       {
-        path: "/usuarios",
+        path: "usuarios",
         element: <UsersTable />,
+      },
+      {
+        path: "areas",
+        element: <AreasTable />,
       },
     ],
   },
   {
-    path: "/expediente/:expedientId",
+    path: "expediente/:expedientId",
     element: <Expedient />,
   },
   {
     path: "actualizar-contraseña",
     element: <FirsLogin />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
   },
 ]);
 

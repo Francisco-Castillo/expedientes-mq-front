@@ -1,8 +1,7 @@
-/*
-* {
-  padding: 0;
+body {
+  background-color: rgba(217, 217, 217, 1);
 }
 
-/* body {
-  background-color: rgba(217, 217, 217, 1);
-} */
+button {
+  border-color: rgba(136, 133, 133, 0.75) !important;
+}

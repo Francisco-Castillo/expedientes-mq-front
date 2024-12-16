@@ -8,7 +8,7 @@ export const expedientSlice = createSlice({
     number: null,
     reference: "",
     description: "",
-    budgetCode: 0,
+    budgetCode: null,
     monto: null,
     responsable: "",
     date: null,

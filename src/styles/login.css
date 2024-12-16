@@ -4,6 +4,7 @@
 .container-login {
   width: 100vw;
   height: 100vh;
+  background-color: white !important;
   background: linear-gradient(
     270deg,
     #eb5757 0%,
@@ -25,8 +26,6 @@
     display: inline-block;
   }
 }
-
-
 
 /* .container-form {
   width: 100%;

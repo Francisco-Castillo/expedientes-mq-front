@@ -8,11 +8,11 @@ const ProtectedRouter = ({ children }) => {
 
   useEffect(() => {
     if (status === "not-authenticated") {
-      navigate("/login");
+      navigate("/");
     }
-  }, [status, navigate]);
+  }, [status]);
 
-  return children;
+  return status === "authenticated" ? children : null;
 };
 
 export default ProtectedRouter;

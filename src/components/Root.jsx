@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Route, Routes } from "react-router-dom";
 
 import ProtectedRouter from "../helpers/ProtectedRouter";
@@ -13,6 +12,7 @@ import ExpedientsTab from "./expedientsTab";
 import MyExpedientsTable from "./table/MyExpedientsTable";
 import QueryContent from "./queryContent";
 import UsersTable from "./table/UsersTable";
+import AreasTable from "./table/AreasTables";
 
 export const Root = () => {
   return (
@@ -24,7 +24,7 @@ export const Root = () => {
 
       <Routes>
         <Route
-          path="/expedientes"
+          path="expedientes"
           element={
             <ProtectedRouter>
               <ExpedientsTab />
@@ -42,8 +42,7 @@ export const Root = () => {
             }
           />
           <Route
-            path="mis-expedientes/:page
-            ?"
+            path="mis-expedientes/:page?"
             element={
               <div style={{ padding: "0px 10px" }}>
                 <ProtectedRouter>
@@ -53,9 +52,8 @@ export const Root = () => {
             }
           />
         </Route>
-
         <Route
-          path="/consulta"
+          path="consulta/:page?"
           element={
             <ProtectedRouter>
               <QueryContent />
@@ -63,7 +61,7 @@ export const Root = () => {
           }
         />
         <Route
-          path="/usuarios"
+          path="usuarios"
           element={
             <ProtectedRouter>
               <UsersTable />
@@ -71,7 +69,15 @@ export const Root = () => {
           }
         />
         <Route
-          path="/expediente/:expedientId"
+          path="areas"
+          element={
+            <ProtectedRouter>
+              <AreasTable />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path="expediente/:expedientId"
           element={
             <ProtectedRouter>
               <Expedient />
@@ -79,7 +85,7 @@ export const Root = () => {
           }
         />
         <Route
-          path="/actualizar-contraseña"
+          path="actualizar-contraseña"
           element={
             <ProtectedRouter>
               <FirsLogin />
