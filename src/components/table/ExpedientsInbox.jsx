@@ -47,6 +47,8 @@ const ExpedientsInbox = () => {
     }
   }, [loadStatus, dispatch]);
 
+  console.log(InboxExpedients);
+
   return (
     <>
       {loadStatus ? (

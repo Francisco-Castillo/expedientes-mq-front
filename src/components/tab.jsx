@@ -15,8 +15,6 @@ const Tab = () => {
   const { tab } = useSelector((state) => state.tab);
   const { areaId, areaName } = useSelector((state) => state.userData.user);
 
-  console.log(areaName);
-
   const authorizedLevel = import.meta.env.VITE_HIGH_LVL;
 
   const dispatch = useDispatch();

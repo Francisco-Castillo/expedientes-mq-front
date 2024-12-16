@@ -49,7 +49,6 @@ const useAreas = () => {
         codigoPresupuestario: codigoPresupuestario,
       });
 
-      console.log(referenciaId + 1);
       Swal.fire({
         iconHtml: customIcon,
         text: "Area generado exitosamente!",
