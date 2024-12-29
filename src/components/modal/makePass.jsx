@@ -1,33 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
 import MakePassTable from "../table/makePassTable";
-import SearchUser from "../searchUser";
 
 import getDateTime from "../../helpers/getDate";
 
 import useExpedients from "../../hooks/useExpedients";
+import useUsers from "../../hooks/useUsers";
 
 import { clearSearchResult } from "../../store/search";
 import { SetRefreshExpedientsInbox } from "../../store/expedients/expedients";
 
-import { Form, Dropdown, Modal, Button } from "react-bootstrap";
+import { Form, Modal, Button } from "react-bootstrap";
 
 import { MdDriveFileMove } from "react-icons/md";
 
-import Swal from "sweetalert2";
-
-const MakePass = ({ expedientId }) => {
-  const [expedient, setExpedient] = useState({});
-  const [selectUserReceiver, setSelectUserReceiver] = useState({});
+const MakePass = ({ expedient, isOpened, setIsOpened }) => {
+  const [selectUserReceptor, setSelectUserReceptor] = useState({});
   const [observations, setObservations] = useState("");
-  const [passNumber, setPassNumber] = useState();
-  const [actualUserReceiverId, setActualUserReceiverId] = useState();
 
-  const [show, setShow] = useState(false);
+  const [users, setUsers] = useState([]);
 
-  const { getExpedient, expedientPass, lastPassNumber } = useExpedients();
+  const { expedientPass } = useExpedients();
+  const { getUsers } = useUsers();
 
   const { userId } = useSelector((state) => state.userData.user);
 
@@ -36,52 +32,36 @@ const MakePass = ({ expedientId }) => {
   const dispatch = useDispatch();
 
   const handleClose = () => {
-    setShow(false);
+    setIsOpened(false);
     dispatch(clearSearchResult());
     dispatch(SetRefreshExpedientsInbox(false));
-  };
-
-  const handleShow = () => {
-    setShow(true);
-    getExpedient(setExpedient, expedientId);
-    lastPassNumber(setPassNumber, setActualUserReceiverId, expedientId);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (actualUserReceiverId === Number(selectUserReceiver.id)) {
-      return Swal.fire({
-        icon: "error",
-        text: "El usuario seleccionado ya tiene en su poder este expediente!",
-        confirmButtonColor: "rgba(235, 87, 87, 1)",
-      });
-    } else {
-      expedientPass(
-        userId,
-        selectUserReceiver.id,
-        selectUserReceiver.nombre,
-        selectUserReceiver.apellido,
-        date,
-        expedientId,
-        observations,
-        setShow,
-        passNumber
-      );
-      dispatch(clearSearchResult());
-      dispatch(SetRefreshExpedientsInbox(true));
-    }
+    expedientPass(
+      userId,
+      selectUserReceptor.id,
+      selectUserReceptor.nombre,
+      selectUserReceptor.apellido,
+      date,
+      expedient.id,
+      observations
+    );
+    dispatch(clearSearchResult());
+    dispatch(SetRefreshExpedientsInbox(true));
   };
+
+  useEffect(() => {
+    getUsers(setUsers);
+  }, []);
 
   return (
     <>
-      <Dropdown.Item variant="light" onClick={handleShow}>
-        Realizar Pase
-      </Dropdown.Item>
-
       <Modal
         size="lg"
-        show={show}
+        show={isOpened}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
@@ -90,7 +70,7 @@ const MakePass = ({ expedientId }) => {
           closeButton
           style={{ backgroundColor: "rgba(235, 87, 87, 1)", color: "white" }}
         >
-          <Modal.Title>{`Pase de Expediente N° ${expedient.numero}`}</Modal.Title>
+          <Modal.Title>{`Pase de Expediente N° ${expedient?.numero}`}</Modal.Title>
         </Modal.Header>
 
         <Modal.Body style={{ padding: "30px" }}>
@@ -101,6 +81,7 @@ const MakePass = ({ expedientId }) => {
                 className="me-2"
                 type="text"
                 onChange={(e) => setObservations(e.target.value)}
+                placeholder="Motivo del pase"
                 style={{
                   borderColor: "rgb(188, 191, 194)",
                   borderStyle: "solid",
@@ -111,14 +92,23 @@ const MakePass = ({ expedientId }) => {
 
             <Form.Label htmlFor="">Usuario :</Form.Label>
             <Form.Group>
-              <SearchUser />
+              <Form.Select>
+                <option value="">Seleccionar destino del pase</option>
+                {users.map((user) => (
+                  <option
+                    key={user.id}
+                    value={user.id}
+                    hidden={user.id === userId}
+                    onClick={(e) => {
+                      setSelectUserReceptor(user);
+                    }}
+                  >
+                    {user.area.descripcion} - {user.nombre} {user.apellido}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Form>
-
-          <MakePassTable
-            setSelectUserReceiver={setSelectUserReceiver}
-            actualUserReceiverId={actualUserReceiverId}
-          />
         </Modal.Body>
         <Modal.Footer
           style={{

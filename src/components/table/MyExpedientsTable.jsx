@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -25,9 +25,17 @@ const MyExpedientsTable = () => {
     (state) => state.expedients
   );
 
+  const [isOpened, setIsOpened] = useState(false);
+  const [expedient, setExpedient] = useState({});
+
   const { getMyExpedients } = useExpedients();
 
   const dispatch = useDispatch();
+
+  const handleMakePass = (value) => {
+    setIsOpened(true);
+    setExpedient(value);
+  };
 
   useEffect(() => {
     getMyExpedients();
@@ -116,7 +124,12 @@ const MyExpedientsTable = () => {
 
                             <UpdateExpedient expedientId={expedient.id} />
                             <New_document expedientId={expedient.id} />
-                            <MakePass expedientId={expedient.id}></MakePass>
+                            <Dropdown.Item
+                              value={expedient}
+                              onClick={() => handleMakePass(expedient)}
+                            >
+                              Realizar pase
+                            </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
                       </td>
@@ -131,6 +144,11 @@ const MyExpedientsTable = () => {
           )}
         </>
       )}
+      <MakePass
+        expedient={expedient}
+        isOpened={isOpened}
+        setIsOpened={setIsOpened}
+      />
     </>
   );
 };

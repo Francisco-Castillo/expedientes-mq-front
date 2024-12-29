@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -25,7 +25,15 @@ const ExpedientsInbox = () => {
     (state) => state.expedients
   );
 
+  const [isOpened, setIsOpened] = useState(false);
+  const [expedient, setExpedient] = useState({});
+
   const { getExpedientsInbox } = useExpedients();
+
+  const handleMakePass = (value) => {
+    setIsOpened(true);
+    setExpedient(value);
+  };
 
   useEffect(() => {
     getExpedientsInbox();
@@ -46,8 +54,6 @@ const ExpedientsInbox = () => {
       return () => clearTimeout(timer);
     }
   }, [loadStatus, dispatch]);
-
-  console.log(InboxExpedients);
 
   return (
     <>
@@ -111,7 +117,13 @@ const ExpedientsInbox = () => {
                             </Link>
                             <UpdateExpedient expedientId={expedient.id} />
                             <New_document expedientId={expedient.id} />
-                            <MakePass expedientId={expedient.id}></MakePass>
+
+                            <Dropdown.Item
+                              value={expedient}
+                              onClick={() => handleMakePass(expedient)}
+                            >
+                              Realizar pase
+                            </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
                       </td>
@@ -125,6 +137,11 @@ const ExpedientsInbox = () => {
           )}
         </>
       )}
+      <MakePass
+        expedient={expedient}
+        isOpened={isOpened}
+        setIsOpened={setIsOpened}
+      />
     </>
   );
 };
