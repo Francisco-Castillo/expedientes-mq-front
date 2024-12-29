@@ -57,11 +57,13 @@ const New_Expedient = () => {
     const isValid = form.checkValidity();
 
     if (isValid) {
+      setValidated(true);
       newExpedient(setShow);
       dispatch(setClearAttributes());
       dispatch(SetRefreshMyExpedientsList(true));
     } else {
-      // Opcional: mostrar mensaje de error o indicar campos inválidos
+      setValidated(false);
+
       console.log("Por favor complete todos los campos requeridos");
     }
   };
@@ -242,7 +244,7 @@ const New_Expedient = () => {
               background: "rgba(235, 87, 87, 1)",
             }}
             type="submit"
-            form="expedient-form" // Este form attribute asegura que el onSubmit del formulario se llame
+            form="expedient-form"
           >
             <IoIosSave style={{ fontSize: "25px" }} />
             Guardar
