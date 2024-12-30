@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,35 +8,27 @@ import useExpedients from "../../hooks/useExpedients";
 
 import { IoIosSave } from "react-icons/io";
 
-import { Dropdown, Form, Modal, Button } from "react-bootstrap";
+import { Form, Modal, Button } from "react-bootstrap";
 
-const UpdateExpedient = ({ expedientId }) => {
-  const [expedient, setExpedient] = useState({});
-
+const UpdateExpedient = ({ expedient, isOpened, setIsOpened }) => {
   const { status } = useSelector((state) => state.expedientProperties);
 
-  const { getExpedient, updateExpedient } = useExpedients();
+  const { updateExpedient } = useExpedients();
 
   const dispatch = useDispatch();
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = async () => {
-    setShow(true);
-    await getExpedient(setExpedient, expedientId);
-  };
+  const handleClose = () => setIsOpened(false);
 
   const handleUpdate = async () => {
-    await updateExpedient(setShow, expedientId);
+    await updateExpedient(expedient.id);
+    setIsOpened(false);
   };
 
   return (
     <>
-      <Dropdown.Item onClick={handleShow}>Cambiar estado</Dropdown.Item>
-
       <Modal
         size="lg"
-        show={show}
+        show={isOpened}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}

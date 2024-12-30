@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import useExpedients from "../../hooks/useExpedients";
@@ -16,14 +16,13 @@ import {
 
 import { SetRefreshMyExpedientsList } from "../../store/expedients/expedients";
 
-import { Form, Button, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Form, Button, Modal } from "react-bootstrap";
 
 import { IoIosSave } from "react-icons/io";
-import { FaFileSignature } from "react-icons/fa6";
 
 import "../../styles/new_expedient.css";
 
-const New_Expedient = () => {
+const New_Expedient = ({ isOpened, setIsOpened }) => {
   const { newExpedient, lastExpedientNumber } = useExpedients();
 
   const dispatch = useDispatch();
@@ -34,60 +33,43 @@ const New_Expedient = () => {
 
   const { areas } = useSelector((state) => state.areas);
 
-  const [show, setShow] = useState(false);
-
   const [validated, setValidated] = useState(false);
 
   const handleClose = () => {
-    setShow(false);
+    setIsOpened(false);
     dispatch(setClearAttributes());
     dispatch(SetRefreshMyExpedientsList(false));
-  };
-
-  const handleShow = () => {
-    setShow(true);
-    lastExpedientNumber();
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validación manual de campos
     const form = e.currentTarget;
     const isValid = form.checkValidity();
 
     if (isValid) {
-      setValidated(true);
-      newExpedient(setShow);
+      e.stopPropagation();
+      newExpedient();
       dispatch(setClearAttributes());
       dispatch(SetRefreshMyExpedientsList(true));
+      setIsOpened(false);
     } else {
-      setValidated(false);
-
-      console.log("Por favor complete todos los campos requeridos");
+      setValidated(true);
+      console.log("Formulario invalido");
     }
   };
 
+  useEffect(() => {
+    if (isOpened) {
+      lastExpedientNumber();
+    }
+  }, [isOpened]);
+
   return (
     <>
-      <OverlayTrigger
-        placement="right"
-        overlay={<Tooltip id="tooltip">Caratular Expediente</Tooltip>}
-      >
-        <div
-          style={{
-            textAlign: "center",
-            display: "inline-block",
-            verticalAlign: "middle",
-          }}
-        >
-          <FaFileSignature onClick={handleShow} className="newExpedient" />
-        </div>
-      </OverlayTrigger>
-
       <Modal
         size="lg"
-        show={show}
+        show={isOpened}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}

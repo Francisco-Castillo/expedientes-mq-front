@@ -17,7 +17,6 @@ const TypeTable = () => {
 
   const [editIndex, setEditIndex] = useState(null);
   const [editValue, setEditValue] = useState("");
-  const [validated, setValidated] = useState(false);
 
   const handleDelete = async (id) => {
     const isConfirmed = window.confirm(

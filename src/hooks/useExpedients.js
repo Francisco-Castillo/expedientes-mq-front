@@ -49,7 +49,7 @@ const useExpedients = () => {
 
   const dispatch = useDispatch();
 
-  const newExpedient = async (setShow) => {
+  const newExpedient = async () => {
     try {
       await axios.post(`${BaseUrl}expedientes/caratular`, {
         numero: `${number}-${budgetCode}`,
@@ -67,7 +67,6 @@ const useExpedients = () => {
         },
       });
 
-      setShow(false);
       Swal.fire({
         iconHtml: customIcon,
         text: "Expediente generado exitosamente!",
@@ -262,13 +261,11 @@ const useExpedients = () => {
     }
   };
 
-  const updateExpedient = async (setShow, expedientId) => {
+  const updateExpedient = async (expedientId) => {
     try {
       await axios.put(`${BaseUrl}expedientes/${expedientId}/cambiar-estado`, {
         status: state,
       });
-
-      setShow(false);
 
       Swal.fire({
         iconHtml: customIcon,

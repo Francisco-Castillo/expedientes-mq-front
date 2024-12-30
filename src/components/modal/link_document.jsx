@@ -1,29 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Button, Modal, Form, Dropdown } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 
 import useDocuments from "../../hooks/useDocuments";
 
 import getDateTime from "../../helpers/getDate";
 
 import { IoIosSave } from "react-icons/io";
-import { BsFillFileEarmarkCheckFill } from "react-icons/bs";
-
 
 import "../../styles/new_document.css";
 
-const New_document = ({ expedientId }) => {
+const LinkDocument = ({ expedientId, isOpened, setIsOpened }) => {
   const [file, setFile] = useState(null);
   const [observations, setObservations] = useState();
   const [types, setTypes] = useState([]);
   const [type, setType] = useState();
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => {
-    setShow(true);
-    ListDocumentTypes(setTypes);
-  };
+  const handleClose = () => setIsOpened(false);
 
   const { newDocument, ListDocumentTypes } = useDocuments();
 
@@ -45,16 +38,21 @@ const New_document = ({ expedientId }) => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    await newDocument(formData, setShow);
+    await newDocument(formData);
+    setIsOpened(false);
   };
+
+  useEffect(() => {
+    if (isOpened) {
+      ListDocumentTypes(setTypes);
+    }
+  }, [isOpened]);
 
   return (
     <>
-      <Dropdown.Item onClick={handleShow}>Vincular Archivo</Dropdown.Item>
-
       <Modal
         size="lg"
-        show={show}
+        show={isOpened}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
@@ -136,4 +134,4 @@ const New_document = ({ expedientId }) => {
   );
 };
 
-export default New_document;
+export default LinkDocument;

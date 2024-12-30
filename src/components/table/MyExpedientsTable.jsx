@@ -9,7 +9,7 @@ import { IoSettingsSharp } from "react-icons/io5";
 import useExpedients from "../../hooks/useExpedients";
 import Pagination from "../Pagination";
 import Empty from "../card/empty";
-import New_document from "../modal/new_document";
+import LinkDocument from "../modal/link_document";
 import MakePass from "../modal/makePass";
 import UpdateExpedient from "../modal/updateExpedient";
 
@@ -19,13 +19,26 @@ const MyExpedientsTable = () => {
   const { totalPages, page } = useSelector((state) => state.pages);
   const { myExpedients } = useSelector((state) => state.expedients);
 
-  const [isOpened, setIsOpened] = useState(false);
   const [expedient, setExpedient] = useState({});
+  const [expedientId, setExpedientId] = useState();
+  const [updateExpedient, setUpdateExpedient] = useState(false);
+  const [linkFile, setLinkFile] = useState(false);
+  const [makePass, setMakePass] = useState(false);
 
   const { getMyExpedients } = useExpedients();
 
   const handleMakePass = (value) => {
-    setIsOpened(true);
+    setMakePass(true);
+    setExpedient(value);
+  };
+
+  const handleLinkFile = (value) => {
+    setLinkFile(true);
+    setExpedientId(value);
+  };
+
+  const handleUpdateExpedient = (value) => {
+    setUpdateExpedient(true);
     setExpedient(value);
   };
 
@@ -33,7 +46,6 @@ const MyExpedientsTable = () => {
     getMyExpedients();
   }, [page]);
 
-  console.log(myExpedients);
   return (
     <>
       {myExpedients.length ? (
@@ -89,8 +101,22 @@ const MyExpedientsTable = () => {
                           Ver expediente
                         </Link>
 
-                        <UpdateExpedient expedientId={expedient.id} />
-                        <New_document expedientId={expedient.id} />
+                        <Dropdown.Item
+                          value={expedient}
+                          onClick={() => {
+                            handleUpdateExpedient(expedient);
+                          }}
+                        >
+                          Cambiar estado
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          value={expedient.id}
+                          onClick={() => {
+                            handleLinkFile(expedient.id);
+                          }}
+                        >
+                          Vincular Archivo
+                        </Dropdown.Item>
                         <Dropdown.Item
                           value={expedient}
                           onClick={() => handleMakePass(expedient)}
@@ -112,8 +138,18 @@ const MyExpedientsTable = () => {
 
       <MakePass
         expedient={expedient}
-        isOpened={isOpened}
-        setIsOpened={setIsOpened}
+        isOpened={makePass}
+        setIsOpened={setMakePass}
+      />
+      <LinkDocument
+        expedientId={expedientId}
+        isOpened={linkFile}
+        setIsOpened={setLinkFile}
+      />
+      <UpdateExpedient
+        expedient={expedient}
+        isOpened={updateExpedient}
+        setIsOpened={setUpdateExpedient}
       />
     </>
   );

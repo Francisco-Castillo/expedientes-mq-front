@@ -12,14 +12,14 @@ const customIcon = `
 const useDocuments = () => {
   const BaseUrl = import.meta.env.VITE_API_URL;
 
-  const newDocument = async (formData, setShow) => {
+  const newDocument = async (formData) => {
     try {
       await axios.post(`${BaseUrl}documentos`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      setShow(false);
+
       Swal.fire({
         iconHtml: customIcon,
         text: "Documento subido exitosamente!",

@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 
 import useExpedients from "../../hooks/useExpedients";
 
-import New_document from "../modal/new_document";
 import MakePass from "../modal/makePass";
 import UpdateExpedient from "../modal/updateExpedient";
+import LinkDocument from "../modal/link_document";
 
 import Empty from "../card/empty";
 
@@ -18,13 +18,26 @@ import "../../styles/table.css";
 const ExpedientsInbox = () => {
   const { InboxExpedients } = useSelector((state) => state.expedients);
 
-  const [isOpened, setIsOpened] = useState(false);
-  const [expedient, setExpedient] = useState({});
-
   const { getExpedientsInbox } = useExpedients();
 
+  const [expedient, setExpedient] = useState({});
+  const [expedientId, setExpedientId] = useState();
+  const [updateExpedient, setUpdateExpedient] = useState(false);
+  const [linkFile, setLinkFile] = useState(false);
+  const [makePass, setMakePass] = useState(false);
+
   const handleMakePass = (value) => {
-    setIsOpened(true);
+    setMakePass(true);
+    setExpedient(value);
+  };
+
+  const handleLinkFile = (value) => {
+    setLinkFile(true);
+    setExpedientId(value);
+  };
+
+  const handleUpdateExpedient = (value) => {
+    setUpdateExpedient(true);
     setExpedient(value);
   };
 
@@ -86,9 +99,22 @@ const ExpedientsInbox = () => {
                         >
                           Ver expediente
                         </Link>
-                        <UpdateExpedient expedientId={expedient.id} />
-                        <New_document expedientId={expedient.id} />
-
+                        <Dropdown.Item
+                          value={expedient}
+                          onClick={() => {
+                            handleUpdateExpedient(expedient);
+                          }}
+                        >
+                          Cambiar estado
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          value={expedient.id}
+                          onClick={() => {
+                            handleLinkFile(expedient.id);
+                          }}
+                        >
+                          Vincular Archivo
+                        </Dropdown.Item>
                         <Dropdown.Item
                           value={expedient}
                           onClick={() => handleMakePass(expedient)}
@@ -108,8 +134,18 @@ const ExpedientsInbox = () => {
       )}
       <MakePass
         expedient={expedient}
-        isOpened={isOpened}
-        setIsOpened={setIsOpened}
+        isOpened={makePass}
+        setIsOpened={setMakePass}
+      />
+      <LinkDocument
+        expedientId={expedientId}
+        isOpened={linkFile}
+        setIsOpened={setLinkFile}
+      />
+      <UpdateExpedient
+        expedient={expedient}
+        isOpened={updateExpedient}
+        setIsOpened={setUpdateExpedient}
       />
     </>
   );

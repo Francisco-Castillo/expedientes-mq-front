@@ -1,16 +1,13 @@
 import { useState } from "react";
-import { Form, OverlayTrigger, Tooltip, Button, Modal } from "react-bootstrap";
+import { Form, Button, Modal } from "react-bootstrap";
 
-import { IoIosSave, IoIosSettings } from "react-icons/io";
 import TypeTable from "../table/TypeTable";
 import useExpedients from "../../hooks/useExpedients";
 
-function Settings() {
-  const [show, setShow] = useState(false);
+function Settings({ isOpened, setIsOpened }) {
   const [name, setName] = useState("");
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => setIsOpened(false);
 
   const [validated, setValidated] = useState(false);
 
@@ -20,10 +17,11 @@ function Settings() {
     if (name.trim()) {
       await createExpedientType(name);
       await listExpedientTypes();
-      setName(""); // Limpiar el input después de crear
+      setName("");
       setValidated(false);
+      setIsOpened(false);
     } else {
-      setValidated(true); // Mostrar el mensaje de validación si está vacío
+      setValidated(true);
     }
   };
 
@@ -36,26 +34,9 @@ function Settings() {
 
   return (
     <>
-      <OverlayTrigger
-        placement="right"
-        overlay={
-          <Tooltip id="tooltip">Configurar Tipos de Expedientes</Tooltip>
-        }
-      >
-        <div
-          style={{
-            textAlign: "center",
-            display: "inline-block",
-            verticalAlign: "middle",
-          }}
-        >
-          <IoIosSettings onClick={handleShow} className="newExpedient" />
-        </div>
-      </OverlayTrigger>
-
       <Modal
         size="lg"
-        show={show}
+        show={isOpened}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
@@ -81,7 +62,7 @@ function Settings() {
                 type="text"
                 placeholder="Ingrese un nuevo tipo de expediente"
                 required
-                value={name} // Enlazar el valor del input al estado
+                value={name}
                 onChange={(e) => setName(e.target.value)}
                 onKeyDown={handleKeyDown}
               />

@@ -51,6 +51,7 @@ const MakePass = ({ expedient, isOpened, setIsOpened }) => {
     );
     dispatch(clearSearchResult());
     dispatch(SetRefreshExpedientsInbox(true));
+    setIsOpened(false);
   };
 
   useEffect(() => {
