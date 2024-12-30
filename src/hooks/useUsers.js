@@ -112,7 +112,9 @@ const useUsers = () => {
 
   const getUsers = async (setUsers) => {
     try {
-      const { data } = await axios.get(`${BaseUrl}usuarios?page=${page}`);
+      const { data } = await axios.get(
+        `${BaseUrl}usuarios${page ? `?page=${page}` : ""}`
+      );
 
       setUsers(data.items);
       dispatch(setTotalPages(data.totalPages));

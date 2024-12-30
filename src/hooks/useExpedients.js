@@ -308,7 +308,7 @@ const useExpedients = () => {
 
   const lastPassNumber = async (
     setPassNumber,
-    setActualUserReceiverId,
+    setActualselectUserReceptorId,
     expedientId
   ) => {
     try {
@@ -316,9 +316,8 @@ const useExpedients = () => {
         `${BaseUrl}/expedientes/${expedientId}/buscar-ultimo-pase`
       );
       const lastNumber = Number(data.id);
-      console.log(data);
       setPassNumber(lastNumber);
-      setActualUserReceiverId(data.usuarioReceptorId);
+      setActualselectUserReceptorId(data.usuarioReceptorId);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -333,39 +332,25 @@ const useExpedients = () => {
 
   const expedientPass = async (
     userId,
-    userReceiverId,
-    userReceiverName,
-    userReceiverApellido,
+    selectUserReceptorId,
+    selectUserReceptorName,
+    selectUserReceptorLastName,
     date,
     expedientId,
-    observations,
-    setShow,
-    passNumber
+    observations
   ) => {
     try {
-      if (passNumber) {
-        await axios.post(`${BaseUrl}expedientes/${expedientId}/pase`, {
-          id: passNumber,
-          fechaHora: date,
-          observaciones: observations,
-          expedienteId: expedientId,
-          usuarioEmisorId: userId,
-          usuarioReceptorId: Number(userReceiverId),
-        });
-      } else {
-        await axios.post(`${BaseUrl}expedientes/${expedientId}/pase`, {
-          fechaHora: date,
-          observaciones: observations,
-          expedienteId: expedientId,
-          usuarioEmisorId: userId,
-          usuarioReceptorId: Number(userReceiverId),
-        });
-      }
+      await axios.post(`${BaseUrl}expedientes/${expedientId}/pase`, {
+        fechaHora: date,
+        observaciones: observations,
+        expedienteId: expedientId,
+        usuarioEmisorId: userId,
+        usuarioReceptorId: Number(selectUserReceptorId),
+      });
 
-      setShow(false);
       Swal.fire({
         iconHtml: customIcon,
-        text: `Expediente enviado exitosamente a ${userReceiverName} ${userReceiverApellido}`,
+        text: `Expediente enviado exitosamente a ${selectUserReceptorName} ${selectUserReceptorLastName}`,
         confirmButtonColor: "rgba(235, 87, 87, 1)",
       });
     } catch (error) {
