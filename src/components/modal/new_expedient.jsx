@@ -35,10 +35,16 @@ const New_Expedient = ({ isOpened, setIsOpened }) => {
 
   const [validated, setValidated] = useState(false);
 
+  const [especial, setEspecial] = useState(false);
+
   const handleClose = () => {
     setIsOpened(false);
     dispatch(setClearAttributes());
     dispatch(SetRefreshMyExpedientsList(false));
+  };
+
+  const handleEspecial = (e) => {
+    setEspecial(e.target.checked);
   };
 
   const handleSubmit = (e) => {
@@ -49,10 +55,11 @@ const New_Expedient = ({ isOpened, setIsOpened }) => {
 
     if (isValid) {
       e.stopPropagation();
-      newExpedient();
+      newExpedient(especial);
       dispatch(setClearAttributes());
       dispatch(SetRefreshMyExpedientsList(true));
       setIsOpened(false);
+      setEspecial(false);
     } else {
       setValidated(true);
       console.log("Formulario invalido");
@@ -91,12 +98,20 @@ const New_Expedient = ({ isOpened, setIsOpened }) => {
             <Form.Label htmlFor="">Numero Expediente :</Form.Label>
 
             <Form.Group className="mb-3">
-              <Form.Control
-                defaultValue={number}
-                readOnly
-                style={{ width: "20%", marginBottom: "10px" }}
-                className="expedient-input"
-              />
+              <div className="d-flex justify-content-between">
+                <Form.Control
+                  defaultValue={number}
+                  readOnly
+                  style={{ width: "20%", marginBottom: "10px" }}
+                  className="expedient-input"
+                />
+                <Form.Check
+                  type="switch"
+                  id="custom-switch"
+                  onClick={handleEspecial}
+                  // label="Expediente especial"
+                />
+              </div>
               <Form.Control.Feedback type="invalid">
                 Por favor seleccione el Código Presupuestario
               </Form.Control.Feedback>

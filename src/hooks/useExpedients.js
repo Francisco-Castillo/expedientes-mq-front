@@ -2,8 +2,6 @@ import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import getDateTime from "../helpers/getDate";
-
 import { setTotalPages } from "../store/pages";
 import { setStatus, setTypes } from "../store/expedients/expedientProperties";
 import { setNumber } from "../store/expedients/expedient";
@@ -26,8 +24,6 @@ const customIcon = `
 const useExpedients = () => {
   const BaseUrl = import.meta.env.VITE_API_URL;
 
-  // const date = getDateTime();
-
   const { expedientStatus, expedientType, startDate, endDate } = useSelector(
     (state) => state.filters
   );
@@ -49,7 +45,7 @@ const useExpedients = () => {
 
   const dispatch = useDispatch();
 
-  const newExpedient = async () => {
+  const newExpedient = async (especial) => {
     try {
       await axios.post(`${BaseUrl}expedientes/caratular`, {
         numero: `${number}-${budgetCode}`,
@@ -65,6 +61,7 @@ const useExpedients = () => {
         usuario: {
           id: userId,
         },
+        especial: especial ? 1 : null,
       });
 
       Swal.fire({
