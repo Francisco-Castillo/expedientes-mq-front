@@ -15,19 +15,26 @@ import Settings from "./modal/settings";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FaFileSignature } from "react-icons/fa6";
 import { IoIosSettings } from "react-icons/io";
+import useExpedients from "../hooks/useExpedients";
 
 const ExpedientsTab = ({}) => {
   const { subTab } = useSelector((state) => state.tab);
   const { areaName } = useSelector((state) => state.userData.user);
+  const { number } = useSelector((state) => state.expedient);
+
+  const { lastExpedientNumber } = useExpedients();
 
   const [isOpened, setIsOpened] = useState(false);
   const [isModal, setIsModal] = useState("");
 
   const dispatch = useDispatch();
 
-  const handleOpenModal = (value) => {
-    setIsModal(value);
-    setIsOpened(true);
+  const handleOpenModal = async (value) => {
+    if (number !== null) {
+      setIsModal(value);
+      setIsOpened(true);
+    }
+    await lastExpedientNumber();
   };
 
   const handleTabChange = (tabName) => {

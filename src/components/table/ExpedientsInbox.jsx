@@ -16,11 +16,13 @@ import "../../styles/table.css";
 const MyExpedientsTable = () => {
   const dispatch = useDispatch();
   const { totalPages, page } = useSelector((state) => state.pages);
-  const { myExpedients, refreshMyExpedientsList } = useSelector(
+  const { InboxExpedients, refreshExpedientsInbox } = useSelector(
     (state) => state.expedients
   );
   const { loadStatus } = useSelector((state) => state.load);
-  const { getMyExpedients } = useExpedients();
+  const { getExpedientsInbox } = useExpedients();
+
+  console.log(InboxExpedients);
 
   const [modalState, setModalState] = useState({
     expedient: {},
@@ -58,17 +60,12 @@ const MyExpedientsTable = () => {
   // Combined useEffect for expedients fetching
   useEffect(() => {
     const shouldFetchExpedients =
-      refreshMyExpedientsList || modalState.updateExpedient;
+      refreshExpedientsInbox || modalState.updateExpedient;
 
     if (shouldFetchExpedients) {
-      getMyExpedients();
+      getExpedientsInbox();
     }
-  }, [
-    page,
-    modalState.updateExpedient,
-    refreshMyExpedientsList,
-    getMyExpedients,
-  ]);
+  }, [page, modalState.updateExpedient, refreshExpedientsInbox]);
 
   // Separate effect for load status handling
   useEffect(() => {
@@ -76,7 +73,7 @@ const MyExpedientsTable = () => {
 
     const timer = setTimeout(() => {
       dispatch(onLoad(false));
-      getMyExpedients();
+      getExpedientsInbox();
     }, 1000);
 
     return () => clearTimeout(timer);
@@ -90,7 +87,7 @@ const MyExpedientsTable = () => {
         <td>{expedient.fechaCaratulacion}</td>
         <td>{expedient.tipo}</td>
         <td>{expedient.estado}</td>
-        <td>{`${expedient.usuario.nombre} ${expedient.usuario.apellido}`}</td>
+        <td>{`${expedient.usuarioEmisor.nombre} ${expedient.usuarioEmisor.apellido}`}</td>
         <td>
           <Dropdown
             key="end"
@@ -135,7 +132,7 @@ const MyExpedientsTable = () => {
     return <LoadColorRing />;
   }
 
-  if (!myExpedients.length) {
+  if (!InboxExpedients.length) {
     return <Empty />;
   }
 
@@ -147,19 +144,19 @@ const MyExpedientsTable = () => {
         bordered
         hover
         id="table-data"
-        className={`table ${myExpedients.length === 1 ? "short" : "long"}`}
+        className={`table ${InboxExpedients.length === 1 ? "short" : "long"}`}
       >
         <thead>
           <tr>
             <th>Número</th>
-            <th>Iniciado</th>
+            <th>Fecha de Inicio</th>
             <th>Tipo de Expediente</th>
             <th>Estado</th>
-            <th>Caratulado por</th>
+            <th>Enviado por</th>
             <th>Acciones</th>
           </tr>
         </thead>
-        <tbody>{myExpedients.map(renderTableRow)}</tbody>
+        <tbody>{InboxExpedients.map(renderTableRow)}</tbody>
       </Table>
 
       {totalPages > 1 && <Pagination />}

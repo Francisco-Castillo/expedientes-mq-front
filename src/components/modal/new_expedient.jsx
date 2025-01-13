@@ -66,9 +66,13 @@ const New_Expedient = ({ isOpened, setIsOpened }) => {
     }
   };
 
+  const expedientNumber = async () => {
+    await lastExpedientNumber();
+  };
+
   useEffect(() => {
     if (isOpened) {
-      lastExpedientNumber();
+      expedientNumber();
     }
   }, [isOpened]);
 
